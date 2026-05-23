@@ -38,5 +38,5 @@ Route::middleware(['auth', 'role:careerpath'])->prefix('dashboard')->name('dashb
     Route::get('universities/{university}/manage-majors', [UniversityController::class, 'manageMajors'])->name('universities.majors');
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
-// test deploy
-// force clean build fixed 2
+
+Route::get('/healthz', function () { return response()->json(['status' => 'ok']); });
