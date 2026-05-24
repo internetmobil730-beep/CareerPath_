@@ -12,9 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-    // تسجيل الـ Middleware الخاص بالأدمن والطلاب هنا
+    // تسجيل أسماء الميدل وير المستعارة هنا ليفهمها ملف الـ routes
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'block.admin' => \App\Http\Middleware\BlockAdminFromWeb::class,
         ]);
     })
