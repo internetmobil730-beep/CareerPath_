@@ -8,8 +8,8 @@
       @if($errors->any())
         <div class="alert alert-danger">{{ $errors->first() }}</div>
       @endif
-      <form method="POST" action="{{ url('/login') }}">
-        @csrf
+      <form method="POST" action="{{ route('login') }}">
+       @csrf 
         <input type="email" name="email" class="form-control mb-5" placeholder="E-posta">
         <input type="password" name="password" class="form-control mb-5" placeholder="Şifre">
         <button class="btn w-100 mb-4 ">Giriş</button>
