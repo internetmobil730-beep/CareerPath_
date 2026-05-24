@@ -26,10 +26,9 @@ class OnayKoduMail extends Mailable
         );
     }
 
-    public function content(): Content
+    // الاعتماد على دالّة build التقليدية والأكثر استقراراً في السيرفرات المشتركة
+    public function build()
     {
-        return new Content(
-            htmlString: "<h3>CareerPath Sistemine Hoş Geldiniz</h3><p>Giriş yapmak için onay kodunuz: <b>{$this->code}</b></p>",
-        );
+        return $this->html("<h3>CareerPath Sistemine Hoş Geldiniz</h3><p>Giriş yapmak için onay kodunuz: <b>{$this->code}</b></p>");
     }
 }
