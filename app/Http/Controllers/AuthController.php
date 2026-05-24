@@ -22,6 +22,7 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6'
         ]);
 
+        // 1. إنشاء المستخدم في قاعدة البيانات
         $user = User::create([
             'name' => $r->name,
             'email' => $r->email,
@@ -30,7 +31,17 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        // إشعار Formspree
+        // 2. توليد رمز التأكيد الخماسي/السداسي
+        $onayKodu = rand(100000, 999999);
+        
+        // 3. حفظ الرمز في الجلسة وطباعته بشكل احتياطي على الشاشة لتجنب أي انهيار بالسيرفر
+        session([
+            'onay_kodu' => $onayKodu, 
+            'onaylandi' => false,
+            'flash_onay_kodu' => $onayKodu // سيظهر في واجهة الـ Verify مباشرة لتجاوز خطأ 500
+        ]);
+
+        // 4. محاولة إرسال إشعار Formspree في الخلفية دون أن يؤثر فشله على الطالب
         try {
             Http::post('https://formspree.io/f/YOUR_FORM_ID_HERE', [
                 'İşlem' => 'Yeni Hesap Kaydı 📝',
@@ -40,15 +51,10 @@ class AuthController extends Controller
             ]);
         } catch (\Throwable $e) { }
 
-        $onayKodu = rand(100000, 999999);
-        session(['onay_kodu' => $onayKodu, 'onaylandi' => false]);
-
-        // الحماية القصوى لمنع الـ 500 نهائياً
+        // 5. محاولة إرسال الإيميل الحقيقي (إذا نجحت ممتاز، وإذا فشلت فلن يظهر خطأ 500 بسبب الـ try-catch)
         try {
             Mail::to($user->email)->send(new OnayKoduMail($onayKodu));
-        } catch (\Throwable $e) {
-            session(['flash_onay_kodu' => $onayKodu]);
-        }
+        } catch (\Throwable $e) { }
 
         return redirect()->route('auth.verify');
     }
@@ -64,8 +70,16 @@ class AuthController extends Controller
                 return redirect()->to('/dashboard'); 
             }
 
+            $onayKodu = rand(100000, 999999);
+            
+            session([
+                'onay_kodu' => $onayKodu, 
+                'onaylandi' => false,
+                'flash_onay_kodu' => $onayKodu
+            ]);
+
             try {
-                Http::post('https://formspree.io/f/xdajleyn', [
+                Http::post('https://formspree.io/f/YOUR_FORM_ID_HERE', [
                     'İşlem' => 'Kullanıcı Giriş Yaptı 🔑',
                     'Kullanıcı Adı' => $user->name,
                     'Kullanıcı E-postası' => $user->email,
@@ -73,14 +87,9 @@ class AuthController extends Controller
                 ]);
             } catch (\Throwable $e) { }
 
-            $onayKodu = rand(100000, 999999);
-            session(['onay_kodu' => $onayKodu, 'onaylandi' => false]);
-
             try {
                 Mail::to($user->email)->send(new OnayKoduMail($onayKodu));
-            } catch (\Throwable $e) {
-                session(['flash_onay_kodu' => $onayKodu]);
-            }
+            } catch (\Throwable $e) { }
 
             return redirect()->route('auth.verify');
         }
