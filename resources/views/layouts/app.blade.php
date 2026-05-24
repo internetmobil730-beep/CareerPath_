@@ -6,7 +6,7 @@
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('title','CareerPath')</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/jpg" href="{{ asset('logo.jpg') }}">
     <!-- هاد السطر ضفته مشان يشتغلوا التنسيقات بعد ما رفعت الموقع على النت -->
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
