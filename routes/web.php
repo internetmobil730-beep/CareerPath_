@@ -46,6 +46,15 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
+// 🌟 كود سحري لتشغيل الـ Migrate أونلاين بدون استخدام الـ Shell 🌟
+Route::get('/run-migrate-path', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
+        return "Tebrikler! Bütün tablolar başarıyla sıfırlandı ve yeniden yüklendi. 🎉";
+    } catch (\Exception $e) {
+        return "Hata oluştu: " . $e->getMessage();
+    }
+});
 
 // رابط فحص حالة السيرفر (مهم لمنصة Render)
 Route::get('/healthz', function () { 
