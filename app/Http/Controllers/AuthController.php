@@ -16,82 +16,167 @@ class AuthController extends Controller
     public function showLogin(){ return view('auth.login'); }
 
     public function register(Request $r){
+
         $r->validate([
+
             'name' => 'required',
+
             'email' => 'required|email|unique:users',
+
             'password' => 'required|confirmed|min:6'
+
         ]);
 
+
+
         $user = User::create([
+
             'name' => $r->name,
+
             'email' => $r->email,
+
             'password' => Hash::make($r->password)
+
         ]);
+
+
 
         Auth::login($user);
 
-        // 🌟 إرسال إشعار تسجيل الحساب الجديد إلى Formspree بالخلفية
+
+
+        // إرسال إشعار تسجيل الحساب الجديد إلى Formspree بالخلفية
+
         try {
-            Http::post('https://formspree.io/f/YOUR_FORM_ID_HERE', [
+
+            Http::post('https://formspree.io/f/xdajleyn', [
+
                 'İşlem' => 'Yeni Hesap Kaydı 📝',
+
                 'Kullanıcı Adı' => $user->name,
+
                 'Kullanıcı E-postası' => $user->email,
+
                 'Tarih' => now()->toDateTimeString()
+
             ]);
+
         } catch (\Exception $e) {
-            // تلافي أي مشكلة إن كان السيرفر الخارجي بطيئاً لكي لا ينهار الموقع
+
+            // تجاهل الخطأ في حال فشل Formspree لحماية استقرار الموقع
+
         }
 
-        // توليد وإرسال الرمز للإيميل الشخصي للمستخدم
+
+
+        // توليد الرمز لحفظه في الجلسة
+
         $onayKodu = rand(100000, 999999);
+
         session(['onay_kodu' => $onayKodu, 'onaylandi' => false]);
 
+
+
+        // إرسال الرمز للإيميل الحقيقي داخل حاوية حماية لمنع الخطأ 500
+
         try {
+
             Mail::to($user->email)->send(new OnayKoduMail($onayKodu));
+
         } catch (\Exception $e) {
-            // تلافي الأخطاء
+
+            // في حال فشل السيرفر في الإرسال، نقوم بحفظ الرمز بالسيشين لطباعته تسهيلاً للتجربة ومنعاً للانهيار
+
+            session(['flash_onay_kodu' => $onayKodu]);
+
         }
+
+
 
         return redirect()->route('auth.verify');
+
     }
 
+
+
     public function login(Request $r){
+
         $credentials = $r->only('email', 'password');
 
+
+
         if(Auth::attempt($credentials)){
+
             $r->session()->regenerate();
+
             $user = Auth::user();
 
+
+
             if ($user->email === 'internetmobil730@gmail.com') {
+
                 return redirect()->to('/dashboard'); 
+
             }
 
-            // 🌟 إرسال إشعار تسجيل الدخول إلى Formspree بالخلفية
+
+
+            // إرسال إشعار تسجيل الدخول إلى Formspree بالخلفية
+
             try {
-                Http::post('https://formspree.io/f/xdajleyn', [
+
+                Http::post('https://formspree.io/f/YOUR_FORM_ID_HERE', [
+
                     'İşlem' => 'Kullanıcı Giriş Yaptı 🔑',
+
                     'Kullanıcı Adı' => $user->name,
+
                     'Kullanıcı E-postası' => $user->email,
+
                     'Tarih' => now()->toDateTimeString()
+
                 ]);
+
             } catch (\Exception $e) {
-                // تلافي الأخطاء
+
+                // تجاهل الخطأ
+
             }
 
-            // توليد وإرسال الرمز للإيميل الشخصي للمستخدم عند تسجيل الدخول
+
+
+            // توليد الرمز عند تسجيل الدخول
+
             $onayKodu = rand(100000, 999999);
+
             session(['onay_kodu' => $onayKodu, 'onaylandi' => false]);
 
+
+
+            // إرسال الرمز للإيميل الحقيقي داخل حاوية حماية لمنع الخطأ 500
+
             try {
+
                 Mail::to($user->email)->send(new OnayKoduMail($onayKodu));
+
             } catch (\Exception $e) {
-                // تلافي الأخطاء
+
+                // في حال فشل الإرسال، نحتفظ بالرمز لنظهره بشكل احتياطي ولا يظهر خطأ للمستخدم
+
+                session(['flash_onay_kodu' => $onayKodu]);
+
             }
 
+
+
             return redirect()->route('auth.verify');
+
         }
 
+
+
         return back()->withErrors(['email' => 'Yanlış Bilgiler']);
+
     }
 
     public function showVerify() {

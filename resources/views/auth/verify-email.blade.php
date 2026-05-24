@@ -10,6 +10,13 @@
         Lütfen e-posta adresinize gönderilen 6 haneli onay kodunu giriniz.
       </div>
 
+      @if(session('flash_onay_kodu'))
+        <div class="alert alert-warning text-center">
+          <strong>Sistem Notu (Simülasyon):</strong> Mail sunucusu bağlanamadı. <br>
+          Test Kodunuz: <span style="font-size: 18px; color: red; font-weight: bold;">{{ session('flash_onay_kodu') }}</span>
+        </div>
+      @endif
+
       @if($errors->any())
         <div class="alert alert-danger text-center">{{ $errors->first() }}</div>
       @endif
