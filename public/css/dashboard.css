@@ -9,16 +9,13 @@
     --color-accent: rgb(255, 168, 131);
 }
 
-/* تنسيق حاوية المحتوى الرئيسي في الداشبورد */
 .dashboard-page #content-wrapper {
     margin-left: 260px;
     margin-top: 60px;
-    margin-bottom: 70px; /* زيادة بسيطة لمنع تداخل الفوتر */
+    margin-bottom: 50px;
     background-color: var(--color-background);
-    padding: 15px;
 }
 
-/* الشاشات الكبيرة: تثبيت القائمة الجانبية وتعديل الهوامش */
 @media (min-width: 768px) {
     .dashboard-page .offcanvas-start {
         visibility: visible !important;
@@ -40,7 +37,11 @@
     }
 
     .dashboard-page .navbar,
-    .dashboard-page #dwidth,
+    .dashboard-page #dwidth {
+        left: 260px !important;
+        width: calc(100% - 260px) !important;
+    }
+
     .dashboard-page footer,
     .dashboard-page #fwidth {
         left: 260px !important;
@@ -52,11 +53,9 @@
     }
 }
 
-/* شاشات الموبايل والتابلت */
 @media (max-width: 767px) {
     .dashboard-page #content-wrapper {
         margin-left: 0 !important;
-        padding: 10px; /* تقليص الفراغات لكسب مساحة أفقية على الموبايل */
     }
 
     .dashboard-page .dashboard-sidebar-toggler {
@@ -78,7 +77,6 @@
     }
 }
 
-/* تنسيقات عناصر السايدبار */
 .sidebar a {
     border-radius: 5px;
     margin-bottom: 10px;
@@ -96,78 +94,58 @@
     transition: 0.3s;
 }
 
-.sidebar-link:hover,
+.sidebar-link:hover {
+    background-color: var(--color-navbar-hover);
+}
 .sidebar-link.active {
     background-color: var(--color-navbar-hover);
 }
 
-/* أحجام العناوين المتجاوبة */
-.title {
-    font-size: 32px;
+.title{
+    font-size: 40px;
 }
-@media (max-width: 576px) {
-    .title {
-        font-size: 24px;
-    }
+.card-title{
+    font-size: 2rem;
 }
 
-.card-title {
-    font-size: 1.75rem;
+.bgcolor1 {
+    background-color: var(--color-button);
 }
 
-.bgcolor1 { background-color: var(--color-button); }
-.bgcolor2 { background-color: var(--color-title); }
-.bgcolor3 { background-color: var(--color-accent); }
+.bgcolor2 {
+    background-color: var(--color-title);
+}
+
+.bgcolor3 {
+    background-color: var(--color-accent);
+}
 
 .card-title,
 .card-text {
     color: var(--color-navbar-text);
 }
-
-/* ----------- نظام الجداول والأزرار المتجاوبة المطور ----------- */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     display: block;
 }
-
-.custom-table {
-    table-layout: auto;
-    margin-bottom: 0;
-}
-
-.custom-table th, .custom-table td {
-    padding: 12px 6px !important;
-    vertical-align: middle !important;
-}
-
-/* تنسيق أزرار التحكم داخل الجداول */
-.custom-btn-group .btn {
-    font-size: 14px !important;
-    padding: 6px 12px !important;
-    border-radius: 4px;
-    margin: 0 2px !important;
-    display: inline-block;
-}
-
-/* زر إضافة عنصر جديد */
 .ekle {
     background-color: #28a745 !important;
-    font-size: 16px !important;
+    font-size: 18px;
+    margin-bottom: 15px;
     border-color: #28a745 !important;
     color: var(--color-navbar-text) !important;
     border-radius: 5px;
-    margin-left: 0 !important;
-    margin-bottom: 0 !important;
+    margin-left: 0 !important; /* إزالة الـ 50px الثابتة لتتوسط بالموبايل */
 }
-
-.detay {
-    background-color: #FFCE56 !important;
-    border-color: #FFCE56 !important;
-    color: #1e293b !important;
+.detay, .düzenle, .sil-uni {
+    font-size: 16px !important;
+    border-radius: 5px;
+    margin: 4px !important; /* مساحة متناسقة ومريحة للمس باليد */
+    display: inline-block;
+    white-space: nowrap; /* تمنع انقسام نص الزر لسطرين */
 }
-
 .detayuni {
     background-color: #E49BA6 !important;
     border-color: #E49BA6 !important;
@@ -175,8 +153,8 @@
 }
 
 .düzenle {
-    background-color: #ffb03b !important;
-    border-color: #ffb03b !important;
+    background-color: #FFCE56 !important;
+    border-color: #FFCE56 !important;
     color: var(--color-navbar-text) !important;
 }
 
@@ -184,76 +162,65 @@
     background-color: #6c757d !important;
     border-color: #6c757d !important;
     color: var(--color-navbar-text) !important;
-    margin-left: 0 !important;
+    margin-left: 0 !important; /* التخلص من الـ 18rem الكارثية للموبايل */
 }
-
-/* أزرار إدارة المستخدمين الخاصة بكِ */
-.userbtn1 {
-    background-color: #FFCE56 !important;
-    border-color: #FFCE56 !important;
-    color: #1e293b !important;
-}
-
-.userbtn2 {
-    background-color: #6c757d !important;
-    border-color: #6c757d !important;
-    color: var(--color-navbar-text) !important;
-    border-radius: 5px;
-}
-
-.güncel, .güncel1 {
-    background-color: #36A2EB !important;
-    border-color: #36A2EB !important;
-    color: var(--color-navbar-text) !important;
-    height: auto !important;
-    padding: 8px 16px !important;
-}
-
-.iptal {
-    background-color: #dc3545 !important;
-    border-color: #dc3545 !important;
-    color: var(--color-navbar-text) !important;
-}
-
-.kaydet {
-    background-color: #9966FF !important;
-    border-color: #9966FF !important;
-    color: var(--color-navbar-text) !important;
-}
-
-/* محاذاة مرنة لمجموعات الأزرار */
 .btn-group-container {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap; /* للمحافظة على الأزرار بجانب بعضها بالشاشات المتوسطة والكبيرة */
     justify-content: center;
 }
-
-/* شاشات الموبايل الصغيرة للتحكم الدقيق بالأزرار والجداول */
-@media (max-width: 767px) {
-    .custom-table th, .custom-table td {
-        padding: 8px 4px !important;
-        font-size: 13px !important;
-    }
-    
-    .custom-btn-group {
-        flex-wrap: wrap !important;
-        gap: 4px !important;
-    }
-    
-    .custom-btn-group .btn, .userbtn1, .userbtn2 {
-        font-size: 11px !important;
-        padding: 4px 8px !important;
-        width: auto;
-    }
-}
-
 @media (max-width: 576px) {
     .btn-group-container {
         flex-direction: column;
         width: 100%;
     }
     .detay, .düzenle, .sil-uni {
-        width: 100%;
+        width: 100%; /* تأخذ كامل العرض المتاح بالموبايل لتسهيل الضغط */
         text-align: center;
     }
+    .title {
+        font-size: 28px; /* تصغير حجم العنوان ليناسب شاشة الهاتف */
+    }
+}
+
+
+.userbtn1{
+    background-color: #FFCE56 !important;
+    font-size: 20px;
+    border-color: #FFCE56 !important;
+    color: var(--color-navbar-text) !important;
+}
+.userbtn2{
+    background-color: #6c757d !important;
+    font-size: 20px;
+    border-color: #6c757d !important;
+    color: var(--color-navbar-text) !important;
+    border-radius: 5px;
+}
+.güncel{
+    background-color: #36A2EB !important;
+    font-size: 20px;
+    height: 43px;
+    margin-top: -6px;
+    border-color: #36A2EB !important;
+    color: var(--color-navbar-text) !important;
+}
+.güncel1{
+    background-color: #36A2EB !important;
+    font-size: 20px;
+    height: 43px;
+    border-color: #36A2EB !important;
+    color: var(--color-navbar-text) !important;
+}
+.iptal{
+    background-color: #dc3545 !important;
+    font-size: 20px;
+    border-color: #dc3545 !important;
+    color: var(--color-navbar-text) !important;
+}
+.kaydet{
+    background-color: #9966FF !important;
+    font-size: 20px;
+    border-color: #9966FF !important;
+    color: var(--color-navbar-text) !important;
 }
