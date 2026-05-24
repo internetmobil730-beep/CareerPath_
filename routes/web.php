@@ -11,23 +11,30 @@ use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\SkillCategoryController;
 use App\Http\Controllers\UserController;
 
-// الصفحات العامة
+
+// 1. الصفحات العامة (متاحة للجميع زوار وأعضاء)
 Route::get('/', [HomeController::class, 'index'])->name('home');
-    // روابط تسجيل الدخول
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-// روابط المستخدمين المسجلين (الكويز وتفاصيل الجامعة)
-Route::middleware('auth')->group(function () {
+
+
+// روابط الحسابات وتسجيل الدخول
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+// 2. روابط الطلاب والمستخدمين العاديين (ممنوع دخول الأدمن هنا)
+Route::middleware(['auth', 'block.admin'])->group(function () {
     Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
     Route::post('/quiz', [QuizController::class, 'submit'])->name('quiz.submit');
     Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
     Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university_details');
     Route::post('/quiz-results', [QuizController::class, 'submit'])->name('quiz_results.submit');
 });
-// روابط لوحة تحكم الإدارة (Admin)
+
+
+// 3. روابط لوحة تحكم الإدارة (الأدمن فقط حصرًا)
 Route::middleware(['auth', 'role:careerpath'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::resource('skills', SkillController::class);
@@ -39,4 +46,8 @@ Route::middleware(['auth', 'role:careerpath'])->prefix('dashboard')->name('dashb
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
-Route::get('/healthz', function () { return response()->json(['status' => 'ok']); });
+
+// رابط فحص حالة السيرفر (مهم لمنصة Render)
+Route::get('/healthz', function () { 
+    return response()->json(['status' => 'ok']); 
+});

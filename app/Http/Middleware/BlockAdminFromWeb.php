@@ -6,19 +6,18 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class BlockAdminFromWeb
 {
     /**
      * Handle an incoming request.
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // إذا كان المستخدم مسجل دخوله ويملك رتبة الأدمن، اسمح له بالمرور للداشبورد
+        // إذا كان المستخدم أدمن وحاول تصفح صفحات الطلاب، قم بتحويله فوراً للداشبورد
         if (auth()->check() && auth()->user()->hasRole('careerpath')) {
-            return $next($request);
+            return redirect('/dashboard');
         }
 
-        // غير ذلك، امنعه تماماً
-        abort(403, 'Sistem yöneticisi yetkileriniz yok');
+        return $next($request);
     }
 }
