@@ -46,20 +46,32 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
+// 🌟 الكود الصحيح والمطابق تماماً لبيانات وصلاحيات مشروعكِ 🌟
 Route::get('/run-migrate-path', function() {
     try {
+        // 1. تنظيف وبناء الجداول أونلاين
         \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
         
+        // 2. تشغيل الـ Seeders لإنشاء الصلاحيات (Roles) وزرع الأسئلة والتخصصات
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
         
-        \App\Models\User::create([
-            'name' => 'Admin',
-            'email' => 'internetmobil730@gmail.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('internet20mobil26'), 
-            'role' => 'admin'
-        ]);
+        // 3. فحص وإنشاء حساب الآدمن بالبيانات الصحيحة الخاصة بكِ تماماً
+        $adminEmail = 'internetmobil730@gmail.com';
+        $adminExists = \App\Models\User::where('email', $adminEmail)->exists();
+        
+        if (!$adminExists) {
+            $admin = \App\Models\User::create([
+                'name' => 'careerpath',
+                'email' => $adminEmail,
+                'email_verified_at' => now(),
+                'password' => bcrypt('internet20mobil26'),
+            ]);
+            
+            // ربط الصلاحية بالطريقة الصحيحة المستخدمة في مشروعكِ
+            $admin->assignRole('careerpath');
+        }
 
-        return "Harika! Bütün tablolar, sorular, kategoriler ve Admin hesabı başarıyla geri yüklendi! 🎉";
+        return "Mükemmel! Bütün sistem, sorular, kategoriler ve Admin hesabı orijinal verilerinizle başarıyla yüklendi! 🎉";
     } catch (\Exception $e) {
         return "Hata oluştu: " . $e->getMessage();
     }
