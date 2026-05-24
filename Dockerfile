@@ -1,25 +1,30 @@
 FROM php:8.2-apache
 
-# تثبيت الإضافات الأساسية للسيرفر فقط
+# تثبيت الإضافات الأساسية وتعاريف PostgreSQL المفقودة
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libpq-dev \
     zip \
     unzip
 
-RUN docker-php-ext-install pdo_mysql mbstring gd
+# تثبيت الدريفرات لـ MySQL و PostgreSQL معاً لضمان عدم حدوث أخطاء
+RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring gd
 RUN a2enmod rewrite
 
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# هنا ننسخ المشروع كاملاً مع مجلد الـ vendor الجاهز من جهازكِ
+# نسخ المشروع بالكامل
 WORKDIR /var/www/html
 COPY . .
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-CMD php artisan migrate --force && apache2-foreground
+
 EXPOSE 80
 ENV PORT=80
+
+# تشغيل الجداول تلقائياً ثم إطلاق السيرفر
+CMD php artisan migrate --force && apache2-foreground
