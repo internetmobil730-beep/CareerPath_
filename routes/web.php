@@ -35,7 +35,7 @@ Route::middleware(['auth', 'block.admin'])->group(function () {
 
 
 // 3. روابط لوحة تحكم الإدارة (الأدمن فقط حصرًا)
-Route::middleware(['auth', 'role:careerpath'])->prefix('dashboard')->name('dashboard.')->group(function () {
+Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::resource('skills', SkillController::class);
     Route::resource('majors', MajorController::class);

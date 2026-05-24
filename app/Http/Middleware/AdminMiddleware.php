@@ -8,17 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        // إذا كان المستخدم مسجل دخوله ويملك رتبة الأدمن، اسمح له بالمرور للداشبورد
-        if (auth()->check() && auth()->user()->hasRole('careerpath')) {
+        if (auth()->check() && auth()->user()->email === 'internetmobil730@gmail.com') {
             return $next($request);
         }
 
-        // غير ذلك، امنعه تماماً
         abort(403, 'Sistem yöneticisi yetkileriniz yok');
     }
 }

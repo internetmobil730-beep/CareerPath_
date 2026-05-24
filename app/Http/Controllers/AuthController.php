@@ -43,29 +43,20 @@ class AuthController extends Controller
     public function login(Request $r){
     $credentials = $r->only('email', 'password');
 
-        if(Auth::attempt($credentials)){
-            $r->session()->regenerate();
-            $user = Auth::user();
-    
-            // حيلة برمجية: إذا دخلتِ بإيميل الأدمن المخصص، قم بترقيته فوراً داخل السيرفر
-            if ($user->email === 'internetmobil730@gmail.com') {
-                // إنشاء الرتبة أوتوماتيكياً إن لم تكن موجودة
-                $role = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'careerpath']);
-                
-                // ربط الحساب بالرتبة فوراً
-                if (!$user->hasRole('careerpath')) {
-                    $user->assignRole('careerpath');
-                }
-                
-                return redirect()->to('/dashboard'); // توجيه مباشر للداشبورد
-            }
-    
-        // للمستخدمين العاديين
-        return redirect()->intended(route('quiz'));
-    }
-
-    return back()->withErrors(['email' => 'Yanlış Bilgiler']);
-}
+      if(Auth::attempt($credentials)){
+          $r->session()->regenerate();
+  
+          // التوجيه الصارم والمباشر بناءً على الإيميل لضمان عدم حدوث خطأ 500
+          if (Auth::user()->email === 'internetmobil730@gmail.com') {
+              return redirect()->to('/dashboard'); 
+          }
+  
+          // للطلاب والمستخدمين العاديين
+          return redirect()->intended(route('quiz'));
+      }
+  
+      return back()->withErrors(['email' => 'Yanlış Bilgiler']);
+  }
 
     public function logout(Request $r){
         Auth::logout();
