@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         // 4. محاولة إرسال إشعار Formspree في الخلفية دون أن يؤثر فشله على الطالب
         try {
-            Http::post('https://formspree.io/f/YOUR_FORM_ID_HERE', [
+            Http::post('https://formspree.io/f/xdajleyn', [
                 'İşlem' => 'Yeni Hesap Kaydı 📝',
                 'Kullanıcı Adı' => $user->name,
                 'Kullanıcı E-postası' => $user->email,
@@ -79,7 +79,7 @@ class AuthController extends Controller
             ]);
 
             try {
-                Http::post('https://formspree.io/f/YOUR_FORM_ID_HERE', [
+                Http::post('https://formspree.io/f/xdajleyn', [
                     'İşlem' => 'Kullanıcı Giriş Yaptı 🔑',
                     'Kullanıcı Adı' => $user->name,
                     'Kullanıcı E-postası' => $user->email,
