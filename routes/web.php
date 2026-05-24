@@ -46,34 +46,68 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
-// 🌟 الكود الصحيح والمطابق تماماً لبيانات وصلاحيات مشروعكِ 🌟
+// 🌟 الكود النهائي المطور لحل تضارب الـ Seeders والصلاحيات أونلاين 🌟
 Route::get('/run-migrate-path', function() {
     try {
-        // 1. تنظيف وبناء الجداول أونلاين
+        // 1. تنظيف كاش لارافيل وكاش المكتبات لضمان عدم حدوث تضارب
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        
+        // 2. تنظيف وبناء الجداول من الصفر
         \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
         
-        // 2. تشغيل الـ Seeders لإنشاء الصلاحيات (Roles) وزرع الأسئلة والتخصصات
-        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        // 3. إنشاء الصلاحيات برمجياً بشكل محمي
+        $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'careerpath']);
+        \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'user']);
         
-        // 3. فحص وإنشاء حساب الآدمن بالبيانات الصحيحة الخاصة بكِ تماماً
+        // 4. فحص وإنشاء حساب الأدمن بالصيغة الأصلية لمشروعكِ
         $adminEmail = 'internetmobil730@gmail.com';
-        $adminExists = \App\Models\User::where('email', $adminEmail)->exists();
+        $admin = \App\Models\User::where('email', $adminEmail)->first();
         
-        if (!$adminExists) {
+        if (!$admin) {
             $admin = \App\Models\User::create([
                 'name' => 'careerpath',
                 'email' => $adminEmail,
                 'email_verified_at' => now(),
                 'password' => bcrypt('internet20mobil26'),
             ]);
-            
-            // ربط الصلاحية بالطريقة الصحيحة المستخدمة في مشروعكِ
-            $admin->assignRole('careerpath');
+        }
+        
+        // ربط الصلاحية بالأدمن بشكل آمن
+        if (!$admin->hasRole('careerpath')) {
+            $admin->assignRole($adminRole);
         }
 
-        return "Mükemmel! Bütün sistem, sorular, kategoriler ve Admin hesabı orijinal verilerinizle başarıyla yüklendi! 🎉";
+        // 5. استدعاء باقي الـ Seeders الخاصة بالأسئلة والتخصصات (دون تكرار الـ Roles والأدمن)
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\SkillCategorySeeder',
+            '--force' => true
+        ]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\SkillSeeder',
+            '--force' => true
+        ]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\UniversitySeeder',
+            '--force' => true
+        ]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\MajorSeeder',
+            '--force' => true
+        ]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\MajorUniversitySeeder',
+            '--force' => true
+        ]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\MajorSkillSeeder',
+            '--force' => true
+        ]);
+
+        return "Tebrikler! Bütün sistem, sorular, kategoriler ve orijinal Admin hesabı kusursuzca yüklendi! 🎉";
     } catch (\Exception $e) {
-        return "Hata oluştu: " . $e->getMessage();
+        return "Hata oluştu: " . $e->getMessage() . " | Satır: " . $e->getLine();
     }
 });
 
