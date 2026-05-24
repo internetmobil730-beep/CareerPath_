@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex flex-column align-items-center text-center">
     <div class="col-8 col-sm-6 col-md-4 col-lg-3 mt-5">
-        <img src="{{ asset('img/logo.jpg') }}" alt="Logo" class="img-fluid rounded-circle shadow-sm mt-5 mb-3">
+        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="img-fluid rounded-circle shadow-sm mt-5 mb-3">
     </div>
   <h1 class="title display-5 mb-3 mt-2">CareerPath'a hoşgeldiniz</h1>
   <p class="lead">Hobilerinizi ve ilgi alanlarınızı seçin, sizin için uygun üniversite bölümünü önerelim.</p>

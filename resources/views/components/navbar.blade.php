@@ -6,7 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a href="{{ route('home') }}"><img width="50px" src="{{ asset('img/logo.jpg') }}" alt="Logo"
+        <a href="{{ route('home') }}"><img width="50px" src="{{ asset('img/logo.png') }}" alt="Logo"
             class="img-fluid rounded-circle shadow-sm mb-2 mt-2"></a>
         <a class="navbar-brand" href="{{ route('home') }}">CareerPath</a>
 
