@@ -46,11 +46,20 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
-// 🌟 كود سحري لتشغيل الـ Migrate أونلاين بدون استخدام الـ Shell 🌟
 Route::get('/run-migrate-path', function() {
     try {
         \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
-        return "Tebrikler! Bütün tablolar başarıyla sıfırlandı ve yeniden yüklendi. 🎉";
+        
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        
+        \App\Models\User::create([
+            'name' => 'Admin',
+            'email' => 'internetmobil730@gmail.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('internet20mobil26'), 
+            'role' => 'admin'
+        ]);
+
+        return "Harika! Bütün tablolar, sorular, kategoriler ve Admin hesabı başarıyla geri yüklendi! 🎉";
     } catch (\Exception $e) {
         return "Hata oluştu: " . $e->getMessage();
     }
