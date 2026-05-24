@@ -1,53 +1,130 @@
-@section('title', 'TÜM KULLANICILAR')
-
+@section('title', 'KONTROL PANELİ')
 @extends('dashboard.layout')
 
 @section('content')
-<div class="card-box mt-4">
-    <div class="card shadow-lg p-3 border-1">
-        
-        <div class="card-body p-3">
-            <h2 class="text-xl title m-0 mb-3" style="font-size: 28px;">Sistemdeki Kullanıcılar</h2>
+<h2 class="mb-4 title">Admin Dashboard</h2>
+
+<div class="row text-center">
+
+    <div class="col-md-4">
+        <div class="card shadow-lg bgcolor1 p-4 mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Toplam Becerleri</h5>
+                <p class="card-text display-6">
+                    {{ $skillsCount ?? 0 }}
+                </p>
+            </div>
         </div>
-        
-        <div class="table-responsive" style="width: 100%; overflow-x: auto; display: block; -webkit-overflow-scrolling: touch;">
-            <table class="table table-hover align-middle m-0" style="min-width: 550px; table-layout: fixed; width: 100%;">
-                <thead>
-                    <tr class="text-nowrap">
-                        <th class="thead p-2 text-center" style="width: 10%">ID</th>
-                        <th class="thead p-2 text-center" style="width: 35%;">İsim</th>
-                        <th class="thead p-2 text-center" style="width: 50%">E-posta</th>
-                        <th class="thead p-2 text-center" style="width: 20%">Kayıt Tarihi</th>
-                        <th class="thead p-2 text-center" style="width: 20%">İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users ?? [] as $user)
-                    <tr>
-                        <td class="p-2 text-center fw-bold">{{ $user->id }}</td>
-                        <td class="p-2 text-center text-muted">{{ $user->name ?? 'careerpath' }}</td>
-                        <td class="p-2 text-center">
-                            <div class="text-break fw-semibold px-1" style="font-size: 14px; word-break: break-all;">
-                                {{ $user->email }}
-                            </div>
-                        </td>
-                        <td class="p-2 text-center text-nowrap text-muted" style="font-size: 14px;">
-                            {{ $user->created_at ? $user->created_at->format('Y-m-d') : '2026-05-20' }}
-                        </td>
-                        <td class="p-2 text-center">
-                            <div class="d-flex flex-row flex-sm-wrap justify-content-center gap-1">
-                                <a href="#" class="düzenle btn btn-sm px-2 py-1 text-nowrap" style="font-size: 13px;">Düzenle</a>
-                                <form action="#" method="POST" class="m-0 inline">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="sil-uni btn btn-sm px-2 py-1 text-nowrap" style="font-size: 13px;" onclick="return confirm('Emin misiniz?')">Sil</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg bgcolor2 p-4 mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Toplam Bölümler</h5>
+                <p class="card-text display-6">
+                    {{ $majorsCount ?? 0 }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg bgcolor3 p-4 mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Toplam Üniversiteler</h5>
+                <p class="card-text display-6">
+                    {{ $universitiesCount ?? 0 }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row mt-5">
+    <div class="col-md-6">
+        <canvas id="skillsChart"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="usersChart"></canvas>
+    </div>
+    
+</div>
+<div class="row mt-5">
+    <div class="col-md-12">
+        <div class="card shadow-lg p-4">
+            <h5 class="text-center mb-4">Genel İstatistik Karşılaştırması</h5>
+            <canvas id="combinedComparisonChart" style="width: 100%; height: 400px;"></canvas>
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('scripts')
+<script>
+    new Chart(document.getElementById('skillsChart'), {
+        type: "doughnut",
+        data: {
+            labels: ['Beceri_Kategorileri', 'Beceriler', 'Bölümler', 'Üniversiteler'],
+            datasets: [{
+                data: [ {{ $categoriesCount }}, 
+                        {{ $skillsCount }}, 
+                        {{ $majorsCount }}, 
+                        {{ $universitiesCount }}
+                      ],
+                backgroundColor: ['#28a745', '#ffc107', '#fbb2b9ff', '#6c757d']
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+    new Chart(document.getElementById('usersChart'), {
+        type: "pie",
+        data: {
+            labels: ['Kullanıcılar'],
+            datasets: [{
+                data: [{{ $usersCount }}], 
+                backgroundColor: ['#6f42c1'] 
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+const ctx = document.getElementById('combinedComparisonChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar', 
+        data: {
+            labels: ['Bölümler', 'Beceriler', 'Üniversiteler', 'Kategoriler',  'Kullanıcılar'],
+            datasets: [{
+                label: 'Toplam Sayı',
+                data: [
+                    {{ $majorsCount}},
+                    {{ $skillsCount}}, 
+                    {{ $universitiesCount}},
+                    {{ $categoriesCount}},
+                    {{ $usersCount}}
+                ],
+                backgroundColor: [
+                    '#628141', 
+                    '#E49BA6', 
+                    '#36A2EB', 
+                    '#FFCE56', 
+                    '#9966FF'  
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 @endsection

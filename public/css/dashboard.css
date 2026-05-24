@@ -14,7 +14,6 @@
     margin-top: 60px;
     margin-bottom: 50px;
     background-color: var(--color-background);
-    min-width: 0;
 }
 
 @media (min-width: 768px) {
@@ -57,10 +56,6 @@
 @media (max-width: 767px) {
     .dashboard-page #content-wrapper {
         margin-left: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow-x: hidden; /* منع المحتوى الرئيسي كاملاً من إظهار سكرول عام للموقع */
-        padding: 10px !important;
     }
 
     .dashboard-page .dashboard-sidebar-toggler {
@@ -128,4 +123,104 @@
 .card-title,
 .card-text {
     color: var(--color-navbar-text);
+}
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+}
+.ekle {
+    background-color: #28a745 !important;
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-color: #28a745 !important;
+    color: var(--color-navbar-text) !important;
+    border-radius: 5px;
+    margin-left: 0 !important; /* إزالة الـ 50px الثابتة لتتوسط بالموبايل */
+}
+.detay, .düzenle, .sil-uni {
+    font-size: 16px !important;
+    border-radius: 5px;
+    margin: 4px !important; /* مساحة متناسقة ومريحة للمس باليد */
+    display: inline-block;
+    white-space: nowrap; /* تمنع انقسام نص الزر لسطرين */
+}
+.detayuni {
+    background-color: #E49BA6 !important;
+    border-color: #E49BA6 !important;
+    color: var(--color-navbar-text) !important;
+}
+
+.düzenle {
+    background-color: #FFCE56 !important;
+    border-color: #FFCE56 !important;
+    color: var(--color-navbar-text) !important;
+}
+
+.sil-uni {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: var(--color-navbar-text) !important;
+    margin-left: 0 !important; /* التخلص من الـ 18rem الكارثية للموبايل */
+}
+.btn-group-container {
+    display: flex;
+    flex-wrap: nowrap; /* للمحافظة على الأزرار بجانب بعضها بالشاشات المتوسطة والكبيرة */
+    justify-content: center;
+}
+@media (max-width: 576px) {
+    .btn-group-container {
+        flex-direction: column;
+        width: 100%;
+    }
+    .detay, .düzenle, .sil-uni {
+        width: 100%; /* تأخذ كامل العرض المتاح بالموبايل لتسهيل الضغط */
+        text-align: center;
+    }
+    .title {
+        font-size: 28px; /* تصغير حجم العنوان ليناسب شاشة الهاتف */
+    }
+}
+
+
+.userbtn1{
+    background-color: #FFCE56 !important;
+    font-size: 20px;
+    border-color: #FFCE56 !important;
+    color: var(--color-navbar-text) !important;
+}
+.userbtn2{
+    background-color: #6c757d !important;
+    font-size: 20px;
+    border-color: #6c757d !important;
+    color: var(--color-navbar-text) !important;
+    border-radius: 5px;
+}
+.güncel{
+    background-color: #36A2EB !important;
+    font-size: 20px;
+    height: 43px;
+    margin-top: -6px;
+    border-color: #36A2EB !important;
+    color: var(--color-navbar-text) !important;
+}
+.güncel1{
+    background-color: #36A2EB !important;
+    font-size: 20px;
+    height: 43px;
+    border-color: #36A2EB !important;
+    color: var(--color-navbar-text) !important;
+}
+.iptal{
+    background-color: #dc3545 !important;
+    font-size: 20px;
+    border-color: #dc3545 !important;
+    color: var(--color-navbar-text) !important;
+}
+.kaydet{
+    background-color: #9966FF !important;
+    font-size: 20px;
+    border-color: #9966FF !important;
+    color: var(--color-navbar-text) !important;
 }

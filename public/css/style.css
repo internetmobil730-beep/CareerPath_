@@ -11,13 +11,12 @@
 *{
     color: var(--color-text);
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-    box-sizing: border-box;
 }
 body {
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     margin: 0;
     padding: 0;
 }
@@ -129,7 +128,6 @@ footer {
 
 .title {
     color: var(--color-title);
-    font-size: 2rem;
 }
 
 /* home page */
@@ -198,84 +196,4 @@ footer {
 }
 .içerik{
     color: var(--color-text) !important;
-}
-.ekle{
-    background-color: #28a745 !important;
-    font-size: 20px;
-    margin-bottom: 15px;
-    border-color: #28a745 !important;
-    color: var(--color-navbar-text) !important;
-    border-radius: 5px;
-    margin-left: 50px;
-}
-.detay{
-    background-color: #E49BA6 !important;
-    font-size: 20px;
-    border-color: #E49BA6 !important;
-    color: var(--color-navbar-text) !important;
-    border-radius: 5px;
-    margin-bottom: -3rem;
-}
-.detayuni{
-    background-color: #E49BA6 !important;
-    font-size: 20px;
-    border-color: #E49BA6 !important;
-    color: var(--color-navbar-text) !important;
-    border-radius: 5px;
-}
-.düzenle{
-    background-color: #FFCE56 !important;
-    font-size: 20px;
-    border-color: #FFCE56 !important;
-    color: var(--color-navbar-text) !important;
-    border-radius: 5px;
-    margin-bottom: -3rem;
-}
-.sil-uni{
-    background-color: #6c757d !important;
-    font-size: 16px;
-    border-color: #6c757d !important;
-    color: var(--color-navbar-text) !important;
-    border-radius: 5px;
-    margin: 0 !important;
-}
-.userbtn1{
-    background-color: #FFCE56 !important;
-    font-size: 20px;
-    border-color: #FFCE56 !important;
-    color: var(--color-navbar-text) !important;
-}
-.userbtn2{
-    background-color: #6c757d !important;
-    font-size: 20px;
-    border-color: #6c757d !important;
-    color: var(--color-navbar-text) !important;
-    border-radius: 5px;
-}
-.güncel{
-    background-color: #36A2EB !important;
-    font-size: 20px;
-    height: 43px;
-    margin-top: -6px;
-    border-color: #36A2EB !important;
-    color: var(--color-navbar-text) !important;
-}
-.güncel1{
-    background-color: #36A2EB !important;
-    font-size: 20px;
-    height: 43px;
-    border-color: #36A2EB !important;
-    color: var(--color-navbar-text) !important;
-}
-.iptal{
-    background-color: #dc3545 !important;
-    font-size: 20px;
-    border-color: #dc3545 !important;
-    color: var(--color-navbar-text) !important;
-}
-.kaydet{
-    background-color: #9966FF !important;
-    font-size: 20px;
-    border-color: #9966FF !important;
-    color: var(--color-navbar-text) !important;
 }
