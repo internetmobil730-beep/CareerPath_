@@ -1,53 +1,57 @@
-@section('title', 'TÜM KULANICILAR')
+@section('title', 'TÜM KULLANICILAR')
 
 @extends('dashboard.layout')
 
 @section('content')
-<div class="container mt-2">
-    <div class="card shadow-lg">
-        <div class="card-body p-5">
-            <h3 class="text-xl title">Sistemdeki Kullanıcılar</h3>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered text-center table-striped">
-                <thead class="min-w-full">
-                    <tr>
-                        <th class="thead px-5 py-3 uppercase">ID</th>
-                        <th class="thead px-5 py-3 uppercase">İsim</th>
-                        <th class="thead px-5 py-3 uppercase">E-posta</th>
-                        <th class="thead px-5 py-3 uppercase">Kayıt Tarihi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($users as $user)
-                    <tr>
-                        <td class="içerik">{{ $user->id }}</td>
-                        <td class="içerik">{{ $user->name }}</td>
-                        <td class="içerik">{{ $user->email }}</td>
-                        <td class="içerik">{{ $user->created_at->format('Y-m-d') }}</td>
-                        <td>
-                    <a href="{{ route('dashboard.users.edit', $user->id) }}" class="btn btn-sm userbtn1">
-                        Düzenle
-                    </a>
-                    
-                    <form action="{{ route('dashboard.users.destroy', $user->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm userbtn2" onclick="return confirm('Emin misiniz?')">
-                            Sil
-                        </button>
-                    </form>
-                </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" class="text-center">Henüz kullanıcı bulunamad</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+<div class="box container-fluid mt-2">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow-lg w-full max-w-full overflow-hidden">
+                <div class="card-body p-4">
+                    <h3 class="text-xl title p-2">Sistemdeki Kullanıcılar</h3>
+                </div>
+                
+                <div class="table-responsive shadow">
+                    <table class="table table-sm table-bordered text-center table-striped min-w-full w-100 custom-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%;" class="thead p-2 uppercase">ID</th>
+                                <th style="width: 22%;" class="thead p-2 uppercase">İsim</th>
+                                <th style="width: 25%;" class="thead p-2 uppercase">E-posta</th>
+                                <th style="width: 20%;" class="thead p-2 uppercase">Kayıt Tarihi</th>
+                                <th style="width: 25%;" class="thead p-2 uppercase">İşlemler</th> </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($users as $user)
+                            <tr>
+                                <td class="p-2 align-middle font-weight-bold içerik">{{ $user->id }}</td>
+                                <td class="p-2 align-middle içerik">{{ $user->name }}</td>
+                                <td class="p-2 align-middle içerik text-lowercase">{{ $user->email }}</td>
+                                <td class="p-2 align-middle içerik text-secondary">{{ $user->created_at->format('Y-m-d') }}</td>
+                                <td class="p-2 align-middle">
+                                    <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group">
+                                        <a href="{{ route('dashboard.users.edit', $user->id) }}" class="btn btn-sm userbtn1 px-3 py-1-5">
+                                            Düzenle
+                                        </a>
+                                        
+                                        <form action="{{ route('dashboard.users.destroy', $user->id) }}" method="POST" class="d-inline m-0">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm userbtn2 px-3 py-1-5" onclick="return confirm('Emin misiniz?')">
+                                                Sil
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="text-center p-4">Henüz kullanıcı bulunamadı.</td> </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div> </div>
     </div>
-</div>
 </div>
 @endsection

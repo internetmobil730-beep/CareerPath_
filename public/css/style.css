@@ -1,27 +1,22 @@
-:root {
-    --color-background: rgb(246, 246, 246);
-    --color-text: #1e293b;
-    --color-navbar-bg: rgb(59, 56, 56);
-    --color-navbar-text: #ffffff;
-    --color-navbar-hover: rgb(139, 138, 138);
-    --color-title: teal;
-    --color-button: gold;
-    --color-accent: rgb(255, 168, 131);
-}
-*{
-    color: var(--color-text);
+* {
+    box-sizing: border-box;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
+
 body {
     background-color: var(--color-background);
     color: var(--color-text);
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-    font-size: 20px;
+    font-size: 16px; /* تم تصغير الخط الافتراضي من 20px لـ 16px ليتناسب مع كل الشاشات ويسع الجدول */
     margin: 0;
     padding: 0;
 }
 
-/* navbar */
+/* تخصيص نصوص الألوان العامة */
+p, span, div, td, th {
+    color: inherit; /* يعتمد على العنصر الأب بدلاً من فرض لون ثابت يسبب التداخل */
+}
+
+/* ----------- القائمة العلوية (Navbar) ----------- */
 .navbar {
     background-color: var(--color-navbar-bg);
     position: fixed;
@@ -33,14 +28,15 @@ body {
 }
 
 .navbar a {
-    color: var(--color-navbar-text);
+    color: var(--color-navbar-text) !important;
     text-decoration: none;
     display: block;
     margin-right: 10px;
     border-radius: 5px;
     transition: 0.3s;
 }
-.nav-item{
+
+.nav-item {
     padding: 5px;
 }
 
@@ -54,28 +50,24 @@ body {
     color: var(--color-navbar-text) !important;
 }
 
-.navbar-brand:hover {
-    color: var(--color-navbar-text);
-}
-
 @media (max-width: 767px) {
     .navbar-collapse {
-        background-color: var(--color-navbar-bg); /* نفس لون النافبار */
-        margin-left: -12px; /* لإلغاء فراغات الحاوية */
+        background-color: var(--color-navbar-bg);
+        margin-left: -12px;
         margin-right: -12px;
         padding: 5px;
     }
     .nav-link {
-        width: 100%; /* جعل الزر طويلاً بعرض الشاشة */
+        width: 100%;
         text-align: center;
-        padding: 15px !important;
+        padding: 12px !important;
         border-bottom: 1px solid rgb(139, 138, 138);
-        margin: 0 !important; /* إلغاء أي هوامش جانبية */
+        margin: 0 !important;
     }
     .nav-item { width: 100%; }
 }
 
-/* footer */
+/* ----------- الفوتر (Footer) ----------- */
 footer {
     background: var(--color-navbar-bg);
     color: var(--color-navbar-text);
@@ -86,114 +78,92 @@ footer {
     width: 100%;
     height: 65px;
     z-index: 100;
-    line-height: 50px;
+    line-height: 65px; /* متناسق مع الطول تماماً */
 }
 
 @media (max-width: 767px) {
     footer {
+        position: relative; /* لمنع حجب الفوتر المحتوى الأسفل في الموبايل */
         width: 100%;
         height: auto;
-        padding: 10px 0;
+        padding: 15px 0;
         line-height: normal;
+        margin-top: 40px;
     }
 }
 
-/* Buttons */
-.btn-primary {
-    background-color: var(--color-button) !important;
-    border-color: var(--color-button) !important;
-}
-
-/* الداشبود: تنسيق عام */
-.dashboard-sidebar-toggler {
-    display: none !important;
-}
-
-/* ----------- الكروت (التعديل المهم) ----------- */
-
-/* حاوية كاملة للداشبورد داخل المحتوى */
-
-/* صندوق الكروت – يجعل الكروت وسط الشاشة */
+/* ----------- الكروت (Card System) ----------- */
 .card-box {
-    max-width: 800px; /* ← هون نتحكم بعرض الكروت */
-    width: 90%; /* responsive */
-    margin: 0 auto; /* ← توسيط كامل */
+    max-width: 800px;
+    width: 100%; /* تعديل من 90% لمنع الهوامش الجانبية القاسية بالموبايل */
+    margin: 0 auto;
+    padding: 0 10px;
 }
 
-/* الكروت نفسها */
 .card {
     border-color: var(--color-accent) !important;
     border-radius: 10px;
+    background-color: #ffffff;
 }
 
 .title {
-    color: var(--color-title);
+    color: var(--color-title) !important;
 }
 
-/* home page */
-
-.home-hero {
-    text-align: center;
-    padding: 80px 0;
-}
-
-.lead {
-    font-size: 25px;
-    margin-bottom: 20px;
-}
-
+/* ----------- الأزرار العامة للموقع ----------- */
 .btn {
-    font-size: 20px;
-    margin-bottom: 15px;
+    font-size: 16px; /* ضبط متوازن للأزرار بدلاً من 20px المسببة للتضخم */
+    padding: 8px 16px;
     background-color: var(--color-button) !important;
     border-color: var(--color-button) !important;
     color: var(--color-navbar-text) !important;
     border-radius: 5px;
+    transition: 0.2s ease-in-out;
 }
 
 .btn2 {
-    font-size: 20px;
-    height: 50px;
+    font-size: 16px;
+    height: 45px;
     color: var(--color-navbar-text) !important;
     background-color: var(--color-accent) !important;
     border-color: var(--color-accent) !important;
     border-radius: 5px;
 }
 
-.quiz-title {
-    margin-top: 75px;
+/* الهوم بيج وصفحات التقييمات */
+.home-hero {
+    text-align: center;
+    padding: 60px 0;
 }
 
-.quiz-btn {
-    margin-bottom: 80px;
+.lead {
+    font-size: 20px;
+    margin-bottom: 20px;
 }
 
-/* login boxes */
+.quiz-title { margin-top: 75px; }
+.quiz-btn { margin-bottom: 80px; }
+
+/* عناصر الصناديق المتجاوبة */
 .box {
-    margin-top: 120px;
-    margin-bottom: 37px;
+    margin-top: 100px;
+    margin-bottom: 30px;
 }
 
 .box2 {
-    margin-top: 96px;
+    margin-top: 80px;
     margin-bottom: 10px;
 }
 
-/* university_details sayfasi */
-.badge{
-    background: #628141;
-}
+/* تفاصيل الجامعات */
+.badge { background: #628141; }
+.uni { margin-top: 3rem; }
+.uni2 { margin-top: 4rem; }
 
-.uni{
-    margin-top: 4rem;
-}
-.uni2{
-    margin-top: 5rem;
-}
-
-.thead{
+/* ألوان عناصر الجداول */
+.thead {
     color: var(--color-navbar-hover) !important;
 }
-.içerik{
+.içerik {
     color: var(--color-text) !important;
 }
