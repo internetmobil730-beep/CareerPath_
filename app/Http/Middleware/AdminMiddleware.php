@@ -10,10 +10,12 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->email === 'internetmobil730@gmail.com') {
+        // التحقق الصارم: يجب أن يكون مسجلاً، وإما إيميله هو إيميلك أو يمتلك صلاحية careerpath
+        if (auth()->check() && (auth()->user()->email === 'internetmobil730@gmail.com' || auth()->user()->hasRole('careerpath'))) {
             return $next($request);
         }
 
+        // إذا كان طالباً عادياً يحاول التسلل، يتم طرده فوراً بـ 403
         abort(403, 'Sistem yöneticisi yetkileriniz yok');
     }
 }
