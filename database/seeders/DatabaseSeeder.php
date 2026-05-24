@@ -29,11 +29,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
         SkillCategorySeeder::class,
+        SkillSeeder::class,
         UniversitySeeder::class,
         MajorSeeder::class,
         MajorUniversitySeeder::class,
         MajorSkillSeeder::class,
-        SkillSeeder::class,
         ]);
     }
 }
