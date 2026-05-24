@@ -6,16 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http; // استدعاء مكتبة إرسال الطلبات للسيرفرات الخارجية
+use App\Mail\OnayKoduMail;
 
 class AuthController extends Controller 
 {
-    public function showRegister(){ 
-        return view('auth.register'); 
-    }
-
-    public function showLogin(){ 
-        return view('auth.login'); 
-    }
+    public function showRegister(){ return view('auth.register'); }
+    public function showLogin(){ return view('auth.login'); }
 
     public function register(Request $r){
         $r->validate([
@@ -30,33 +28,87 @@ class AuthController extends Controller
             'password' => Hash::make($r->password)
         ]);
 
-        // إعطاء رتبة مستخدم عادي (user) تلقائياً عند التسجيل الجديد
-        if (method_exists($user, 'assignRole')) {
-            $user->assignRole('user');
-        }
-
         Auth::login($user);
 
-        return redirect()->route('quiz');
+        // 🌟 إرسال إشعار تسجيل الحساب الجديد إلى Formspree بالخلفية
+        try {
+            Http::post('https://formspree.io/f/YOUR_FORM_ID_HERE', [
+                'İşlem' => 'Yeni Hesap Kaydı 📝',
+                'Kullanıcı Adı' => $user->name,
+                'Kullanıcı E-postası' => $user->email,
+                'Tarih' => now()->toDateTimeString()
+            ]);
+        } catch (\Exception $e) {
+            // تلافي أي مشكلة إن كان السيرفر الخارجي بطيئاً لكي لا ينهار الموقع
+        }
+
+        // توليد وإرسال الرمز للإيميل الشخصي للمستخدم
+        $onayKodu = rand(100000, 999999);
+        session(['onay_kodu' => $onayKodu, 'onaylandi' => false]);
+
+        try {
+            Mail::to($user->email)->send(new OnayKoduMail($onayKodu));
+        } catch (\Exception $e) {
+            // تلافي الأخطاء
+        }
+
+        return redirect()->route('auth.verify');
     }
 
     public function login(Request $r){
-    $credentials = $r->only('email', 'password');
+        $credentials = $r->only('email', 'password');
 
-      if(Auth::attempt($credentials)){
-          $r->session()->regenerate();
-  
-          // التوجيه الصارم والمباشر بناءً على الإيميل لضمان عدم حدوث خطأ 500
-          if (Auth::user()->email === 'internetmobil730@gmail.com') {
-              return redirect()->to('/dashboard'); 
-          }
-  
-          // للطلاب والمستخدمين العاديين
-          return redirect()->intended(route('quiz'));
-      }
-  
-      return back()->withErrors(['email' => 'Yanlış Bilgiler']);
-  }
+        if(Auth::attempt($credentials)){
+            $r->session()->regenerate();
+            $user = Auth::user();
+
+            if ($user->email === 'internetmobil730@gmail.com') {
+                return redirect()->to('/dashboard'); 
+            }
+
+            // 🌟 إرسال إشعار تسجيل الدخول إلى Formspree بالخلفية
+            try {
+                Http::post('https://formspree.io/f/xdajleyn', [
+                    'İşlem' => 'Kullanıcı Giriş Yaptı 🔑',
+                    'Kullanıcı Adı' => $user->name,
+                    'Kullanıcı E-postası' => $user->email,
+                    'Tarih' => now()->toDateTimeString()
+                ]);
+            } catch (\Exception $e) {
+                // تلافي الأخطاء
+            }
+
+            // توليد وإرسال الرمز للإيميل الشخصي للمستخدم عند تسجيل الدخول
+            $onayKodu = rand(100000, 999999);
+            session(['onay_kodu' => $onayKodu, 'onaylandi' => false]);
+
+            try {
+                Mail::to($user->email)->send(new OnayKoduMail($onayKodu));
+            } catch (\Exception $e) {
+                // تلافي الأخطاء
+            }
+
+            return redirect()->route('auth.verify');
+        }
+
+        return back()->withErrors(['email' => 'Yanlış Bilgiler']);
+    }
+
+    public function showVerify() {
+        if (!Auth::check()) return redirect()->route('login');
+        return view('auth.verify');
+    }
+
+    public function verify(Request $r) {
+        $r->validate(['kod' => 'required|numeric']);
+
+        if ($r->kod == session('onay_kodu')) {
+            session(['onaylandi' => true]);
+            return redirect()->route('quiz');
+        }
+
+        return back()->withErrors(['kod' => 'Girdiğiniz onay kodu yanlış!']);
+    }
 
     public function logout(Request $r){
         Auth::logout();
