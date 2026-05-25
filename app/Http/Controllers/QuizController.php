@@ -18,28 +18,23 @@ class QuizController extends Controller
     public function submit(Request $r)
     {
         $r->validate(['skills' => 'required|array|min:1']);
-        
         $user = Auth::user();
         
-        // 1. حفظ مهارات المستخدم في جدول الربط الخاص به (إذا كان مسجلاً)
-        if ($user) {
-            $user->skills()->sync($r->skills);
-        }
-
-        // 2. جلب التخصصات وترتيبها حسب الأفضلية (الأكثر مطابقة للمهارات المحددة)
-        $selectedSkills = $r->skills;
-
-        $matchingMajors = Major::where('education_language', 'TR') // جلب نسخة واحدة من التخصص لمنع تكرار الكروت في الـ Blade
-            ->whereHas('skills', function($query) use ($selectedSkills) {
-                $query->whereIn('skills.id', $selectedSkills);
-            })
-            ->withCount(['skills' => function($query) use ($selectedSkills) {
-                $query->whereIn('skills.id', $selectedSkills);
-            }])
-            ->orderBy('skills_count', 'desc')
-            ->get();
-
-        // 3. التوجيه لصفحة النتائج مع التخصصات المرتبة
+        $user->skills()->sync($r->skills);
+    
+        // جلب التخصصات المرتبة حسب الأولوية الأعلى
+        $matchingMajors = Major::whereHas('skills', function($query) use ($r) {
+            $query->whereIn('skills.id', $r->skills);
+        })
+        ->withCount(['skills' => function($query) use ($r) {
+            $query->whereIn('skills.id', $r->skills);
+        }])
+        ->orderBy('skills_count', 'desc')
+        ->get();
+    
+        // السطر السحري: تصفية الأسماء المتكررة مع الحفاظ التام على الترتيب الذكي التنازلي القادم من الداتابيز
+        $matchingMajors = $matchingMajors->unique('name');
+    
         return view('quiz_results', compact('matchingMajors'));
     }
 }
