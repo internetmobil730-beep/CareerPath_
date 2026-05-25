@@ -26,5 +26,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 ENV PORT=80
 
-# تشغيل الجداول تلقائياً ثم إطلاق السيرفر
-CMD ["sh", "-c", "php artisan migrate --force && php artisan db:seed --force && apache2-foreground"]
+# ابحثي عن السطر الأخير في ملف الـ Dockerfile واجعليه ينفذ الأوامر معاً بالتوالي:
+CMD php artisan migrate:fresh --seed && php artisan serve --host=0.0.0.0 --port=80

@@ -15,8 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. إنشاء الأدوار بشكل محمي يمنع التكرار والانهيار أونلاين
-        $adminRole = Role::firstOrCreate(['name' => 'careerpath', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
+        // استبدلي السطر القديم المنهار بهذا السطر الآمن:
+        \Spatie\Permission\Models\Role::firstOrCreate([
+            'name' => 'careerpath', 
+            'guard_name' => 'web'
+        ]);
 
         // 2. إنشاء حساب الأدمن بشكل متوافق تماماً وبدون استخدام عمود الـ role المفقود
         $adminEmail = 'internetmobil730@gmail.com';
