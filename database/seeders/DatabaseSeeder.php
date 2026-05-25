@@ -14,26 +14,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \Spatie\Permission\Models\Role::create(['name' => 'careerpath']);
-        \Spatie\Permission\Models\Role::create(['name' => 'user']);
+        // 1. إنشاء الأدوار بشكل محمي يمنع التكرار والانهيار أونلاين
+        $adminRole = Role::firstOrCreate(['name' => 'careerpath', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
 
-        // 1. Varsayılan bir kullanıcı oluşturun (isteğe bağlı).
-        $admin = \App\Models\User::create([
+        // 2. إنشاء حساب الأدمن بشكل متوافق تماماً وبدون استخدام عمود الـ role المفقود
+        $adminEmail = 'internetmobil730@gmail.com';
+        $admin = User::where('email', $adminEmail)->first();
 
-            'name' => 'careerpath',
-            'email' => 'internetmobil730@gmail.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('internet20mobil26'),
-        ]);
-        $admin->assignRole('careerpath');
+        if (!$admin) {
+            $admin = User::create([
+                'name' => 'careerpath',
+                'email' => $adminEmail,
+                'email_verified_at' => now(),
+                'password' => bcrypt('internet20mobil26'),
+            ]);
+        }
 
+        // ربط الصلاحية بالأدمن بأمان
+        if (!$admin->hasRole('careerpath')) {
+            $admin->assignRole($adminRole);
+        }
+
+        // 3. استدعاء باقي جداول الأسئلة والتخصصات
         $this->call([
-        SkillCategorySeeder::class,
-        SkillSeeder::class,
-        UniversitySeeder::class,
-        MajorSeeder::class,
-        MajorUniversitySeeder::class,
-        MajorSkillSeeder::class,
+            SkillCategorySeeder::class,
+            SkillSeeder::class,
+            UniversitySeeder::class,
+            MajorSeeder::class,
+            MajorUniversitySeeder::class,
+            MajorSkillSeeder::class,
         ]);
     }
 }
