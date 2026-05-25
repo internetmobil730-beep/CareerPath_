@@ -27,4 +27,4 @@ EXPOSE 80
 ENV PORT=80
 
 # تشغيل الجداول تلقائياً ثم إطلاق السيرفر
-CMD php artisan migrate --force && apache2-foreground
+php artisan migrate --force && php artisan db:seed --force && apache2-foreground
