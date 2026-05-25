@@ -34,7 +34,6 @@ Route::middleware(['auth', 'block.admin'])->group(function () {
 });
 
 
-// 3. روابط لوحة تحكم الإدارة (الأدمن فقط حصرًا)
 // 3. روابط لوحة تحكم الإدارة (الأدمن الحقيقي فقط حصرًا ومحمي تماماً)
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -80,7 +79,7 @@ Route::get('/run-migrate-path', function() {
             $admin->assignRole($adminRole);
         }
 
-        // 5. استدعاء باقي الـ Seeders الخاصة بالأسئلة والتخصصات (دون تكرار الـ Roles والأدمن)
+        // 5. استدعاء الـ Seeders بالترتيب الصحيح والمثالي لقاعدة البيانات
         \Illuminate\Support\Facades\Artisan::call('db:seed', [
             '--class' => 'Database\\Seeders\\SkillCategorySeeder',
             '--force' => true
@@ -101,12 +100,14 @@ Route::get('/run-migrate-path', function() {
             '--class' => 'Database\\Seeders\\MajorUniversitySeeder',
             '--force' => true
         ]);
+        
+        // 🔥 هنا تم حقن السيرفر الجديد لبناء علاقات المهارات بالتخصصات 
         \Illuminate\Support\Facades\Artisan::call('db:seed', [
             '--class' => 'Database\\Seeders\\MajorSkillSeeder',
             '--force' => true
         ]);
 
-        return "Tebrikler! Bütün sistem, sorular, kategoriler ve orijinal Admin hesabı kusursuzca yüklendi! 🎉";
+        return "Tebrikler! Bütün sistem, sorular, kategoriler, beceri-bölüm eşleşmeleri ve orijinal Admin hesabı kusursuzca yüklendi! 🎉";
     } catch (\Exception $e) {
         return "Hata oluştu: " . $e->getMessage() . " | Satır: " . $e->getLine();
     }
