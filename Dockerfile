@@ -26,4 +26,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 ENV PORT=80
 
-CMD php artisan migrate:fresh --seed --force && exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+CMD php artisan migrate --force && exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
