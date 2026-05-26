@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Http; // استدعاء مكتبة إرسال الطلبات للسيرفرات الخارجية
+use Illuminate\Support\Facades\Http; 
 use App\Mail\OnayKoduMail;
 use Illuminate\Auth\Events\Registered;
 
@@ -33,7 +33,9 @@ class AuthController extends Controller
         // إطلاق حدث التسجيل لإرسال إيميل التحقق تلقائياً
         event(new Registered($user));
 
+        // 🌟 تثبيت وتجديد الجلسة أمنياً لحل خطأ 419 للأبد عند التوجيه التلقائي
         Auth::login($user);
+        $r->session()->regenerate(); 
 
         // 2. إرسال البيانات بشكل احتياطي لـ Formspree في الخلفية دون تعطيل الطالب
         try {
@@ -45,7 +47,7 @@ class AuthController extends Controller
             ]);
         } catch (\Throwable $e) { }
 
-        // 3. التوجه مباشرة وبسلام إلى صفحة الكويز (تم تعديل المسار ليتوافق مع الـ web.php)
+        // 3. التوجه مباشرة وبسلام إلى صفحة الكويز (لارافيل سيحوله لصفحة التنبيه تلقائياً وجلسته آمنة)
         return redirect()->route('quiz');
     }
 
@@ -56,7 +58,6 @@ class AuthController extends Controller
             $r->session()->regenerate();
             $user = Auth::user();
 
-            // إذا كان آدمن يذهب للوحة التحكم فوراً
             if ($user->email === 'internetmobil730@gmail.com') {
                 return redirect()->to('/dashboard'); 
             }
@@ -70,7 +71,6 @@ class AuthController extends Controller
                 ]);
             } catch (\Throwable $e) { }
 
-            // الطالب العادي يذهب للكويز فوراً دون الحاجة لكود إيميل معطل
             return redirect()->route('quiz');
         }
 
@@ -100,27 +100,26 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
-
-
-
-
-  
-  // الدالة الجديدة: معالجة تفعيل الإيميل بشكل مرن بدون اشتراط تسجيل الدخول مسبقاً
-  public function verifyEmail(Request $request, $id){
-      // 1. التحقق من أن التوقيع الرقمي للرابط صحيح وغير منتهي
-      if (! $request->hasValidSignature()) {
-          abort(403, 'رابط التفعيل غير صالح أو منتهي الصلاحية.');
-      }
-      // 2. جلب المستخدم من الـ id الممرر في الرابط مباشرة
-      $user = User::findOrFail($id);
-      // 3. إذا لم يكن الإيميل مفعلاً من قبل، يتم تفعيله الآن
-      if (! $user->hasVerifiedEmail()) {
-          $user->markEmailAsVerified();
-      }
-      // 4. تسجيل دخول المستخدم تلقائياً بعد التفعيل لسهولة الاستخدام
-      Auth::login($user);
-      // 5. توجيهه مباشرة إلى صفحة الكويز
-      return redirect()->route('quiz')->with('success', 'تم تفعيل حسابك بنجاح!');
-  }
-
+    // 🌟 الدالة المعدلة والمحمية تماماً ضد خطأ 419 عند الضغط على الإيميل
+    public function verifyEmail(Request $request, $id){
+        // 1. التحقق من أن التوقيع الرقمي للرابط صحيح وغير منتهي
+        if (! $request->hasValidSignature()) {
+            abort(403, 'رابط التفعيل غير صالح أو منتهي الصلاحية.');
+        }
+        
+        // 2. جلب المستخدم من الـ id الممرر في الرابط مباشرة
+        $user = User::findOrFail($id);
+        
+        // 3. إذا لم يكن الإيميل مفعلاً من قبل، يتم تفعيله الآن
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+        
+        // 4. تسجيل دخول المستخدم وتجديد جلسته فوراً لمنع الـ 419
+        Auth::login($user);
+        $request->session()->regenerate(); 
+        
+        // 5. توجيهه مباشرة إلى صفحة الكويز
+        return redirect()->route('quiz')->with('success', 'تم تفعيل حسابك بنجاح!');
+    }
 }
