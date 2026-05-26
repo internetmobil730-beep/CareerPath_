@@ -10,7 +10,7 @@ use App\Http\Controllers\MajorController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\SkillCategoryController;
 use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest; // هي مشان مسار معالجة ضغطة المستخدم على رابط التأكيد القادم في الإيميل
+use Illuminate\Foundation\Auth\EmailVerificationRequest; 
 
 // 1. الصفحات العامة (متاحة للجميع زوار وأعضاء)
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,7 +31,6 @@ Route::middleware(['auth', 'block.admin', 'verified'])->group(function () {
     Route::post('/quiz-results', [QuizController::class, 'submit'])->name('quiz_results.submit');
 });
 
-
 // 3. روابط لوحة تحكم الإدارة (الأدمن الحقيقي فقط حصرًا ومحمي تماماً)
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class, 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -44,40 +43,38 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class, 'verifie
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
-// 🌟 الكود النهائي المطور لحل تضارب الـ Seeders والصلاحيات أونلاين 🌟
+// 🌟 الكود النهائي المطور والمصحح بالترتيب البرمجي الآمن 🌟
 Route::get('/run-migrate-path', function() {
     try {
-        // 1. تنظيف كاش لارافيل وكاش المكتبات لضمان عدم حدوث تضارب
+        // 1. تنظيف كاش لارافيل لضمان عدم حدوث تضارب في قراءة الإعدادات القديمة
         \Illuminate\Support\Facades\Artisan::call('config:clear');
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         
-        // 2. تنظيف وبناء الجداول من الصفر
+        // 2. بناء الجداول أولاً من الصفر (يجب أن يتم هذا السطر قبل استدعاء أي موديول)
         \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
         
-        // 3. إنشاء الصلاحيات برمجياً بشكل محمي
+        // 3. مسح كاش المكتبات الخاصة بالصلاحيات بعد بناء الجداول مباشرة
+        if (isset(app()[\Spatie\Permission\PermissionRegistrar::class])) {
+            app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        }
+        
+        // 4. إنشاء الصلاحيات برمجياً داخل الجداول الجديدة التي تم بناؤها
         $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'careerpath']);
         \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'user']);
         
-        // 4. فحص وإنشاء حساب الأدمن بالصيغة الأصلية لمشروعكِ
+        // 5. إنشاء حساب الأدمن الخاص بكِ وتفعيله تلقائياً
         $adminEmail = 'internetmobil730@gmail.com';
-        $admin = \App\Models\User::where('email', $adminEmail)->first();
-        
-        if (!$admin) {
-            $admin = \App\Models\User::create([
-                'name' => 'careerpath',
-                'email' => $adminEmail,
-                'email_verified_at' => now(),
-                'password' => bcrypt('internet20mobil26'),
-            ]);
-        }
+        $admin = \App\Models\User::create([
+            'name' => 'careerpath',
+            'email' => $adminEmail,
+            'email_verified_at' => now(),
+            'password' => bcrypt('internet20mobil26'),
+        ]);
         
         // ربط الصلاحية بالأدمن بشكل آمن
-        if (!$admin->hasRole('careerpath')) {
-            $admin->assignRole($adminRole);
-        }
+        $admin->assignRole($adminRole);
 
-        // 5. استدعاء الـ Seeders بالترتيب الصحيح والمثالي لقاعدة البيانات
+        // 6. استدعاء الـ Seeders بالترتيب الصحيح والمثالي لقاعدة البيانات لمنع أخطاء العلاقات (Foreign Keys)
         \Illuminate\Support\Facades\Artisan::call('db:seed', [
             '--class' => 'Database\\Seeders\\SkillCategorySeeder',
             '--force' => true
@@ -98,8 +95,6 @@ Route::get('/run-migrate-path', function() {
             '--class' => 'Database\\Seeders\\MajorUniversitySeeder',
             '--force' => true
         ]);
-        
-        // 🔥 هنا تم حقن السيرفر الجديد لبناء علاقات المهارات بالتخصصات 
         \Illuminate\Support\Facades\Artisan::call('db:seed', [
             '--class' => 'Database\\Seeders\\MajorSkillSeeder',
             '--force' => true
@@ -116,19 +111,12 @@ Route::get('/healthz', function () {
     return response()->json(['status' => 'ok']); 
 });
 
-
-
-
-
-// 1. مسار عرض صفحة التنبيه (نتركه كما هو، يحتاج تسجيل دخول لكي يراه المستخدم بعد التسجيل مباشرة)
-// مسار عرض صفحة التنبيه للمستخدم بعد التسجيل مباشرة لكي يذهب ويفحص بريده
-// مسار عرض صفحة التنبيه للمستخدم لتأكيد بريده الإلكتروني (استدعاء ملف العرض)
+// 1. مسار عرض صفحة التنبيه لتأكيد البريد الإلكتروني
 Route::get('/email/verify', function () {
     return view('auth.verify-notice');
 })->middleware('auth')->name('verification.notice');
 
-// 2. المسار الجديد والمعدل: يوجه الطلب للـ Controller ونحذف منه الـ 'auth' ليعمل من أي متصفح
-// مسار معالجة ضغطة المستخدم على الزر القادم في الإيميل (مربوط بالـ Controller وبدون حماية auth)
+// 2. مسار معالجة ضغطة المستخدم على الزر القادم في الإيميل (بدون حماية auth ليعمل بكفاءة)
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
     ->middleware(['signed'])
     ->name('verification.verify');
