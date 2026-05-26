@@ -27,4 +27,4 @@ EXPOSE 80
 ENV PORT=80
 
 # ابحثي عن السطر الأخير في ملف الـ Dockerfile واجعليه ينفذ الأوامر معاً بالتوالي:
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
+RUN php artisan migrate:fresh --seed --force
