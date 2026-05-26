@@ -26,5 +26,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 ENV PORT=80
 
-# ابحثي عن السطر الأخير في ملف الـ Dockerfile واجعليه ينفذ الأوامر معاً بالتوالي:
 RUN php artisan migrate:fresh --seed --force
