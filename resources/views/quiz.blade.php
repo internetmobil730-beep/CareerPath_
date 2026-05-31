@@ -9,9 +9,9 @@
                 
                 <form action="{{ route('global.search') }}" method="GET" class="flex-grow-1 me-3">
                     <div class="input-group">
-                        <input class="form-control border-0 bg-transparent" type="search" name="query" placeholder="ابحث عن تخصص، جامعة، أو اختبار..." value="{{ request('query') }}" required>
+                        <input class="form-control border-0 bg-transparent" type="search" name="query" placeholder="Quiz, Bölüm veyaÜniversite arayın..." value="{{ request('query') }}" required>
                         <button class="btn btn-primary rounded-pill px-4" type="submit">
-                            <i class="fa fa-search d-md-none"></i> <span class="d-none d-md-inline">بحث</span> </button>
+                            <i class="fa fa-search d-md-none"></i> <span class="d-none d-md-inline">araştırma</span> </button>
                     </div>
                 </form>
 

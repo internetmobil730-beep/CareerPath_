@@ -1,5 +1,4 @@
 <div class="offcanvas-header d-md-none">
-    <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">CareerPath</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
 

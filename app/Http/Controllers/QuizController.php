@@ -11,7 +11,7 @@ class QuizController extends Controller
 {
     public function index()
     {
-        $skills = Skill::all();
+        $skills = Skill::all(); // ⚠️ هنا المشكلة إذا كانت الداتابيز غير مهيأة
         return view('quiz', compact('skills'));
     }
 

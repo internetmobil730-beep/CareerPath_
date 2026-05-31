@@ -30,10 +30,13 @@ class AuthController extends Controller
             'password' => Hash::make($r->password)
         ]);
 
+        //  السطر المعدل: إعطاء رتبة user للمستخدم الجديد فوراً لتخطي حماية الـ Middleware ومنع خطأ 500
+        $user->assignRole('user'); 
+
         // إطلاق حدث التسجيل لإرسال إيميل التحقق تلقائياً
         //event(new Registered($user));
 
-        // 🌟 تثبيت وتجديد الجلسة أمنياً لحل خطأ 419 للأبد عند التوجيه التلقائي
+        //  تثبيت وتجديد الجلسة أمنياً لحل خطأ 419 للأبد عند التوجيه التلقائي
         Auth::login($user);
         $r->session()->regenerate(); 
 
@@ -100,7 +103,7 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
-    // 🌟 الدالة المعدلة والمحمية تماماً ضد خطأ 419 عند الضغط على الإيميل
+    //  الدالة المعدلة والمحمية تماماً ضد خطأ 419 عند الضغط على الإيميل
     public function verifyEmail(Request $request, $id, $hash){
         // 1. التحقق من أن التوقيع الرقمي للرابط صحيح وغير منتهي
         if (! $request->hasValidSignature()) {
