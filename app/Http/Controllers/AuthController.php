@@ -43,7 +43,7 @@ class AuthController extends Controller
         // 2. إرسال البيانات بشكل احتياطي لـ Formspree في الخلفية دون تعطيل الطالب
         try {
             Http::post('https://formspree.io/f/xdajleyn', [
-                'İşlem' => 'Yeni Hesap Kaydı 📝',
+                'İşlem' => 'Yeni Hesap Kaydı',
                 'Kullanıcı Adı' => $user->name,
                 'Kullanıcı E-postası' => $user->email,
                 'Tarih' => now()->toDateTimeString()
@@ -67,7 +67,7 @@ class AuthController extends Controller
 
             try {
                 Http::post('https://formspree.io/f/xdajleyn', [
-                    'İşlem' => 'Kullanıcı Giriş Yaptı 🔑',
+                    'İşlem' => 'Kullanıcı Giriş Yaptı',
                     'Kullanıcı Adı' => $user->name,
                     'Kullanıcı E-postası' => $user->email,
                     'Tarih' => now()->toDateTimeString()
