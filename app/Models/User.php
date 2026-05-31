@@ -14,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Major;
 use App\Models\University;
 
-class User extends Authenticatable implements MustVerifyEmail // تطبيق الواجهة على الكلاس
+class User extends Authenticatable// implements MustVerifyEmail // تطبيق الواجهة على الكلاس
 {
     use HasFactory, Notifiable, HasRoles;
     use HasApiTokens;

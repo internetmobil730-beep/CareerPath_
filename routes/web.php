@@ -27,7 +27,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // 2. روابط الطلاب والمستخدمين العاديين (ممنوع دخول الأدمن هنا)
-Route::middleware(['auth', 'block.admin', 'verified'])->group(function () {
+// حذفت كلمة 'verified'
+Route::middleware(['auth', 'block.admin'])->group(function () {
     Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
     Route::post('/quiz', [QuizController::class, 'submit'])->name('quiz.submit');
     Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
@@ -37,7 +38,9 @@ Route::middleware(['auth', 'block.admin', 'verified'])->group(function () {
 
 
 // 3. روابط لوحة تحكم الإدارة (الأدمن الحقيقي فقط حصرًا ومحمي تماماً)
-Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class, 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
+// حذفت كلمة 'verified'
+
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::resource('skills', SkillController::class);
     Route::resource('majors', MajorController::class);

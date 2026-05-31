@@ -31,7 +31,7 @@ class AuthController extends Controller
         ]);
 
         // إطلاق حدث التسجيل لإرسال إيميل التحقق تلقائياً
-        event(new Registered($user));
+        //event(new Registered($user));
 
         // 🌟 تثبيت وتجديد الجلسة أمنياً لحل خطأ 419 للأبد عند التوجيه التلقائي
         Auth::login($user);
