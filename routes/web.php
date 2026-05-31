@@ -12,6 +12,7 @@ use App\Http\Controllers\SkillCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest; // هي مشان مسار معالجة ضغطة المستخدم على رابط التأكيد القادم في الإيميل
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\SearchController;
 
 // 1. الصفحات العامة (متاحة للجميع زوار وأعضاء)
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -50,6 +51,8 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('universities/{university}/manage-majors', [UniversityController::class, 'manageMajors'])->name('universities.majors');
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
+
+Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
 
 // 🌟 الكود النهائي المطور لحل تضارب الـ Seeders والصلاحيات أونلاين 🌟
 Route::get('/run-migrate-path', function() {
