@@ -76,6 +76,184 @@ body {
     .nav-item { width: 100%; }
 }
 
+/* ايقونة المفضلة */
+.header_icons{
+    display: flex;
+    gap: 30px;
+}
+.header_icons .icon{
+    position: relative;
+    cursor: pointer;
+}
+.header_icons .icon i{
+    font-size: 25px;
+    color: var(--color-navbar-text);
+}
+.header_icons .icon .count{
+    position: absolute;
+    top: -9px;
+    right: -1px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background: var(--color-accent);
+    color: var(--color-navbar-text);
+    font-size: 11px;
+    border-radius: 100%;
+}
+ 
+
+
+
+
+/* الحاوية المشتركة للزرين داخل الكرت */
+.card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* تحافظ على زر التفاصيل في المنتصف تماماً */
+    position: relative;       /* تسمح لنا بالتحكم بموقع القلب بحرية */
+    width: 100%;
+}
+
+/* تعديل تنسيق زر القلب ليطير إلى أقصى اليمين */
+.btn-card-favorite {
+    position: absolute;       /* فصل حركته عن زر التفاصيل */
+    right: 15px;              /* دفعه إلى اليمين قبل حافة الكرت بقليل */
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.btn-card-favorite i {
+    font-size: 20px;
+    color: var(--color-accent);
+}
+/* .btn-card-favorite.active i {
+    color: var(--color-accent);
+} */
+.details-card {
+    position: relative; /* مهم جداً لكي يحسب الجافا سكريبت والـ CSS موقع القلب بناءً على حدود هذا الكرت */
+}
+.btn-card-favorite.cart-details-fav {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    margin: 0;
+    z-index: 10;
+}
+.btn-card-favorite.uni-cart {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin: 0;
+    z-index: 10;
+}
+
+
+/* تصميم القائمة الجانبية */
+.favorites-sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px; /* مخفية افتراضياً خارج الشاشة من اليمين */
+    bottom: 0;
+    z-index: 9999;
+    background: var(--color-background);
+    border-left: 1px solid var(--color-navbar-hover);
+    width: 350px;
+    padding: 25px;
+    transition: right 0.3s ease-in-out;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+/* الكلاس الذي سيتم إضافته بالجافا سكريبت لفتح القائمة */
+.favorites-sidebar.open {
+    right: 0;
+}
+
+/* رأس القائمة الجانبية وزر الإغلاق */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #d2d5d8;
+    padding-bottom: 15px;
+    margin-bottom: 5px;
+}
+.sidebar-header h3, .sidebar-header span{
+    font-size: 22px;
+    color: var(--color-accent);
+}
+.close-sidebar-btn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+
+/* محتوى القائمة والقوائم */
+.sidebar-title {
+    color: #1e293b;
+    font-weight: 600;
+    margin: 35px 0 20px 0;
+    font-size: 20px;
+}
+
+
+
+
+
+/*  تفعيل السكرول الذكي داخل حاويات القوائم في السايدبار */
+.sidebar-content {
+    overflow-y: auto;          /* إظهار السكرول العمودي تلقائياً فقط إذا تجاوزت الكروت المساحة */
+    padding: 0 10px 0 10px;
+    margin: 0;
+}
+
+
+.sidebar-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #d2d5d8;
+}
+.sidebar-content li {
+    padding: 10px 0;
+    color: #334155;
+    font-size: 14px;
+}
+.sidebar-content .empty-msg {
+    color: #94a3b8;
+    font-size: 13px;
+    border: none;
+}
+
+/* الخلفية المظلمة */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 9998;
+    display: none;
+}
+.sidebar-overlay.show {
+    display: block;
+}
+
+
 /* footer */
 footer {
     background: var(--color-navbar-bg);
@@ -279,3 +457,25 @@ footer {
     border-color: #9966FF !important;
     color: var(--color-navbar-text) !important;
 }
+
+
+
+
+
+
+
+/* تنسيقات إضافية لكروت السايدبار المصغرة */
+.mini-cart-title {
+    color: var(--color-title);
+    font-size: 24px;
+}
+.btn-warning {
+    background-color: #E49BA6 !important;
+    border-color: #E49BA6 !important;
+    margin-top: 12px;
+    font-size: 14px;
+    width: 56%;
+    padding: 4px 3px !important;   /* تقليل الحشو داخل الزر */
+    display: inline-block;
+}
+

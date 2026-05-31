@@ -11,9 +11,13 @@ use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\SkillCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest; // هي مشان مسار معالجة ضغطة المستخدم على رابط التأكيد القادم في الإيميل
+use App\Http\Controllers\FavoriteController;
 
 // 1. الصفحات العامة (متاحة للجميع زوار وأعضاء)
 Route::get('/', [HomeController::class, 'index'])->name('home');
+//  . مسار التبديل ومسار جلب البيانات للـ Sidebar.  روابط المفضلة والـ Sidebar الجديدة أضيفيها هنا 
+Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
+Route::get('/api/user/favorites', [FavoriteController::class, 'getFavorites']);
 
 // روابط الحسابات وتسجيل الدخول
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
@@ -130,5 +134,6 @@ Route::get('/email/verify', function () {
 // 2. المسار الجديد والمعدل: يوجه الطلب للـ Controller ونحذف منه الـ 'auth' ليعمل من أي متصفح
 // مسار معالجة ضغطة المستخدم على الزر القادم في الإيميل (مربوط بالـ Controller وبدون حماية auth)
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
-    ->middleware(['signed'])
+
     ->name('verification.verify');
+

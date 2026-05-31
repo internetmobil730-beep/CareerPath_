@@ -3,9 +3,24 @@
 
 @section('content')
 <div class="container uni2">
-    <div class="card shadow-lg  d-flex flex-column ">
+    <div class="card details-card shadow-lg  d-flex flex-column ">
         <div class="card-header p-5">
             <h2 class="title">{{ $university->name }}</h2>
+            @auth
+                @if(auth()->user()->favoriteUniversities->contains($university->id))
+                    <button class="btn-card-favorite cart-details-fav active" data-id="{{ $university->id }}" data-type="university">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                @else
+                    <button class="btn-card-favorite cart-details-fav" data-id="{{ $university->id }}" data-type="university">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                @endif
+            @else
+                <button class="btn-card-favorite cart-details-fav" data-id="{{ $university->id }}" data-type="university">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            @endauth
         </div>
         <div class="card-body p-3">
             <h3 >Hakkında:</h3>

@@ -10,6 +10,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+// استدعاء الموديلات المطلوبة للعلاقات لضمان عدم حدوث خطأ
+use App\Models\Major;
+use App\Models\University;
 
 class User extends Authenticatable implements MustVerifyEmail // تطبيق الواجهة على الكلاس
 {
@@ -50,6 +53,19 @@ class User extends Authenticatable implements MustVerifyEmail // تطبيق ال
     {
         return $this->belongsToMany(Skill::class, 'user_skills');
     }
+
+    // 🌟 أضيفي هذه الدالة المفقودة هنا لكي يراها كود الـ Blade
+public function favoriteMajors()
+{
+    return $this->belongsToMany(Major::class, 'favorites', 'user_id', 'major_id')->withTimestamps();
+}
+    // 🌟 إضافة دالة الجامعات المفضلة لربط كروت الجامعات بالجدول الصحيح 'favorites'
+public function favoriteUniversities()
+    {
+        return $this->belongsToMany(University::class, 'favorites', 'user_id', 'university_id')->withTimestamps();
+    }
+
+
 
     public function isAdmin(): bool
     {

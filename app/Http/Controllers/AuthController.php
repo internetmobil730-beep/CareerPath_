@@ -101,7 +101,7 @@ class AuthController extends Controller
     }
 
     // 🌟 الدالة المعدلة والمحمية تماماً ضد خطأ 419 عند الضغط على الإيميل
-    public function verifyEmail(Request $request, $id){
+    public function verifyEmail(Request $request, $id, $hash){
         // 1. التحقق من أن التوقيع الرقمي للرابط صحيح وغير منتهي
         if (! $request->hasValidSignature()) {
             abort(403, 'رابط التفعيل غير صالح أو منتهي الصلاحية.');
