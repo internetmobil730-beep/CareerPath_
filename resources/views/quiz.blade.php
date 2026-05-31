@@ -2,7 +2,7 @@
 @section('title','Becerilerin Testi')
 @section('content')
 <div class="container">
-        <div class="row justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center mt-4">
             <div class="col-12 col-md-8 col-lg-6">
                 <div class="d-flex align-items-center justify-content-center p-2 rounded shadow-sm">
 
@@ -11,8 +11,8 @@
                             <input class="form-control" type="search" name="query"
                                 placeholder="Quiz, Bölüm veyaÜniversite arayın..." value="{{ request('query') }}"
                                 required>
-                            <button type="submit" class="btn search-btn mt-4">
-                                <i class="fa fa-search d-md-none"></i> <span class="d-none d-md-inline">araştırma</span>
+                            <button type="submit" class="btn mt-4">
+                                <i class="fa fa-search d-md-none"></i> <span class="search-btn d-none d-md-inline">araştırma</span>
                             </button>
                         </div>
                     </form>

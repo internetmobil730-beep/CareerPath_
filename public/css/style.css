@@ -89,6 +89,10 @@ body {
     font-size: 25px;
     color: var(--color-navbar-text);
 }
+.count{
+    background: var(--color-accent);
+    color: var(--color-navbar-text);
+}
 .header_icons .icon .count{
     position: absolute;
     top: -9px;
@@ -473,8 +477,11 @@ footer {
 .input-group .form-control:focus {
     box-shadow: none;
     color: var(--color-text);
+    magin:3px;
 }
+.d-none{
 
+}
 .search-btn{
     background-color: var(--color-button);
     color: var(--color-text);
