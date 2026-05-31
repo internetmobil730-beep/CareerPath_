@@ -209,10 +209,6 @@ body {
     font-size: 20px;
 }
 
-
-
-
-
 /*  تفعيل السكرول الذكي داخل حاويات القوائم في السايدبار */
 .sidebar-content {
     overflow-y: auto;          /* إظهار السكرول العمودي تلقائياً فقط إذا تجاوزت الكروت المساحة */
@@ -458,12 +454,6 @@ footer {
     color: var(--color-navbar-text) !important;
 }
 
-
-
-
-
-
-
 /* تنسيقات إضافية لكروت السايدبار المصغرة */
 .mini-cart-title {
     color: var(--color-title);
@@ -482,6 +472,10 @@ footer {
 /* تحسين مظهر حقل البحث لتبدو الحاوية قطعة واحدة */
 .input-group .form-control:focus {
     box-shadow: none;
-    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.search-btn{
+    background-color: var(--color-button);
     color: var(--color-text);
 }
