@@ -482,12 +482,6 @@ footer {
 /* تحسين مظهر حقل البحث لتبدو الحاوية قطعة واحدة */
 .input-group .form-control:focus {
     box-shadow: none;
-    background-color: transparent;
-}
-
-/* حركة بسيطة عند تمرير الماوس فوق المفضلة */
-.favorite-trigger a:hover .fa-heart {
-    transform: scale(1.1);
-    transition: transform 0.2s ease-in-out;
-    font-weight: 900; /* تتحول لقلب ممتلئ عند التمرير */
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
