@@ -18,7 +18,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
 Route::get('/api/user/favorites', [FavoriteController::class, 'getFavorites']);
 
-// روابط البحث الشامل والصفحات العامة للتفاصيل (متاحة للجميع)
+// روابط البحث الشامل والصفحات العامة للتفاصيل
 Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
 Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
 Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
@@ -30,13 +30,13 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// 2. روابط الطلاب والمستخدمين العاديين (محمية ومنظّمة تماماً)
+// 2. روابط الطلاب والمستخدمين العاديين
 Route::middleware(['auth', 'block.admin'])->group(function () {
     Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
     Route::post('/quiz', [QuizController::class, 'submit'])->name('quiz.submit');
 });
 
-// 3. روابط لوحة تحكم الإدارة (الأدمن الحقيقي فقط حصرًا ومحمي تماماً)
+// 3. روابط لوحة تحكم الإدارة (الأدمن فقط حصرًا)
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::resource('skills', SkillController::class);
@@ -48,10 +48,9 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
-// الكود المطور والنهائي لحل تضارب الـ Seeders وتصفير كاش الروابط أونلاين 
+// الكود المطور لتصفير كاش الروابط وحل تضارب السيرفر 
 Route::get('/run-migrate-path', function() {
     try {
-        // تنظيف شامل للروابط والكاش لإجبار السيرفر على قراءة الأسماء الجديدة فوراً 🌟
         \Illuminate\Support\Facades\Artisan::call('route:clear');
         \Illuminate\Support\Facades\Artisan::call('config:clear');
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
@@ -59,14 +58,11 @@ Route::get('/run-migrate-path', function() {
         \Illuminate\Support\Facades\Artisan::call('optimize:clear');
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         
-        // تنظيف وبناء الجداول من الصفر
         \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
         
-        // إنشاء الصلاحيات برمجياً بشكل محمي
         $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'careerpath']);
         \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'user']);
         
-        // فحص وإنشاء حساب الأدمن الأصلي
         $adminEmail = 'internetmobil730@gmail.com';
         $admin = \App\Models\User::where('email', $adminEmail)->first();
         
@@ -83,7 +79,6 @@ Route::get('/run-migrate-path', function() {
             $admin->assignRole($adminRole);
         }
 
-        // استدعاء الـ Seeders بالترتيب الصحيح والمثالي لقاعدة البيانات
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\SkillCategorySeeder', '--force' => true]);
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\SkillSeeder', '--force' => true]);
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\UniversitySeeder', '--force' => true]);
@@ -91,18 +86,16 @@ Route::get('/run-migrate-path', function() {
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorUniversitySeeder', '--force' => true]);
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorSkillSeeder', '--force' => true]);
 
-        return "Tebrikler! Önbellek temizlendi, veritabanı sıfırlandı ve sistem başarıyla güncellendi! 🎉";
+        return "Tebrikler! Önbellek temizlendi ve sistem başarıyla güncellendi! 🎉";
     } catch (\Exception $e) {
         return "Hata oluştu: " . $e->getMessage() . " | Satır: " . $e->getLine();
     }
 });
 
-// رابط فحص حالة السيرفر (منصة Render)
-Route::get('/healthz', function () {
-    return response()->json(['status' => 'ok']);
+Route::get('/healthz', function () { 
+    return response()->json(['status' => 'ok']); 
 });
 
-// مسارات التحقق وتأكيد البريد الإلكتروني
 Route::get('/email/verify', function () {
     return view('auth.verify-notice');
 })->middleware('auth')->name('verification.notice');
