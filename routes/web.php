@@ -53,9 +53,9 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 });
 
 Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
-Route::get('/university-details/{id}', [UniversityController::class, 'showDetails'])->name('university.details');
-Route::get('/quiz', [QuizController::class, 'showDetails'])->name('quiz');
-Route::get('/major-details/{id}', [MajorController::class, 'showDetails'])->name('major_details_public');
+Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
+Route::get('/quiz', [QuizController::class, 'showPublic'])->name('quiz');
+Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
 // الكود النهائي المطور لحل تضارب الـ Seeders والصلاحيات أونلاين 
 Route::get('/run-migrate-path', function() {
     try {
