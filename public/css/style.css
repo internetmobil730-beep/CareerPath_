@@ -444,25 +444,78 @@ footer {
     display: inline-block;
 }
 
-/* الحاوية المرنة تضمن بقاء العناصر بجانب بعضها دائماً */
+/* ايقونة المفضلة */
+.header_icons{
+    display: flex;
+    gap: 30px;
+    align-items: center; /* لضمان محاذاة القلب عمودياً مع شريط البحث */
+}
+.header_icons .icon{
+    position: relative;
+    cursor: pointer;
+}
+.header_icons .icon i{
+    font-size: 25px;
+    color: var(--color-navbar-text);
+}
+.count{
+    background: var(--color-accent);
+    color: var(--color-navbar-text);
+}
+.header_icons .icon .count{
+    position: absolute;
+    top: -9px;
+    right: -1px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background: var(--color-accent);
+    color: var(--color-navbar-text);
+    font-size: 11px;
+    border-radius: 100%;
+}
+/* تحسين مظهر حقل البحث لتبدو الحاوية قطعة واحدة */
+.input-group .form-control:focus {
+    box-shadow: none;
+    color: var(--color-text);
+    margin: 3px; /* تصحيح الكلمة من magin إلى margin */
+}
+.d-none{
+
+}
+.search-btn{
+    background-color: var(--color-button);
+    color: var(--color-text);
+}
+
+/* ======================================================== */
+/* 🌟 التعديلات الجديدة والإضافات المطلوبة أسفله دون تغيير القديم 🌟 */
+/* ======================================================== */
+
+/* الحاوية المرنة تضمن بقاء العناصر بجانب بعضها دائماً على اللابتوب والتلفون */
 .custom-search-container {
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-/* حقل البحث */
+/* حقل البحث لتوحيد الارتفاع ومنع الحواف الزرقاء العشوائية */
 .search-field {
     border: 1px solid #ced4da;
     border-radius: 4px 0 0 4px !important;
     height: 44px;
-    font-size: 14px; /* حجم خط مناسب ومريح على الهواتف */
+    font-size: 14px;
+}
+.search-field:focus {
+    outline: none !important;
+    border-color: #ced4da !important;
+    box-shadow: none !important;
 }
 
-/* زر البحث المتناسق أوتوماتيكياً مع الألوان المطلوبة */
+/* زر البحث وتطبيق الألوان المطلوبة كخلفية */
 .search-submit-btn {
     background-color: var(--color-button) !important;
-    color: var(--color-navbar-text) !important;
     border: none;
     border-radius: 0 4px 4px 0 !important;
     height: 44px;
@@ -472,37 +525,24 @@ footer {
     justify-content: center;
 }
 
-.search-btn-text {
-    color: var(--color-text) !important;
-    font-weight: 500;
+/* 🔥 تلوين أيقونة البحث (العدسة) باللون المطلوب تماماً */
+.search-submit-btn .search-icon {
+    color: var(--color-navbar-text) !important;
+    font-size: 16px;
 }
 
-/* منع الحواف الزرقاء والظلال عند الضغط */
-.input-group .form-control:focus {
-    box-shadow: none;
-    border-color: var(--color-button);
-}
-
-/* أيقونة المفضلة والعداد */
-.header_icons {
-    display: flex;
-    align-items: center;
-    margin-left: 8px; /* مسافة أمان صغيرة بين الزر والمفضلة */
-}
-
-.header_icons .icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* تلوين القلب بنفس لون الدائرة (var(--color-accent)) */
+/* تعديل لون أيقونة القلب ليصبح مطابقاً تماماً للون الدائرة التي بجانبه */
 .header_icons .icon i.custom-heart-icon {
     font-size: 24px;
     color: var(--color-accent) !important;
 }
 
-/* عداد المفضلة يظل ثابتاً فوق القلب تماماً ولا يتحرك */
+/* إزاحة صغيرة للمفضلة لتبتعد عن زر البحث بشكل مناسب */
+.header_icons {
+    margin-left: 8px;
+}
+
+/* عداد المفضلة يظل ثابتاً ومحاذياً فوق القلب تماماً ولا يتحرك */
 .header_icons .icon .count {
     position: absolute;
     top: -6px;
