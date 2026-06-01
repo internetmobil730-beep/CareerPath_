@@ -32,9 +32,10 @@ class QuizController extends Controller
         ->orderBy('skills_count', 'desc')
         ->get();
     
-        // السطر السحري: تصفية الأسماء المتكررة مع الحفاظ التام على الترتيب الذكي التنازلي القادم من الداتابيز
-        $matchingMajors = $matchingMajors->unique('name');
+        // 🌟 تعديل السطر السحري: أضفنا ->values() في النهاية لإعادة ترتيب المؤشرات ومنع انهيار الـ Blade
+        $matchingMajors = $matchingMajors->unique('name')->values();
     
         return view('quiz_results', compact('matchingMajors'));
+        
     }
 }

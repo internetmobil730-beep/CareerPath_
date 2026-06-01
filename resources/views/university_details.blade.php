@@ -74,8 +74,8 @@
 
             </div>
         </div>
-        <div class="card-footer p-2  text-end">
-            <a href="{{ route('major_details_public', $major->id) }}" class="btn btn-secondary mt-2 me-2">Geri Dön</a>
+        <div class="card-footer p-2 text-end">
+            <a href="javascript:history.back()" class="btn btn-secondary mt-2 me-2">Geri Dön</a>
         </div>
     </div>
 </div>
