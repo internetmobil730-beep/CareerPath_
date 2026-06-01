@@ -51,9 +51,18 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 // الكود المطور لحل تضارب الـ Seeders والصلاحيات أونلاين 
 Route::get('/run-migrate-path', function() {
     try {
+        // تنظيف شامل للروابط والكاش
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
         \Illuminate\Support\Facades\Artisan::call('config:clear');
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
         \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        
+        // الأسطر الجديدة لإجبار السيرفر على إعادة قراءة خريطة ملفات الـ Controllers
+        if (file_exists(base_path('vendor/autoload.php'))) {
+            exec('composer dump-autoload', $output, $returnVar);
+        }
+
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         
         \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
@@ -84,7 +93,7 @@ Route::get('/run-migrate-path', function() {
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorUniversitySeeder', '--force' => true]);
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorSkillSeeder', '--force' => true]);
 
-        return "Tebrikler! Bütün sistem, sorular, kategoriler, beceri-bölüm eşleşmeleri ve orijinal Admin hesabı kusursuzca yüklendi! 🎉";
+        return "Tebrikler! Otomatik yükleme haritası (Autoload) güncellendi ve bütün sistem başarıyla yüklendi! 🎉";
     } catch (\Exception $e) {
         return "Hata oluştu: " . $e->getMessage() . " | Satır: " . $e->getLine();
     }
