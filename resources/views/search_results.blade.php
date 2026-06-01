@@ -19,7 +19,7 @@
                         <div class="card mb-5 shadow-sm border-1 rounded-3" style="border-color: #fcece8;">
                             <div class="card-body p-5">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <h2 class="card-title font-weight-bold" style="color: #1a7a7a;">{{ $uni->name }}</h2>
+                                    <h2 class="card-title font-weight-bold" style="color: #E49BA6;">{{ $uni->name }}</h2>
                                     <span class="badge px-3 py-2 rounded-pill bg-primary">Üniversite</span>
                                 </div>
                                 <hr class="my-4">
@@ -53,7 +53,7 @@
                         <div class="card mb-5 shadow-sm border-1 rounded-3" style="border-color: #fcece8;">
                             <div class="card-body p-5">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <h2 class="card-title font-weight-bold" style="color: #1a7a7a;">{{ $major->name }}</h2>
+                                    <h2 class="card-title font-weight-bold" style="color: #E49BA6;">{{ $major->name }}</h2>
                                     <span class="badge px-3 py-2 rounded-pill bg-success">Bölüm</span>
                                 </div>
                                 <hr class="my-4">
@@ -77,7 +77,7 @@
                         <div class="card mb-4 shadow-sm border-1 rounded-3" style="border-color: #fcece8;">
                             <div class="card-body p-5">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <h2 class="card-title font-weight-bold" style="color: #1a7a7a;">{{ $skill->name }}</h2>
+                                    <h2 class="card-title font-weight-bold" style="color: #E49BA6;">{{ $skill->name }}</h2>
                                     <span class="badge px-3 py-2 rounded-pill bg-warning text-dark">Yetenek</span>
                                 </div>
                             </div>

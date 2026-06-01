@@ -13,18 +13,21 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
 
-        // 1. البحث في الجامعات (تعديل الحقول إلى name و description لتطابق الـ Migration)
+        // 1. البحث في الجامعات
         $universities = University::where('name', 'LIKE', "%{$query}%")
                                     ->orWhere('description', 'LIKE', "%{$query}%")
                                     ->orWhere('district', 'LIKE', "%{$query}%")
                                     ->get();
 
-        // 2. البحث في التخصصات (مطابق تماماً)
+        // 2. البحث في التخصصات
         $majors = Major::where('name', 'LIKE', "%{$query}%")
                         ->orWhere('description', 'LIKE', "%{$query}%")
                         ->get();
 
-        // 3. البحث في المهارات (حذف البحث في description لأنه غير موجود في جدول الـ skills)
+        //  السطر السحري: تصفية التخصصات المتكررة بناءً على الاسم ليعود كرت واحد فقط 
+        $majors = $majors->unique('name');
+
+        // 3. البحث في المهارات 
         $skills = Skill::where('name', 'LIKE', "%{$query}%")
                         ->get();
 
