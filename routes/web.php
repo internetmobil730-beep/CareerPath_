@@ -54,7 +54,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 
 Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
 
-// 🌟 الكود النهائي المطور لحل تضارب الـ Seeders والصلاحيات أونلاين 🌟
+// الكود النهائي المطور لحل تضارب الـ Seeders والصلاحيات أونلاين 
 Route::get('/run-migrate-path', function() {
     try {
         // 1. تنظيف كاش لارافيل وكاش المكتبات لضمان عدم حدوث تضارب
@@ -109,7 +109,7 @@ Route::get('/run-migrate-path', function() {
             '--force' => true
         ]);
         
-        // 🔥 هنا تم حقن السيرفر الجديد لبناء علاقات المهارات بالتخصصات 
+        //  هنا تم حقن السيرفر الجديد لبناء علاقات المهارات بالتخصصات 
         \Illuminate\Support\Facades\Artisan::call('db:seed', [
             '--class' => 'Database\\Seeders\\MajorSkillSeeder',
             '--force' => true

@@ -459,6 +459,10 @@ footer {
     font-size: 14px; /* حجم خط مناسب ومريح على الهواتف */
 }
 
+.search{
+    color: var(--color-navbar-text);
+}
+
 /* زر البحث المتناسق أوتوماتيكياً مع الألوان المطلوبة */
 .search-submit-btn {
     background-color: var(--color-button) !important;

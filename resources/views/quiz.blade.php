@@ -11,7 +11,7 @@
                     <input class="form-control search-field" type="search" name="query"
                            placeholder="Quiz, Bölüm..." value="{{ request('query') }}" required>
                     
-                    <button type="submit" class="btn search-submit-btn">
+                    <button type="submit" class="btn search-submit-btn search">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
