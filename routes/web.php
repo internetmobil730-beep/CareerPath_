@@ -60,6 +60,7 @@ Route::get('/run-migrate-path', function() {
         // 1. تنظيف كاش لارافيل وكاش المكتبات لضمان عدم حدوث تضارب
         \Illuminate\Support\Facades\Artisan::call('config:clear');
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         
         // 2. تنظيف وبناء الجداول من الصفر
