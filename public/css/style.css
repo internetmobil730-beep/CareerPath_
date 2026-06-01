@@ -481,9 +481,7 @@ footer {
     color: var(--color-text);
     margin: 3px; /* تصحيح الكلمة من magin إلى margin */
 }
-.d-none{
 
-}
 .search-btn{
     background-color: var(--color-button);
     color: var(--color-text);
