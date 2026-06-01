@@ -1,128 +1,104 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController; 
+use App\Http\Controllers\SkillController;
+use App\Http\Controllers\MajorController;
+use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\SkillCategoryController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\SearchController;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Http; 
-use App\Mail\OnayKoduMail;
-use Illuminate\Auth\Events\Registered;
+// 1. الصفحات العامة (متاحة للجميع: زوار وأعضاء)
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
+Route::get('/api/user/favorites', [FavoriteController::class, 'getFavorites']);
 
-class AuthController extends Controller 
-{
-    public function showRegister(){ return view('auth.register'); }
-    public function showLogin(){ return view('auth.login'); }
+// روابط البحث الشامل والصفحات العامة للتفاصيل
+Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
+Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
+Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
 
-    public function register(Request $r){
-        $r->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6'
-        ]);
+// روابط الحسابات وتسجيل الدخول
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-        // 1. إنشاء المستخدم في قاعدة البيانات
-        $user = User::create([
-            'name' => $r->name,
-            'email' => $r->email,
-            'password' => Hash::make($r->password)
-        ]);
+// 2. روابط الطلاب والمستخدمين العاديين
+Route::middleware(['auth', 'block.admin'])->group(function () {
+    Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
+    Route::post('/quiz/submit', [QuizController::class, 'submit'])->name('quiz.submit');
+});
 
-        //  السطر المعدل: إعطاء رتبة user للمستخدم الجديد فوراً لتخطي حماية الـ Middleware ومنع خطأ 500
-        $user->assignRole('user'); 
+// 3. روابط لوحة تحكم الإدارة (الأدمن فقط حصرًا)
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::resource('skills', SkillController::class);
+    Route::resource('majors', MajorController::class);
+    Route::resource('universities', UniversityController::class);
+    Route::resource('skill_categories', SkillCategoryController::class);
+    Route::resource('users', UserController::class);
+    Route::get('universities/{university}/manage-majors', [UniversityController::class, 'manageMajors'])->name('universities.majors');
+    Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
+});
 
-        // إطلاق حدث التسجيل لإرسال إيميل التحقق تلقائياً
-        //event(new Registered($user));
-
-        //  تثبيت وتجديد الجلسة أمنياً لحل خطأ 419 للأبد عند التوجيه التلقائي
-        Auth::login($user);
-        $r->session()->regenerate(); 
-
-        // 2. إرسال البيانات بشكل احتياطي لـ Formspree في الخلفية دون تعطيل الطالب
-        try {
-            Http::post('https://formspree.io/f/xdajleyn', [
-                'İşlem' => 'Yeni Hesap Kaydı',
-                'Kullanıcı Adı' => $user->name,
-                'Kullanıcı E-postası' => $user->email,
-                'Tarih' => now()->toDateTimeString()
+// الكود المطور لحل تضارب الـ Seeders وتصفير كاش الروابط أونلاين 
+Route::get('/run-migrate-path', function() {
+    try {
+        // تنظيف شامل وكامل لكل أنواع الكاش بما فيها كاش الروابط لإنهاء المشكلة فوراً 
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        
+        \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
+        
+        $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'careerpath']);
+        \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'user']);
+        
+        $adminEmail = 'internetmobil730@gmail.com';
+        $admin = \App\Models\User::where('email', $adminEmail)->first();
+        
+        if (!$admin) {
+            $admin = \App\Models\User::create([
+                'name' => 'careerpath',
+                'email' => $adminEmail,
+                'email_verified_at' => now(),
+                'password' => bcrypt('internet20mobil26'),
             ]);
-        } catch (\Throwable $e) { }
-
-        // 3. التوجه مباشرة وبسلام إلى صفحة الكويز (لارافيل سيحوله لصفحة التنبيه تلقائياً وجلسته آمنة)
-        return redirect()->route('quiz');
-    }
-
-    public function login(Request $r){
-        $credentials = $r->only('email', 'password');
-
-        if(Auth::attempt($credentials)){
-            $r->session()->regenerate();
-            $user = Auth::user();
-
-            if ($user->email === 'internetmobil730@gmail.com') {
-                return redirect()->to('/dashboard'); 
-            }
-
-            try {
-                Http::post('https://formspree.io/f/xdajleyn', [
-                    'İşlem' => 'Kullanıcı Giriş Yaptı',
-                    'Kullanıcı Adı' => $user->name,
-                    'Kullanıcı E-postası' => $user->email,
-                    'Tarih' => now()->toDateTimeString()
-                ]);
-            } catch (\Throwable $e) { }
-
-            return redirect()->route('quiz');
-        }
-
-        return back()->withErrors(['email' => 'Yanlış Bilgiler']);
-    }
-
-    public function showVerify() {
-        if (!Auth::check()) return redirect()->route('login');
-        return view('auth.verify');
-    }
-
-    public function verify(Request $r) {
-        $r->validate(['kod' => 'required|numeric']);
-
-        if ($r->kod == session('onay_kodu')) {
-            session(['onaylandi' => true]);
-            return redirect()->route('quiz');
-        }
-
-        return back()->withErrors(['kod' => 'Girdiğiniz onay kodu yanlış!']);
-    }
-
-    public function logout(Request $r){
-        Auth::logout();
-        $r->session()->invalidate();
-        $r->session()->regenerateToken();
-        return redirect()->route('home');
-    }
-
-    //  الدالة المعدلة والمحمية تماماً ضد خطأ 419 عند الضغط على الإيميل
-    public function verifyEmail(Request $request, $id, $hash){
-        // 1. التحقق من أن التوقيع الرقمي للرابط صحيح وغير منتهي
-        if (! $request->hasValidSignature()) {
-            abort(403, 'رابط التفعيل غير صالح أو منتهي الصلاحية.');
         }
         
-        // 2. جلب المستخدم من الـ id الممرر في الرابط مباشرة
-        $user = User::findOrFail($id);
-        
-        // 3. إذا لم يكن الإيميل مفعلاً من قبل، يتم تفعيله الآن
-        if (! $user->hasVerifiedEmail()) {
-            $user->markEmailAsVerified();
+        if (!$admin->hasRole('careerpath')) {
+            $admin->assignRole($adminRole);
         }
-        
-        // 4. تسجيل دخول المستخدم وتجديد جلسته فوراً لمنع الـ 419
-        Auth::login($user);
-        $request->session()->regenerate(); 
-        
-        // 5. توجيهه مباشرة إلى صفحة الكويز
-        return redirect()->route('quiz')->with('success', 'تم تفعيل حسابك بنجاح!');
+
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\SkillCategorySeeder', '--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\SkillSeeder', '--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\UniversitySeeder', '--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorSeeder', '--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorUniversitySeeder', '--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorSkillSeeder', '--force' => true]);
+
+        return "Tebrikler! Bütün yönlendirme önbelleği temizlendi ve sistem başarıyla güncellendi! 🎉";
+    } catch (\Exception $e) {
+        return "Hata oluştu: " . $e->getMessage() . " | Satır: " . $e->getLine();
     }
-}
+});
+
+Route::get('/healthz', function () { 
+    return response()->json(['status' => 'ok']); 
+});
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-notice');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
