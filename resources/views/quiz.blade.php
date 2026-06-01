@@ -29,7 +29,9 @@
         </div>
     </div>
     <h3 class="title quiz-title mb-4">Yeteneklerinizi/İlgi alanlarınızı seçin</h3>
-    <form method="POST" action="{{ route('quiz_results.submit') }}" id="quizForm">@csrf
+    
+    {{-- السطر المعدل بالأسفل: تم تغيير الاسم من quiz_results.submit إلى quiz.submit ليطابق الروابط تماماً --}}
+    <form method="POST" action="{{ route('quiz.submit') }}" id="quizForm">@csrf
         <div class="row">
             @foreach($skills as $skill)
             <div class="col-md-4 mb-4">
