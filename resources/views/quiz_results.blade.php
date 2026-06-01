@@ -15,7 +15,9 @@
                         {{ Str::limit($major->description) }}
                     </p>
                     <div class="card-actions">
-                    <a href="{{ route('major_details_public', $major->id) }}" class="detay-btn">Detayları Gör</a>
+                    <a href="{{ route('major_details_public', $major->id) }}" class="detayuni btn">
+                        Detayları Gör
+                    </a>
                     @auth
                         @if(auth()->user()->favoriteMajors->contains($major->id))
                             <button class="btn-card-favorite active" data-id="{{ $major->id }}" data-type="major">
