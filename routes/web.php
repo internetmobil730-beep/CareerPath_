@@ -13,15 +13,17 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SearchController;
 
-// 1. الصفحات العامة (متاحة للجميع: زوار وأعضاء)
+// 1. الصفحات العامة والبحث (متاحة للجميع: للبحث وعرض التفاصيل مباشرة)
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
 Route::get('/api/user/favorites', [FavoriteController::class, 'getFavorites']);
 
-// روابط البحث الشامل والصفحات العامة للتفاصيل
+// روابط البحث الشامل وصفحات التفاصيل العامة
 Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
-Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
+
+// تثبيت مسار تفاصيل التخصص باسم "major_details_public" ليعمل مع شريط البحث وزر التفاصيل معاً
 Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
+Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
 
 // روابط الحسابات وتسجيل الدخول
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
@@ -30,13 +32,13 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// 2. روابط الطلاب والمستخدمين العاديين
+// 2. روابط الطلاب والمستخدمين العاديين (الكويز)
 Route::middleware(['auth', 'block.admin'])->group(function () {
     Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
     Route::post('/quiz', [QuizController::class, 'submit'])->name('quiz.submit');
 });
 
-// 3. روابط لوحة تحكم الإدارة (الأدمن فقط حصرًا)
+// 3. روابط لوحة تحكم الإدارة (الأدمن فقط)
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::resource('skills', SkillController::class);
@@ -48,7 +50,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/majors/{id}', [MajorController::class, 'show'])->name('majors.show');
 });
 
-// الكود المطور لتصفير كاش الروابط وحل تضارب السيرفر 
+// كود تصفير وتنظيف الكاش الشامل أونلاين
 Route::get('/run-migrate-path', function() {
     try {
         \Illuminate\Support\Facades\Artisan::call('route:clear');
@@ -86,18 +88,12 @@ Route::get('/run-migrate-path', function() {
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorUniversitySeeder', '--force' => true]);
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\MajorSkillSeeder', '--force' => true]);
 
-        return "Tebrikler! Önbellek temizlendi ve sistem başarıyla güncellendi! 🎉";
+        return "Tebrikler! Sistem başarıyla güncellendi ve tüm rotalar eşitlendi! 🎉";
     } catch (\Exception $e) {
-        return "Hata oluştu: " . $e->getMessage() . " | Satır: " . $e->getLine();
+        return "Hata: " . $e->getMessage();
     }
 });
 
-Route::get('/healthz', function () { 
-    return response()->json(['status' => 'ok']); 
-});
-
-Route::get('/email/verify', function () {
-    return view('auth.verify-notice');
-})->middleware('auth')->name('verification.notice');
-
+Route::get('/healthz', function () { return response()->json(['status' => 'ok']); });
+Route::get('/email/verify', function () { return view('auth.verify-notice'); })->middleware('auth')->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
