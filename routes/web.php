@@ -24,11 +24,12 @@ Route::get('/university-details/{id}', [UniversityController::class, 'showPublic
 Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
 
 // روابط الحسابات وتسجيل الدخول
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// روابط الحسابات وتسجيل الدخول (استدعاء مباشر بالمسار الكامل)
+Route::get('/register', [\App\Http\Controllers\AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 // 2. روابط الطلاب والمستخدمين العاديين (محمية بتسجيل الدخول وممنوع دخول الأدمن)
 Route::middleware(['auth', 'block.admin'])->group(function () {
