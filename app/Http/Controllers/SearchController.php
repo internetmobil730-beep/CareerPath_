@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\University; // موديل الجامعات الخاص بمشروعك
-use App\Models\Major;      // موديل التخصصات الخاص بمشروعك
+use App\Models\University; 
+use App\Models\Major;      
+use App\Models\Skill;     
 
 class SearchController extends Controller
 {
-    // تغيير اسم الدالة هنا إلى globalSearch ليطابق ملف الـ routes تماماً
     public function globalSearch(Request $request)
     {
-        // استقبال نص البحث
         $query = $request->input('query');
 
         // 1. البحث في الجامعات
@@ -24,7 +23,12 @@ class SearchController extends Controller
                         ->orWhere('description', 'LIKE', "%{$query}%")
                         ->get();
 
-        // إرجاع صفحة عرض النتائج الموحدة المترجمة بالتركية مع تمرير المتغيرات
-        return view('search_results', compact('universities', 'majors', 'query'));
+        // 3. البحث في المهارات 
+        $skills = Skill::where('name', 'LIKE', "%{$query}%")
+                        ->orWhere('description', 'LIKE', "%{$query}%")
+                        ->get();
+
+        // إرسال جميع المتغيرات بما فيها المهارات إلى الـ View
+        return view('search_results', compact('universities', 'majors', 'skills', 'query'));
     }
 }
