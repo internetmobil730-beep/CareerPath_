@@ -65,7 +65,7 @@
                                 </div>
 
                                 <div class="text-end mt-4">
-                                    <a href="{{ route('major.details', $major->id) }}" class="btn px-4 py-2 font-weight-bold rounded-3" style="background-color: #ffcc00; color: #000; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                    <a href="{{ route('major_details_public', $major->id) }}" class="btn px-4 py-2 font-weight-bold rounded-3" style="background-color: #ffcc00; color: #000; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                                         Bu Bölümü Sunan Üniversiteleri Gör
                                     </a>
                                 </div>

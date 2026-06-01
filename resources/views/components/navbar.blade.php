@@ -16,15 +16,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="header_icons">
-            <div class="icon favorite-trigger">
-                <a href="#">
-                    <i class="fa-regular fa-heart"></i>
-                    <span class="count count_favourite">0</span>
-                </a>
-           </div>
-        </div>
-
+        
 
         <div class="collapse navbar-collapse" id="navMain">
             

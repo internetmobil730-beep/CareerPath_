@@ -5,7 +5,6 @@
 <div class="sidebar">
     <div class="sidebar-header text-center py-3">
         <img width="200px" height="200px" src="{{ asset('img/logo.png') }}" alt="Logo" class="img-fluid rounded-circle shadow-sm mb-2 mt-2">
-        <p class="text-secondary small mt-2">{{ optional(Auth::user())->name }}</p>
     </div>
     
     <ul class="list-unstyled ps-0 mt-4">

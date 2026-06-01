@@ -7,15 +7,15 @@
             <div class="d-flex align-items-center justify-content-center p-2 rounded custom-search-container">
 
                 <form action="{{ route('global.search') }}" method="GET" class="flex-grow-1 me-2 mb-0">
-    <div class="input-group search-input-group">
-        <input class="form-control search-field" type="search" name="query" placeholder="Quiz, Bölüm..."
-            value="{{ request('query') }}" required>
+                    <div class="input-group search-input-group">
+                        <input class="form-control search-field" type="search" name="query" placeholder="Quiz, Bölüm..."
+                            value="{{ request('query') }}" required>
 
-        <button type="submit" class="btn search-submit-btn search">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        </button>
-    </div>
-</form>
+                        <button type="submit" class="btn search-submit-btn search">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        </button>
+                    </div>
+                </form>
 
                 <div class="header_icons flex-shrink-0">
                     <div class="icon favorite-trigger">
@@ -25,7 +25,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
