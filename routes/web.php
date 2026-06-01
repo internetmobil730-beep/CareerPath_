@@ -32,8 +32,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // 2. روابط الطلاب والمستخدمين العاديين (محمية بتسجيل الدخول وممنوع دخول الأدمن)
 Route::middleware(['auth', 'block.admin'])->group(function () {
-    Route::get('/quiz', [QuizController::class, 'index'])->name('quiz.index');
-    Route::post('/quiz/submit', [QuizController::class, 'submit'])->name('quiz.submit');
+Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
+Route::post('/quiz/submit', [QuizController::class, 'submit'])->name('quiz.submit');
 });
 
 // 3. روابط لوحة تحكم الإدارة (الأدمن فقط حصرًا)
