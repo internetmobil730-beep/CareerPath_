@@ -13,7 +13,7 @@
             @else
                 <div class="list-group">
                     @foreach($majors as $major)
-                        <a href="{{ route('major.details', $major->id) }}" class="list-group-item list-group-item-action">
+                        <a href="#" class="list-group-item list-group-item-action">
                             <h5>{{ $major->name }}</h5>
                             <p class="mb-1 text-secondary">{{ Str::limit($major->description, 150) }}</p>
                         </a>
@@ -31,7 +31,7 @@
             @else
                 <div class="list-group">
                     @foreach($universities as $uni)
-                        <a href="{{ route('universities.show', $uni->id) }}" class="list-group-item list-group-item-action">
+                        <a href="#" class="list-group-item list-group-item-action">
                             <h5>{{ $uni->name }}</h5>
                             <p class="mb-1 text-secondary">{{ $uni->location }}</p> 
                         </a>
