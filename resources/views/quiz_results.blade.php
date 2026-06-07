@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container mt-5 mb-5">
-        <div class="row justify-content-center align-items-center mt-5 mb-4 px-3">
+    <div class="row justify-content-center align-items-center mt-5 mb-4 px-3">
         <div class="col-12 col-md-8 col-lg-6">
             <div class="d-flex align-items-center justify-content-center p-2 rounded custom-search-container">
 
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <h2 class="mb-4 mt-5 title">Size En Uygun Bölümler (Sonuçlar)</h2>
+    <h2 class="mb-4 title">Size En Uygun Bölümler (Sonuçlar)</h2>
     <div class="row">
         @forelse($matchingMajors->unique('name') as $major)
         <div class="col-md-4 mb-4">
@@ -41,24 +41,24 @@
                         {{ Str::limit($major->description) }}
                     </p>
                     <div class="card-actions">
-                    <a href="{{ route('major.details', $major->id) }}" class="detayuni btn">
-                        Detayları Gör
-                    </a>
-                    @auth
+                        <a href="{{ route('major.details', $major->id) }}" class="detayuni btn">
+                            Detayları Gör
+                        </a>
+                        @auth
                         @if(auth()->user()->favoriteMajors->contains($major->id))
-                            <button class="btn-card-favorite active" data-id="{{ $major->id }}" data-type="major">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
+                        <button class="btn-card-favorite active" data-id="{{ $major->id }}" data-type="major">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
                         @else
-                            <button class="btn-card-favorite" data-id="{{ $major->id }}" data-type="major">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
-                        @endif
-                    @else
                         <button class="btn-card-favorite" data-id="{{ $major->id }}" data-type="major">
                             <i class="fa-regular fa-heart"></i>
                         </button>
-                    @endauth
+                        @endif
+                        @else
+                        <button class="btn-card-favorite" data-id="{{ $major->id }}" data-type="major">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                        @endauth
                     </div>
 
                 </div>

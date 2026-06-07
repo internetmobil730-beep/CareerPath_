@@ -30,25 +30,25 @@
             </div>
         </div>
     </div>
-    <div class="card details-card shadow-lg  d-flex flex-column">
+    <div class="card details-card shadow-lg  d-flex flex-column mb-5">
         <div class="card-body p-5">
             <h1 class="title  mb-4">{{ $major->name }}</h1>
 
-                @auth
-                    @if(auth()->user()->favoriteMajors->contains($major->id))
-                        <button class="btn-card-favorite cart-details-fav active" data-id="{{ $major->id }}" data-type="major">
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
-                    @else
-                        <button class="btn-card-favorite cart-details-fav" data-id="{{ $major->id }}" data-type="major">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    @endif
-                @else
-                    <button class="btn-card-favorite cart-details-fav" data-id="{{ $major->id }}" data-type="major">
-                        <i class="fa-regular fa-heart"></i>
-                    </button>
-                @endauth
+            @auth
+            @if(auth()->user()->favoriteMajors->contains($major->id))
+            <button class="btn-card-favorite cart-details-fav active" data-id="{{ $major->id }}" data-type="major">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+            @else
+            <button class="btn-card-favorite cart-details-fav" data-id="{{ $major->id }}" data-type="major">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+            @endif
+            @else
+            <button class="btn-card-favorite cart-details-fav" data-id="{{ $major->id }}" data-type="major">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+            @endauth
 
             <div class="d-flex gap-3 mb-4">
                 <div class="p-2 border rounded bg-light">
@@ -91,25 +91,28 @@
                             </div>
 
                             <div class="mt-2 text-end">
-                                
+
                                 <a href="{{ route('university_details', $university->id) }}"
                                     class="detayuni btn btn-sm btn-outline-warning">
                                     Üniversite Detayları
                                 </a>
                                 @auth
-                                    @if(auth()->user()->favoriteUniversities->contains($university->id))
-                                        <button class="btn-card-favorite uni-cart active" data-id="{{ $university->id }}" data-type="university">
-                                            <i class="fa-solid fa-heart"></i>
-                                        </button>
-                                    @else
-                                        <button class="btn-card-favorite uni-cart" data-id="{{ $university->id }}" data-type="university">
-                                            <i class="fa-regular fa-heart"></i>
-                                        </button>
-                                    @endif
+                                @if(auth()->user()->favoriteUniversities->contains($university->id))
+                                <button class="btn-card-favorite uni-cart active" data-id="{{ $university->id }}"
+                                    data-type="university">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
                                 @else
-                                    <button class="btn-card-favorite uni-cart" data-id="{{ $university->id }}" data-type="university">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </button>
+                                <button class="btn-card-favorite uni-cart" data-id="{{ $university->id }}"
+                                    data-type="university">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                @endif
+                                @else
+                                <button class="btn-card-favorite uni-cart" data-id="{{ $university->id }}"
+                                    data-type="university">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
                                 @endauth
                             </div>
                         </div>
