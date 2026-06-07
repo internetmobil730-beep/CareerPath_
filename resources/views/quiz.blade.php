@@ -30,7 +30,6 @@
     </div>
     <h3 class="title quiz-title mb-4">Yeteneklerinizi/İlgi alanlarınızı seçin</h3>
     
-    {{-- السطر المعدل بالأسفل: تم تغيير الاسم من quiz_results.submit إلى quiz.submit ليطابق الروابط تماماً --}}
     <form method="POST" action="{{ route('quiz.submit') }}" id="quizForm">@csrf
         <div class="row">
             @foreach($skills as $skill)

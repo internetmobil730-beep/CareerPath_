@@ -57,6 +57,12 @@
                                         {{ Str::limit($major->description, 250) }}
                                     </p>
                                 </div>
+                                <div class="mt-5">
+                                    <button class="btn btn-lg px-5 py-3 shadow" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#uniCollapse">
+                                        Bu Bölümü Sunan Üniversiteleri Gör
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -67,6 +73,12 @@
                                 <div class="d-flex justify-content-between align-items-start mb-3">
                                     <h2 class="title font-weight-bold">{{ $skill->name }}</h2>
                                     <span class="badge px-3 py-2 rounded-pill" style="background-color: #E49BA6; color: #fff;">Yetenek</span>
+                                </div>
+                                <div class="mt-5">
+                                    <button class="btn btn-lg px-5 py-3 shadow" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#uniCollapse">
+                                        Bu Beceri Sunan Bölümleri Gör
+                                    </button>
                                 </div>
                             </div>
                         </div>
