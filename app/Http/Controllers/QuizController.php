@@ -11,31 +11,41 @@ class QuizController extends Controller
 {
     public function index()
     {
-        $skills = Skill::all(); // ⚠️ هنا المشكلة إذا كانت الداتابيز غير مهيأة
+        $skills = Skill::all(); 
         return view('quiz', compact('skills'));
     }
 
     public function submit(Request $r)
     {
+        // 1. التحقق من اختيار مهارة واحدة على الأقل
         $r->validate(['skills' => 'required|array|min:1']);
+        
         $user = Auth::user();
-        
-        $user->skills()->sync($r->skills);
+        if ($user) {
+            $user->skills()->sync($r->skills);
+        }
     
-        // جلب التخصصات المرتبة حسب الأولوية الأعلى
-        $matchingMajors = Major::whereHas('skills', function($query) use ($r) {
-            $query->whereIn('skills.id', $r->skills);
-        })
-        ->withCount(['skills' => function($query) use ($r) {
-            $query->whereIn('skills.id', $r->skills);
-        }])
-        ->orderBy('skills_count', 'desc')
-        ->get();
+        // 2. جلب التخصصات المرتبطة بالمهارات المختارة بطريقة مرنة ومضمونة
+        $selectedSkills = $r->skills;
+
+        $matchingMajors = Major::whereHas('skills', function($query) use ($selectedSkills) {
+                $query->whereIn('skills.id', $selectedSkills);
+            })
+            ->with(['skills' => function($query) use ($selectedSkills) {
+                $query->whereIn('skills.id', $selectedSkills);
+            }])
+            ->get()
+            // ترتيب التخصصات برمجياً حسب عدد المهارات المشتركة من الأعلى للأقل
+            ->sortByDesc(function($major) use ($selectedSkills) {
+                return $major->skills->count();
+            })
+            // إزالة التكرار بناءً على اسم التخصص وإعادة ترتيب الـ Indexes للـ Blade
+            ->unique('name')
+            ->values();
     
-        // 🌟 تعديل السطر السحري: أضفنا ->values() في النهاية لإعادة ترتيب المؤشرات ومنع انهيار الـ Blade
-        $matchingMajors = $matchingMajors->unique('name')->values();
-    
-        return view('quiz_results', compact('matchingMajors'));
-        
+        // إرسال المتغير الصحيح بنفس الاسم المتوقع في صفحة quiz_results
+        return view('quiz_results', [
+            'matchingMajors' => $matchingMajors
+        ]);
     }
 }
