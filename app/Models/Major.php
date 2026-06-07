@@ -15,7 +15,7 @@ class Major extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class);
+        return $this->belongsToMany(Skill::class, 'major_skill', 'major_id', 'skill_id');
     }
 
     public function universities()
