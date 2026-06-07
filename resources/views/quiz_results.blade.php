@@ -15,7 +15,7 @@
                         {{ Str::limit($major->description) }}
                     </p>
                     <div class="card-actions">
-                    <a href="{{ route('major_details_public', $major->id) }}" class="detayuni btn">
+                    <a href="{{ route('major.details', $major->id) }}" class="detayuni btn">
                         Detayları Gör
                     </a>
                     @auth

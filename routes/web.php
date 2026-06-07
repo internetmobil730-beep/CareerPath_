@@ -25,7 +25,11 @@ Route::get('/api/user/favorites', [FavoriteController::class, 'getFavorites']);
 Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
 
 // Düğmelerin ve arama çubuğunun Blade dosyasında ne yazılırsa yazılsın çalışmasını sağlamak için beklenen adlar (nokta ve tirelerle birlikte) tekrarlanıyor.
-Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major.details');
+// Hem eski ismi desteklesin:
+Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
+
+// Hem de yeni noktalı ismi desteklesin:
+Route::get('/major-details-alt/{id}', [MajorController::class, 'showPublic'])->name('major.details');
 Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
 
 // Hesap bağlantıları ve giriş
