@@ -25,12 +25,17 @@ Route::get('/api/user/favorites', [FavoriteController::class, 'getFavorites']);
 Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
 
 // Düğmelerin ve arama çubuğunun Blade dosyasında ne yazılırsa yazılsın çalışmasını sağlamak için beklenen adlar (nokta ve tirelerle birlikte) tekrarlanıyor.
-// Hem eski ismi desteklesin:
+// Hem eski ismi desteklesinsin:
 Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
 
 // Hem de yeni noktalı ismi desteklesin:
 Route::get('/major-details-alt/{id}', [MajorController::class, 'showPublic'])->name('major.details');
-Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
+
+// Mevcut Blade dosyalarında kullanılan eski adı destekler
+Route::get('/university-details/{id}', [UniversityController::class, 'showPublic'])->name('university_details');
+
+// Yeni puan tabanlı isimlendirme desteklenmektedir.
+Route::get('/university-details-alt/{id}', [UniversityController::class, 'showPublic'])->name('university.details');
 
 // Hesap bağlantıları ve giriş
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
@@ -43,6 +48,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // 2. Öğrenciler ve normal kullanıcılar için bağlantılar (yöneticilerin buraya girmesine izin verilmez)
 Route::middleware(['auth', 'block.admin'])->group(function () {
     Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
+    
+// Eski veya yeni Blade dosyalarında "Rota Bulunamadı" hatası görünmemesi için sınavın gönderilmesinde her iki ismin de kullanılmasına destek.
     Route::post('/quiz', [QuizController::class, 'submit'])->name('quiz.submit');
     Route::post('/quiz-results', [QuizController::class, 'submit'])->name('quiz_results.submit');
 });
@@ -61,7 +68,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 });
 
 
-// 4. Kapsamlı önbellek temizleme ve çevrimiçi tablo sıfırlama (çakışma olmadan) için geliştirilmiş kod
+// 4. Kapsamlı önbellek temizleme ve çevrimiçi tablo sıفırlama (çakışma olmadan) için geliştirilmiş kod
 Route::get('/run-migrate-path', function() {
     try {
         // 1. Bağlantı veya ayar çakışmalarının oluşmadığından emin olmak için Laravel önbelleğini tamamen temizleyin.
