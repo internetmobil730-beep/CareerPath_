@@ -19,16 +19,18 @@ class SearchController extends Controller
                                     ->orWhere('district', 'LIKE', "%{$query}%")
                                     ->get();
 
-        // 2. البحث في التخصصات
+        // 2. البحث في التخصصات (مع جلب الجامعات المرتبطة بكل تخصص)
         $majors = Major::where('name', 'LIKE', "%{$query}%")
                         ->orWhere('description', 'LIKE', "%{$query}%")
+                        ->with('universities') //  السطر السحري المضاف هنا ليعمل زر الجامعات
                         ->get();
 
-        //  السطر السحري: تصفية التخصصات المتكررة بناءً على الاسم ليعود كرت واحد فقط 
+        // تصفية التخصصات المتكررة بناءً على الاسم ليعود كرت واحد فقط 
         $majors = $majors->unique('name');
 
-        // 3. البحث في المهارات 
+        // 3. البحث في المهارات (مع جلب التخصصات المرتبطة بكل مهارة)
         $skills = Skill::where('name', 'LIKE', "%{$query}%")
+                        ->with('majors') //  هذا ممتاز وموجود لديكِ ليعمل زر التخصصات
                         ->get();
 
         return view('search_results', compact('universities', 'majors', 'skills', 'query'));
