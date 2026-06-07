@@ -23,6 +23,10 @@ class MajorSkillSeeder extends Seeder
             $name = $major->name; // الاسم الحقيقي للتخصص
             $skillIds = [];
 
+            if (in_array($name, ['Bilgisayar Programcılıgı', 'Computer Programcılığı'])) {
+                $name = 'Bilgisayar Programcılığı';
+            }
+
             //  [الدفعة الأولى] المهارات العلمية والهندسية والطبية البحتة
 
             // 1. مهارة: İleri Matematik
