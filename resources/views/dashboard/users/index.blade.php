@@ -50,12 +50,12 @@
                         <tbody>
                             @forelse($users as $user)
                             <tr>
-                                <td class="p-2 align-middle font-weight-bold içerik">{{ $user->id }}</td>
-                                <td class="p-2 align-middle içerik">{{ $user->name }}</td>
-                                <td class="p-2 align-middle içerik">{{ $user->email }}</td>
-                                <td class="p-2 align-middle içerik">{{ $user->created_at->format('Y-m-d') }}</td>
-                                <td class="p-2 align-middle">
-                                    <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group">
+                                <td class="p-2 align-middle font-weight-bold içerik font-weight-bold">{{ $user->id }}</td>
+                                <td class="p-2 align-middle font-weight-bold içerik font-weight-bold">{{ $user->name }}</td>
+                                <td class="p-2 align-middle font-weight-bold içerik font-weight-bold">{{ $user->email }}</td>
+                                <td class="p-2 align-middle font-weight-bold içerik font-weight-bold">{{ $user->created_at->format('Y-m-d') }}</td>
+                                <td class="p-2 align-middle font-weight-bold font-weight-bold">
+                                    <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group font-weight-bold">
                                         <a href="{{ route('dashboard.users.edit', $user->id) }}" class="btn btn-sm userbtn1 px-3 py-1-5">
                                             Düzenle
                                         </a>

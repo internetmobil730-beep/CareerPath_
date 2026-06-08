@@ -56,13 +56,13 @@
                             <tr>
                                 <td class="p-2 text-center align-middle font-weight-bold">{{ $uni->id }}</td>
                                 <td class="p-2 text-center align-middle font-weight-bold">{{ $uni->name }}</td>
-                                <td class="p-2 text-center align-middle">
+                                <td class="p-2 text-center align-middle font-weight-bold">
                                     <span class="px-2">{{ strtoupper($uni->type) }}</span>
                                 </td>
-                                <td class="p-2 text-center align-middle">
+                                <td class="p-2 text-center align-middle font-weight-bold">
                                     {{ $uni->district }} / {{ $uni->side }}
                                 </td>
-                                <td class="p-2 text-center align-middle">
+                                <td class="p-2 text-center align-middle font-weight-bold">
                                     <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group">
                                         <a href="{{ route('dashboard.universities.show', $uni->id) }}" 
                                            class="detay btn px-3 py-1-5">Detayları Gör</a>

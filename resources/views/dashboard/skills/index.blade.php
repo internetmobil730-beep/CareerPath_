@@ -54,10 +54,10 @@
                             @foreach($skills as $skill)
                             <tr>
                                 <td class="p-2 text-center align-middle font-weight-bold">{{ $skill->id }}</td>
-                                <td class="p-2 text-center align-middle">{{ $skill->name }}</td>
-                                <td class="p-2 text-center align-middle">{{ $skill->category->name }}</td>
-                                <td class="p-2 text-center align-middle">
-                                    <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group">
+                                <td class="p-2 text-center align-middle font-weight-bold">{{ $skill->name }}</td>
+                                <td class="p-2 text-center align-middle font-weight-bold">{{ $skill->category->name }}</td>
+                                <td class="p-2 text-center align-middle font-weight-bold">
+                                    <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group font-weight-bold">
                                         <a href="{{ route('dashboard.skills.show', $skill->id) }}" 
                                            class="detay btn px-3 py-1-5">Detayları Gör</a>
                                         <a href="{{ route('dashboard.skills.edit', $skill->id) }}" 

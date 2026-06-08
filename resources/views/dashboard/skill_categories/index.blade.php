@@ -54,9 +54,9 @@
                             @foreach($categories as $category)
                             <tr>
                                 <td class="p-2 text-center align-middle font-weight-bold">{{ $category->id }}</td>
-                                <td class="p-2 text-center align-middle">{{ $category->name }}</td>
-                                <td class="p-2 text-center align-middle">{{ $category->name }}</td> <td class="p-2 text-center align-middle">
-                                    <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group">
+                                <td class="p-2 text-center align-middle font-weight-bold">{{ $category->name }}</td>
+                                <td class="p-2 text-center align-middle font-weight-bold">{{ $category->name }}</td> <td class="p-2 text-center align-middle">
+                                    <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group font-weight-bold">
                                         <a href="{{ route('dashboard.skill_categories.show', $category->id) }}" 
                                            class="detay btn px-3 py-1-5">Detayları Gör</a>
                                         <a href="{{ route('dashboard.skill_categories.edit', $category->id) }}" 

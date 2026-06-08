@@ -53,16 +53,16 @@
                             @foreach($majors as $major)
                             <tr>
                                 <td class="p-2 text-center align-middle font-weight-bold">{{ $major->id }}</td>
-                                <td class="p-2 text-center align-middle">
+                                <td class="p-2 text-center align-middle font-weight-bold">
                                     <div class="bölüm-text">{{ $major->name}}</div>
                                 </td>
-                                <td class="p-2 text-center uppercase align-middle">
+                                <td class="p-2 text-center uppercase align-middle font-weight-bold">
                                     {{ str_replace('_', ' ', $major->degree_type) }}
                                 </td>
-                                <td class="p-2 text-center uppercase align-middle">
+                                <td class="p-2 text-center uppercase align-middle font-weight-bold">
                                     {{ str_replace('_', ' ', $major->education_language) }}
                                 </td>
-                                <td class="p-2 text-center align-middle">
+                                <td class="p-2 text-center align-middle font-weight-bold">
                                     <div class="d-flex justify-content-center align-items-center gap-1 text-nowrap custom-btn-group">
                                         <a href="{{ route('dashboard.majors.show', $major->id) }}"
                                             class="detay btn px-3 py-1-5">Detayları Gör</a>
