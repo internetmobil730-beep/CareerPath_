@@ -43,149 +43,91 @@
 
                 {{-- 1. قسم الجامعات --}}
                 @foreach($universities as $uni)
-                    <div class="card details-card shadow-lg  d-flex flex-column ">
-                        <div class="card-header p-5">
-                            <h2 class="title">{{ $university->name }}</h2>
-                            @auth
-                            @if(auth()->user()->favoriteUniversities->contains($university->id))
-                            <button class="btn-card-favorite cart-details-fav active" data-id="{{ $university->id }}"
-                                data-type="university">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                            @else
-                            <button class="btn-card-favorite cart-details-fav" data-id="{{ $university->id }}" data-type="university">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
-                            @endif
-                            @else
-                            <button class="btn-card-favorite cart-details-fav" data-id="{{ $university->id }}" data-type="university">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
-                            @endauth
+                <div class="card mb-5 shadow-sm border-1 rounded-3" style="border-color: #fcece8;">
+                    <div class="card-body p-5">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            {{-- تلوين العناوين باللون الزيتي الجذاب المماثل للصورة الثانية --}}
+                            <h2 class="title font-weight-bold" style="color: #15737a;">{{ $uni->name }}</h2>
+                            <span class="badge px-3 py-2 rounded-pill"
+                                style="background-color: #E49BA6; color: #fff;">Üniversite</span>
                         </div>
-                        <div class="card-body p-3">
-                            <h3>Hakkında:</h3>
-                            <p>{{ $university->description }}</p>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><strong>Tür : </strong>
-                                            {{ $university->type == 'devlet' ? 'Devlet ' : 'Vakıf' }}</li>
-                                        <li class="list-group-item"><strong>İlçe : </strong> {{ $university->district }}</li>
-                                        <li class="list-group-item"><strong>Yaka : </strong> {{ $university->side }}</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><strong>Eğitim Dilleri : <br></strong>
-                                            @foreach($university->education_languages as $lang)
-                                            <span class="badge fs-6 me-2 mt-3">{{ strtoupper($lang) }}</span>
-                                            @endforeach
-                                        </li>
-                                    </ul>
-                                </div>
+                        <hr class="my-4">
+
+                        <div class="mb-4">
+                            <h5 class="font-weight-bold mb-2" style="color: #15737a;">Hakkında:</h5>
+                            <p class="card-text text-muted" style="font-size: 1.05rem; line-height: 1.7;">
+                                {{ Str::limit($uni->description, 250) }}
+                            </p>
+                        </div>
+
+                        <div class="row bg-light p-3 rounded mb-4 mx-0" style="font-size: 0.95rem;">
+                            <div class="col-sm-6 mb-2 mb-sm-0">
+                                <strong style="color: #15737a;">İlçe / Konum:</strong> <span
+                                    class="text-secondary">{{ $uni->district }} ({{ $uni->side }})</span>
+                            </div>
+                            <div class="col-sm-6">
+                                <strong style="color: #15737a;">Tür:</strong> <span
+                                    class="text-secondary">{{ ucfirst($uni->type) }}</span>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endforeach
 
                 {{-- 2. قسم التخصصات --}}
                 @foreach($majors as $major)
-                    <div class="card details-card shadow-lg  d-flex flex-column mb-5">
-                         <div class="card-body p-5">
-                             <h1 class="title  mb-4">{{ $major->name }}</h1>
-                 
-                             @auth
-                             @if(auth()->user()->favoriteMajors->contains($major->id))
-                             <button class="btn-card-favorite cart-details-fav active" data-id="{{ $major->id }}" data-type="major">
-                                 <i class="fa-solid fa-heart"></i>
-                             </button>
-                             @else
-                             <button class="btn-card-favorite cart-details-fav" data-id="{{ $major->id }}" data-type="major">
-                                 <i class="fa-regular fa-heart"></i>
-                             </button>
-                             @endif
-                             @else
-                             <button class="btn-card-favorite cart-details-fav" data-id="{{ $major->id }}" data-type="major">
-                                 <i class="fa-regular fa-heart"></i>
-                             </button>
-                             @endauth
-                 
-                             <div class="d-flex gap-3 mb-4">
-                                 <div class="p-2 border rounded bg-light">
-                                     <strong class="thead">Eğitim Dili:</strong>
-                                     <span class="badge fs-6 me-2">{{ $availableLanguages }}</span>
-                                 </div>
-                 
-                                 <div class="p-2 border rounded bg-light">
-                                     <strong class="thead">Derece:</strong>
-                                     <span class="badge fs-6 me-2">{{ $major->degree_type }}</span>
-                                 </div>
-                             </div>
-                 
-                             <hr>
-                 
-                             <div class="mt-4">
-                                 <div class="p-4 border-start border-4 border-primary bg-white shadow-sm"
-                                     style="font-size: 1.2rem; line-height: 1.8;">
-                                     {{-- عرض الشرح كما هو مخزن في الداتابيز --}}
-                                     {!! nl2br(e($major->description)) !!}
-                                 </div>
-                             </div>
-                 
-                             {{-- الزر الذي يظهر الجامعات عند الضغط عليه --}}
-                             <div class="mt-5">
-                                 <button class="btn btn-lg px-5 py-3 shadow" type="button" data-bs-toggle="collapse"
-                                     data-bs-target="#uniCollapse">
-                                     Bu Bölümü Sunan Üniversiteleri Gör
-                                 </button>
-                             </div>
-                 
-                             <div class="collapse mt-4" id="uniCollapse">
-                                 <div class="row">
-                                     @forelse($major->universities as $university)
-                                     <div class="details-card col-md-4 mb-3">
-                                         <div class="card h-100 p-3 border-warning shadow-sm d-flex flex-column justify-content-between">
-                                             <div>
-                                                 <h5 class="fw-bold">{{ $university->name }}</h5>
-                                                 <p class="text-muted mb-2 small">Ücret: ${{ $university->pivot->tuition_usd }}</p>
-                                             </div>
-                 
-                                             <div class="mt-2 text-end">
-                 
-                                                 <a href="{{ route('university_details', $university->id) }}"
-                                                     class="detayuni btn btn-sm btn-outline-warning">
-                                                     Üniversite Detayları
-                                                 </a>
-                                                 @auth
-                                                 @if(auth()->user()->favoriteUniversities->contains($university->id))
-                                                 <button class="btn-card-favorite uni-cart active" data-id="{{ $university->id }}"
-                                                     data-type="university">
-                                                     <i class="fa-solid fa-heart"></i>
-                                                 </button>
-                                                 @else
-                                                 <button class="btn-card-favorite uni-cart" data-id="{{ $university->id }}"
-                                                     data-type="university">
-                                                     <i class="fa-regular fa-heart"></i>
-                                                 </button>
-                                                 @endif
-                                                 @else
-                                                 <button class="btn-card-favorite uni-cart" data-id="{{ $university->id }}"
-                                                     data-type="university">
-                                                     <i class="fa-regular fa-heart"></i>
-                                                 </button>
-                                                 @endauth
-                                             </div>
-                                         </div>
-                                     </div>
-                                     @empty
-                                     <p class="text-center text-muted">Kayıtlı üniversite bulunamadı.</p>
-                                     @endforelse
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
+                <div class="card mb-5 shadow-sm border-1 rounded-3" style="border-color: #fcece8;">
+                    <div class="card-body p-5">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h2 class="title font-weight-bold" style="color: #15737a;">{{ $major->name }}</h2>
+                            <span class="badge px-3 py-2 rounded-pill"
+                                style="background-color: #E49BA6; color: #fff;">Bölüm</span>
+                        </div>
+                        <hr class="my-4">
+
+                        <div class="mb-4 p-3 border-start border-primary border-4 bg-light rounded">
+                            <p class="card-text text-secondary mb-0" style="font-size: 1.05rem; line-height: 1.6;">
+                                {{ Str::limit($major->description, 250) }}
+                            </p>
+                        </div>
+
+                        <div class="mt-5">
+                            <button class="btn btn-lg px-5 py-3 shadow text-white" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#uniCollapse{{ $major->id }}"
+                                style="background-color: #ffcc00; font-weight: 500;">
+                                Bu Bölümü Sunan Üniversiteleri Gör
+                            </button>
+                        </div>
+
+                        <div class="collapse mt-4" id="uniCollapse{{ $major->id }}">
+                            <div class="row">
+                                @forelse($major->universities as $university)
+                                <div class="details-card col-md-4 mb-3">
+                                    <div class="card h-100 p-3 border-warning shadow-sm d-flex flex-column justify-content-between"
+                                        style="border-radius: 12px; border-color: #fcece8 !important;">
+                                        <div>
+                                            <h5 class="fw-bold" style="color: #15737a;">{{ $university->name }}</h5>
+                                            <p class="text-muted mb-2 small">Anlaşmalı Ücret:
+                                                ${{ $university->pivot->tuition_usd ?? '0' }}</p>
+                                        </div>
+                                        <div class="mt-2 text-end">
+                                            {{-- تنسيق زر الانتقال مثل لون الصورة الثانية تماماً --}}
+                                            <a href="{{ route('university.details', $university->id) }}"
+                                                class="btn btn-sm text-white px-3"
+                                                style="background-color: #D38B97; border-radius: 6px;">
+                                                Detayları Gör
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @empty
+                                <p class="text-center text-muted">Bu bölüm için kayıtlı üniversite bulunamadى.</p>
+                                @endforelse
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 @endforeach
 
                 {{-- 3. قسم المهارات (مع حل مشكلة التكرار الموضحة في صورة image_21c16c.png) --}}
@@ -199,8 +141,9 @@
                         </div>
 
                         <div class="mt-5">
-                            <button class="btn btn-lg px-5 py-3 shadow" type="button"data-bs-toggle="collapse" 
-                                data-bs-target="#skillCollapse{{ $skill->id }}">
+                            <button class="btn btn-lg px-5 py-3 shadow text-white" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#skillCollapse{{ $skill->id }}"
+                                style="background-color: #ffcc00; font-weight: 500;">
                                 Bu Beceriye Uygun Bölümleri Gör
                             </button>
                         </div>
