@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="uni container-fluid py-4">
-    <div class="row justify-content-center align-items-center mt-5 mb-4 px-3">
+    <div class="row justify-content-center align-items-center mb-4 px-3">
         <div class="col-12 col-md-8 col-lg-6">
             <div class="d-flex align-items-center justify-content-center p-2 rounded custom-search-container">
 
