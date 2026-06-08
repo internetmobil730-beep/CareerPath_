@@ -42,13 +42,9 @@
                 </div>
                 @endforeach
             </div>
-            
-            <div class="card-footer p-2  text-end">
                 <button type="submit" class="btn quiz-btn mt-4">
                     Sonuçları Görüntüle
                 </button>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary mt-2 me-2">Geri Dön</a>
-            </div>
         </form>
 
 

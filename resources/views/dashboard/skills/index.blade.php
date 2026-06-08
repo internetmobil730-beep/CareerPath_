@@ -18,15 +18,6 @@
                         </button>
                     </div>
                 </form>
-
-                <div class="header_icons flex-shrink-0">
-                    <div class="icon favorite-trigger">
-                        <a href="#" class="d-block text-decoration-none">
-                            <i class="fa-regular fa-heart custom-heart-icon"></i>
-                            <span class="count count_favourite">0</span>
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

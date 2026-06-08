@@ -60,7 +60,6 @@
                         </button>
                         @endauth
                     </div>
-
                 </div>
             </div>
         </div>
