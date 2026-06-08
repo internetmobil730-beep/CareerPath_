@@ -43,10 +43,6 @@
         </div>
 
         <button class="btn w-100 mb-4">Kayıt Ol</button>
-        <a href="{{ route('auth.google') }}" style="display: flex; align-items: center; justify-content: center; background: white; color: #444; border: 1px solid #ddd; padding: 10px; border-radius: 6px; text-decoration: none; font-weight: 600; margin-top: 15px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px; margin-right: 10px;">
-            Google ile Giriş Yap
-        </a>
       </form>
     </div>
   </div>
