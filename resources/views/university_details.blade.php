@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="card details-card shadow-lg  d-flex flex-column ">
+    <div class="card details-card shadow-lg  d-flex flex-column mb-4">
         <div class="card-header p-5">
             <h2 class="title">{{ $university->name }}</h2>
             @auth

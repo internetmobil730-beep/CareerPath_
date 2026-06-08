@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="card details-card shadow-lg  d-flex flex-column mb-5">
+    <div class="card details-card shadow-lg  d-flex flex-column mb-4">
         <div class="card-body p-5">
             <h1 class="title  mb-4">{{ $major->name }}</h1>
 
@@ -86,7 +86,7 @@
                     <div class="details-card col-md-4 mb-3">
                         <div class="card h-100 p-3 border-warning shadow-sm d-flex flex-column justify-content-between">
                             <div>
-                                <h5 class="fw-bold">{{ $university->name }}</h5>
+                                <h5 class="fw-bold" style="color: #15737a;">{{ $university->name }}</h5>
                                 <p class="text-muted mb-2 small">Ücret: ${{ $university->pivot->tuition_usd }}</p>
                             </div>
 
