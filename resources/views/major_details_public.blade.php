@@ -115,6 +115,9 @@
                                 </button>
                                 @endauth
                             </div>
+                            <div class="card-footer p-2  text-end">
+                                <a href="{{ url()->previous() }}" class="btn btn-secondary mt-2 me-2">Geri Dön</a>
+                            </div>
                         </div>
                     </div>
                     @empty
