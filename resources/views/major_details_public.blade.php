@@ -3,7 +3,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="uni container-fluid py-4">
+<div class="container">
     <div class="row justify-content-center align-items-center px-3">
         <div class="col-12 col-md-8 col-lg-6">
             <div class="d-flex align-items-center justify-content-center p-2 rounded custom-search-container">
