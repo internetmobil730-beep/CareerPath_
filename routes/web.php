@@ -120,14 +120,14 @@ Route::get('/run-migrate-path', function() {
 
 
 // 5. Sunucu durumunu kontrol etmek ve hesabı e-posta yoluyla onaylamak için bağlantılar (doğrudan bağlantı için kimlik doğrulama koruması bulunmamaktadır)
-Route::get('/healthz', function () { 
-    return response()->json(['status' => 'ok']); 
-});
+//Route::get('/healthz', function () { 
+//    return response()->json(['status' => 'ok']); 
+//});
 
 // Kullanıcının kayıt olduktan sonra e-postalarını kontrol edebilmesi için uyarı sayfasının görüntüleneceği yol (kimlik doğrulaması gereklidir)
-Route::get('/email/verify', function () { 
-    return view('auth.verify-notice'); 
-})->middleware('auth')->name('verification.notice');
+//Route::get('/email/verify', function () { 
+//    return view('auth.verify-notice'); 
+//})->middleware('auth')->name('verification.notice');
 
 // E-postadaki bağlantıya kullanıcının tıklaması için işlem yolu (herhangi bir tarayıcıdan çalışması için kimlik doğrulama koruması olmadan)
-Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+//Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
