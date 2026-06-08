@@ -13,13 +13,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Http\Request;
 
 // =========================================================================
 // 1. Genel Sayfalar ve Arama (Herkese Açık - Koruma Olmadan)
 // =========================================================================
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/global-search', [SearchController::class, 'globalSearch'])->name('global.search');
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Detay Sayfaları (Eski ve Yeni İsimlendirme Destekleri)
 Route::get('/major-details/{id}', [MajorController::class, 'showPublic'])->name('major_details_public');
@@ -41,19 +42,22 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // 2. E-posta Onaylama Mekanizması (Email Verification Routes)
 // =========================================================================
 
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
 // صفحة التنبيه التي تخبر المستخدم بضرورة تفعيل الإيميل قبل تصفح الموقع
-Route::get('/email/verify', function () { 
-    return view('auth.verify-notice'); 
-})->middleware('auth')->name('verification.notice');
+//Route::get('/email/verify', function () { 
+//    return view('auth.verify-notice'); 
+//})->middleware('auth')->name('verification.notice');
 
-// الرابط الفعلي القادم من الإيميل لتفعيل الحساب (بدون auth لتجنب مشاكل اختلاف المتصفحات)
-Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+//// الرابط الفعلي القادم من الإيميل لتفعيل الحساب (بدون auth لتجنب مشاكل اختلاف المتصفحات)
+//Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 
-// مسار إعادة إرسال كود التفعيل في حال ضياعه أو لم يصل للبريد أول مرة
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+//// مسار إعادة إرسال كود التفعيل في حال ضياعه أو لم يصل للبريد أول مرة
+//Route::post('/email/verification-notification', function (Request $request) {
+//    $request->user()->sendEmailVerificationNotification();
+//    return back()->with('message', 'Verification link sent!');
+//})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 // =========================================================================

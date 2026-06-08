@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Major;
 use App\Models\University;
 
-class User extends Authenticatable implements MustVerifyEmail // تطبيق واجهة التحقق المباشر
+class User extends Authenticatable //implements MustVerifyEmail // تطبيق واجهة التحقق المباشر
 {
     // دمج الـ Traits بدون تكرار برمي لتجنب أي تعارض في الخصائص
     use HasApiTokens, HasFactory, Notifiable, HasRoles, HasProfilePhoto, TwoFactorAuthenticatable;
