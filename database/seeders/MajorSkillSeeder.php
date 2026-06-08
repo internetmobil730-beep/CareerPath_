@@ -11,17 +11,16 @@ class MajorSkillSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. تصفير الجدول تماماً لمسح أي ربط عشوائي قديم
-        DB::table('major_skill')->truncate();
-
         // 2. جلب جميع المهارات من الداتابيز لبناء الروابط الصحيحة
-        $skills = Skill::pluck('id', 'name')->toArray();
+        $skills = DB::table('skills')->pluck('id', 'name')->toArray();
+        $majors = DB::table('majors')->get();
+
         $pivotData = [];
 
         // 3. جلب التخصصات وتصنيفها بدقة تامة لتوزيع المهارات عليها
-        foreach (Major::all() as $major) {
-            $name = $major->name; // الاسم الحقيقي للتخصص
+        foreach ($majors as $major) {
             $skillIds = [];
+            $name = trim($major->name);
 
             if (in_array($name, ['Bilgisayar Programcılıgı', 'Computer Programcılığı'])) {
                 $name = 'Bilgisayar Programcılığı';
@@ -671,7 +670,7 @@ class MajorSkillSeeder extends Seeder
             // 82. مهارة: Dijital Pazarlama ve Reklamcılık
             if (in_array($name, [
                 'Pazarlama', 'Yeni Medya ve İletişim', 'Sosyal Medya Yöneticiliği', 'Elektronik Ticaret ve Yönetimi', 
-                'Halkla İlişkiler ve Reklamcılık', 'Yönetim Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı'
+                'Halkla İlişkiler ve Reklamcılık', 'Yönetم Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Dijital Pazarlama ve Reklamcılık'])) $skillIds[] = $skills['Dijital Pazarlama ve Reklamcılık'];
             }
@@ -706,8 +705,6 @@ class MajorSkillSeeder extends Seeder
             ])) {
                 if (isset($skills['Sağlık Turizmi Pazarlaması'])) $skillIds[] = $skills['Sağlık Turizmi Pazarlaması'];
             }
-
-            //  [الدفعة التاسعة] مهارات التربية، العلوم الاجتماعية، والإعلام الرقمي
 
             // 87. مهارة: Eğitim Psikolojisi
             if (in_array($name, [
@@ -750,13 +747,11 @@ class MajorSkillSeeder extends Seeder
 
             // 92. مهارة: Sosyal Medya Yönetimi
             if (in_array($name, [
-                'Sosyal Medya Yöneticiliği', 'Yeni Medya ve İletişim', 'Halkla İlişkiler ve Reklamcılık', 
+                'Sosyal Medya Yöneticiliği', 'Yeni Medya ve İletيشim', 'Halkla İlişkiler ve Reklamcılık', 
                 'Pazarlama', 'Görsel İletişim Tasarımı', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Sosyal Medya Yönetimi'])) $skillIds[] = $skills['Sosyal Medya Yönetimi'];
             }
-
-            //  [الدفعة العاشرة] مهارات التحليل، الإحصاء، البيانات الضخمة والقانون
 
             // 93. مهارة: Sayısal Analiz
             if (in_array($name, [
@@ -790,7 +785,7 @@ class MajorSkillSeeder extends Seeder
                 'İlköğretim Matematik Öğretmenliği', 'Özel Eğitim Öğretmenliği', 
                 'Psikolojik Danışmanlık ve Rehberlik (PDR)'
             ])) {
-                if (isset($skills['Ölçme ve Değerlendirme'])) $skillIds[] = $skills['Ölçme ve Değerlendirme'];
+                if (isset($skills['Ölçme ve Değerlendirme'])) $skillsIds[] = $skills['Ölçme ve Değerlendirme'];
             }
 
             // 97. مهارة: Hukuk Prensipleri
@@ -816,8 +811,6 @@ class MajorSkillSeeder extends Seeder
             ])) {
                 if (isset($skills['Finansal Analiz'])) $skillIds[] = $skills['Finansal Analiz'];
             }
-
-            //  [الدفعة الحادية عشرة] مهارات اللغات، الترجمة، والتحليل اللغوي
 
             // 100. مهارة: Akademik İngilizce
             if (in_array($name, [
@@ -862,8 +855,6 @@ class MajorSkillSeeder extends Seeder
             ])) {
                 if (isset($skills['Fransızca Dil Yapısı'])) $skillIds[] = $skills['Fransızca Dil Yapısı'];
             }
-
-            //  [الدفعة الثانية عشرة] مهارات التربية، الأخلاقيات الطبية، وفنون الطهي
 
             // 106. مهارة: Hayat Boyu Öğrenme
             if (in_array($name, [
@@ -911,16 +902,19 @@ class MajorSkillSeeder extends Seeder
             ])) {
                 if (isset($skills['Pastacılık ve Ekmekçilik'])) $skillIds[] = $skills['Pastacılık ve Ekmekçilik'];
             }
-        }
 
-            // حقن البيانات النظيفة والمطابقة للتخصص الحالي
+            // حقن مصفوفة الربط لكل تخصص أولاً بأول داخل الـ foreach الكبرى لضمان عدم ضياع التخصصات
             if (!empty($skillIds)) {
                 $this->insertSkillsForMajor($major->id, $skillIds, $pivotData);
             }
+        }
 
-        // 4. إدخال مصفوفة الربط المفلترة 100% لجدول العلاقات
+        // 4. الإدخال النهائي في جدول العلاقات دفعة واحدة للأداء العالي (Bulk Insert)
         if (!empty($pivotData)) {
-            DB::table('major_skill')->insertOrIgnore($pivotData);
+            // تقسيم البيانات لـ 1000 سطر بكل دفعة لكي لا يحدث خطأ تجاوز حجم حزمة SQL
+            foreach (array_chunk($pivotData, 1000) as $chunk) {
+                DB::table('major_skill')->insertOrIgnore($chunk);
+            }
         }
     }
 
