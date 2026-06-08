@@ -109,7 +109,7 @@ class MajorSeeder extends Seeder
            ['name' => 'Sınıf Öğretmenliği', 'desc' => 'İlkokul (1-4. sınıf) düzeyindeki çocukların temel eğitim süreçlerini yöneten, okuma-yazma ve temel bilimler eğitimini pedagojik yöntemlerle veren branştır.'],
            ['name' => 'İngilizce Öğretmenliği', 'desc' => 'İngilizceyi yabancı dil olarak öğretecek; dil öğretim metodolojileri ve sınıf yönetimi konusunda uzmanlaşmış eğitimciler yetiştirir.'],
            ['name' => 'Psikolojik Danışmanlık ve Rehberlik (PDR)', 'desc' => 'Bireylerin kişisel, sosyal, eğitsel ve mesleki gelişimlerini desteklemek ve sorunlarıyla başa çıkma becerisi kazandırmak amacıyla rehberlik hizmeti sunan alandır.'],
-           ['name' => 'Özel Eğitim Öğretmenliği', 'desc' => 'Zihinsel, physical veya duygusal açıdan özel gereksinimi olan bireylere, onların öğrenme hızına ve ihtiyaçlarına uygun tekniklerle eğitim veren profesyonel branştır.'],
+           ['name' => 'Özel Eğitim Öğretmenliği', 'desc' => 'Zihinsel, fiziksel veya duygusal açıdan özel gereksinimi olan bireylere, onların öğrenme hızına ve ihtiyaçlarına uygun tekniklerle eğitim veren profesyonel branştır.'],
            ['name' => 'İlköğretim Matematik Öğretmenliği', 'desc' => 'Ortaokul düzeyindeki öğrencilere temel matematik kavramlarını öğretecek, pedagojik formasyon eğitimi almış öğretmenler yetiştirir.'],
        
            // --- Temel Bilimler ve Diğerleri (العلوم الأساسية واللاهوت) ---
@@ -150,12 +150,12 @@ class MajorSeeder extends Seeder
            ['name' => 'Bilişim Güvenliği Teknolojisi', 'description' => 'Bilgisayar ağlarını ve verileri siber saldırılara karşı korumak için güvenlik protokolleri geliştiren ve sistem açıklarını denetleyen daldır.'],
            ['name' => 'İnternet ve Ağ Teknolojileri', 'description' => 'Bilgisayar ağlarının kurulumu, sunucu yönetimi, web tasarımı ve ağ güvenliği sistemlerinin işletilmesini kapsayan bilişim alanıdır.'],
            ['name' => 'Mobil Teknolojiler', 'description' => 'Akıllı telefonlar ve tabletler için uygulama geliştirme (iOS/Android), mobil oyun tasarımı ve mobil sistemlerin altyapısı üzerine eğitim verir.'],
-           ['name' => 'Bilgisayar Destekli Tasarım ve Animasyon', 'description' => 'Bilgisayar yazılımları kullanarak 2 boyutlu og 3 boyutlu grafik tasarımı, karakter modelleme ve görsel efekt üretimi yapılan bölümdür.'],
+           ['name' => 'Bilgisayar Destekli Tasarım ve Animasyon', 'description' => 'Bilgisayar yazılımları kullanarak 2 boyutlu ve 3 boyutlu grafik tasarımı, karakter modelleme ve görsel efekt üretimi yapılan bölümdür.'],
        
            // --- Havacılık, Denizcilik ve Lojistik (الطيران، الملاحة واللوجستيك) ---
            ['name' => 'Sivil Havacılık Kabin Hizmetleri', 'description' => 'Uçuş sırasında yolcu güvenliğini sağlayan, ikram hizmetlerini yürüten ve acil durum prosedürlerini uygulayan kabin memurlarını (hostes/host) yetiştirir.'],
            ['name' => 'Sivil Hava Ulaştırma İşletmeciliği', 'description' => 'Havalimanı terminal işletmeciliği, yer hizmetleri, biletleme ve havayolu operasyonlarının idari yönetimini kapsar.'],
-           ['name' => 'Uçak Teknolojisi', 'description' => 'Hava araçlarının motor, gövde og elektronik sistemlerinin periyodik bakımını, arıza teşhisini ve onarımını yapan teknik uzmanlık alanıdır.'],
+           ['name' => 'Uçak Teknolojisi', 'description' => 'Hava araçlarının motor, gövde ve elektronik sistemlerinin periyodik bakımını, arıza teşhisini ve onarımını yapan teknik uzmanlık alanıdır.'],
            ['name' => 'Uçuş Harekat Yöneticiliği (Dispatcher)', 'description' => 'Uçuş planlarını hazırlayan, yakıt hesaplaması yapan ve uçuş boyunca pilotla sürekli iletişim kurarak operasyonu takip eden teknik daldır.'],
            ['name' => 'İnsansız Hava Aracı Teknolojisi Operatörlüğü', 'description' => 'İHA (Drone) sistemlerinin uçuş operasyonlarını yöneten, teknik bakımını yapan ve veri toplama süreçlerini yürüten bölümdür.'],
            ['name' => 'Hava Lojistiği', 'description' => 'Havayolu taşımacılığında kargo yönetimi, gümrükleme, depolama ve uçuş operasyonlarının yer hizmetleri koordinasyonunu sağlayan daldır.'],
@@ -180,7 +180,7 @@ class MajorSeeder extends Seeder
            // --- Ticari, İdari ve Sosyal Programlar (العلوم الإدارية، التجارية والتصميم) ---
            ['name' => 'Adalet', 'description' => 'Mahkemelerde ve hukuk bürolarında yazı işleri, dosyalama ve temel hukuk süreçlerinin yürütülmesinde görev alacak ara elemanlar yetiştirir.'],
            ['name' => 'İşletme Yönetimi', 'description' => 'Küçük ve orta ölçekli işletmelerin finans, pazarlama, yönetim ve organizasyon süreçlerini yürütebilecek yetkinlik kazandırır.'],
-           ['name' => 'Muhasebe ve Vergi Uygulamaları', 'description' => 'Şrkekitlerin ticari kayıtlarını tutan, beyanname hazırlayan ve mali tabloları yasal mevzuata göre düzenleyen uzmanlık alanıdır.'],
+           ['name' => 'Muhasebe ve Vergi Uygulamaları', 'description' => 'Şirketlerin ticari kayıtlarını tutan, beyanname hazırlayan ve mali tabloları yasal mevzuata göre düzenleyen uzmanlık alanıdır.'],
            ['name' => 'Dış Ticaret', 'description' => 'İthalat ve ihracat operasyonları, gümrükleme işlemleri, uluslararası ödeme yöntemleri ve lojistik süreçlerinin takibini yapan alandır.'],
            ['name' => 'Bankacılık ve Sigortacılık', 'description' => 'Finans sektöründe müşteri ilişkileri, kredi işlemleri ve sigorta poliçelerinin satışı/yönetimi süreçlerinde görev alacak personel yetiştirir.'],
            ['name' => 'E-Ticaret ve Pazarlama', 'description' => 'İnternet üzerinden ürün satışı, dijital pazarlama stratejileri, sosyal medya yönetimi ve müşteri deneyimi analizleri üzerine odaklanır.'],
