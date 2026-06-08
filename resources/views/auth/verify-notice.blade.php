@@ -1,13 +1,13 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-posta_Doğrulama</title>
+    <title>E-posta Doğrulama - CareerPath</title>
 </head>
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: rgb(246, 246, 246); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0;">
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: rgb(246, 246, 246); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; box-sizing: border-box;">
 
-    <div style="background: white; padding: 45px; border-radius: 8px; box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.25); text-align: center; max-width: 520px; border: 2px solid rgb(255, 168, 131);">
+    <div style="background: white; padding: 45px; border-radius: 8px; box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.25); text-align: center; max-width: 520px; width: 100%; border: 2px solid rgb(255, 168, 131);">
         
         <div style="margin-bottom: 25px;">
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: teal">
@@ -18,10 +18,31 @@
         
         <h2 style="color: teal; margin-bottom: 18px; font-weight: 600; font-size: 24px;">E-posta Adresinizi Doğrulayın</h2>
         
-        <p style="color: #1e293b; font-size: 16px; line-height: 1.7; margin-bottom: 0; padding: 0 10px;">
+        <p style="color: #1e293b; font-size: 16px; line-height: 1.7; margin-bottom: 25px; padding: 0 10px;">
             Lütfen e-posta adresinizi kontrol edin! Hesabınızı aktifleştirmek için doğrulama bağlantısını içeren bir e-posta gönderdik.
         </p>
+
+        @if (session('message'))
+            <div style="background-color: #d1fae5; color: #065f46; padding: 12px; border-radius: 6px; font-size: 14px; margin-bottom: 25px; border: 1px solid #a7f3d0;">
+                Yeni doğrulama bağlantısı e-posta adresinize gönderildi!
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('verification.send') }}">
+            @csrf
+            <button type="submit" style="background-color: teal; color: white; border: none; padding: 12px 25px; font-size: 15px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; box-shadow: 0 4px 6px rgba(0, 128, 128, 0.2); width: 100%; max-width: 280px;">
+                E-posta Doğrulama Bağlantısını Tekrar Gönder
+            </button>
+        </form>
+
+        <form method="POST" action="{{ route('logout') }}" style="margin-top: 20px;">
+            @csrf
+            <button type="submit" style="background: none; border: none; color: #64748b; font-size: 14px; text-decoration: underline; cursor: pointer;">
+                Çıkış Yap
+            </button>
+        </form>
+
     </div>
 
 </body>
-</html> -->
+</html>
