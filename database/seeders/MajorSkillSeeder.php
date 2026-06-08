@@ -167,12 +167,12 @@ class MajorSkillSeeder extends Seeder
 
             // 17. مهارة: Diş Morfolojisi
             if (in_array($name, [
-                'Diş Hekimliği', 'Ağız ve Diş Sağlığı', 'Diş Protez Teknolojisi', 'Diş Protez Teknolojisi'
+                'Diş Hekimliği', 'Ağız ve Diş Sağlığı', 'Diş Protez Teknolojisi'
             ])) {
                 if (isset($skills['Diş Morfolojisi'])) $skillIds[] = $skills['Diş Morfolojisi'];
             }
 
-            // 18. مهارة: Restoratif Diş Treatisi
+            // 18. مهارة: Restoratif Diş Tedavisi
             if (in_array($name, [
                 'Diş Hekimliği', 'Ağız ve Diş Sağlığı'
             ])) {
@@ -194,12 +194,6 @@ class MajorSkillSeeder extends Seeder
             ])) {
                 if (isset($skills['İmmünoloji'])) $skillIds[] = $skills['İmmünoloji'];
             }
-
-            // حقن البيانات النظيفة والمطابقة للتخصص الحالي
-            if (!empty($skillIds)) {
-                $this->insertSkillsForMajor($major->id, $skillIds, $pivotData);
-            }
-        }
 
             //  [الدفعة الثالثة] المهارات الطبية التطبيقية والتقنيات الصحية
 
@@ -899,7 +893,7 @@ class MajorSkillSeeder extends Seeder
             // 109. مهارة: Öğretim Teknolojileri
             if (in_array($name, [
                 'Sınıf Öğretmenliği', 'Okul Öncesi Öğretmenliği', 'İngilizce Öğretmenliği', 
-                'İlköğretim Matematik Öğretmenliği', 'Özel Eğitim Öğretmenliği', 'Computer Programcılığı'
+                'İlköğretim Matematik Öğretmenliği', 'Özel Eğitim Öğretmenliği', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Öğretim Teknolojileri'])) $skillIds[] = $skills['Öğretim Teknolojileri'];
             }
@@ -916,6 +910,12 @@ class MajorSkillSeeder extends Seeder
                 'Gastronomi ve Mutfak Sanatları', 'Aşçılık'
             ])) {
                 if (isset($skills['Pastacılık ve Ekmekçilik'])) $skillIds[] = $skills['Pastacılık ve Ekmekçilik'];
+            }
+        }
+
+            // حقن البيانات النظيفة والمطابقة للتخصص الحالي
+            if (!empty($skillIds)) {
+                $this->insertSkillsForMajor($major->id, $skillIds, $pivotData);
             }
 
         // 4. إدخال مصفوفة الربط المفلترة 100% لجدول العلاقات
