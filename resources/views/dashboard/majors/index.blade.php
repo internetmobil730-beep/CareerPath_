@@ -56,10 +56,10 @@
                                 <td class="p-2 text-center align-middle">
                                     <div class="bölüm-text">{{ $major->name}}</div>
                                 </td>
-                                <td class="p-2 text-center uppercase align-middle text-secondary">
+                                <td class="p-2 text-center uppercase align-middle">
                                     {{ str_replace('_', ' ', $major->degree_type) }}
                                 </td>
-                                <td class="p-2 text-center uppercase align-middle text-secondary">
+                                <td class="p-2 text-center uppercase align-middle">
                                     {{ str_replace('_', ' ', $major->education_language) }}
                                 </td>
                                 <td class="p-2 text-center align-middle">

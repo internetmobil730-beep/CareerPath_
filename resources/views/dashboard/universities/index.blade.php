@@ -56,10 +56,10 @@
                             <tr>
                                 <td class="p-2 text-center align-middle font-weight-bold">{{ $uni->id }}</td>
                                 <td class="p-2 text-center align-middle font-weight-bold">{{ $uni->name }}</td>
-                                <td class="p-2 text-center align-middle text-secondary">
+                                <td class="p-2 text-center align-middle">
                                     <span class="px-2">{{ strtoupper($uni->type) }}</span>
                                 </td>
-                                <td class="p-2 text-center align-middle text-secondary">
+                                <td class="p-2 text-center align-middle">
                                     {{ $uni->district }} / {{ $uni->side }}
                                 </td>
                                 <td class="p-2 text-center align-middle">
