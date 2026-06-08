@@ -28,7 +28,6 @@
             </div>
         </div>
     </div>
-    <div class="card details-card shadow-lg  d-flex flex-column mb-4">
         <h3 class="title quiz-title mb-4">Yeteneklerinizi/İlgi alanlarınızı seçin</h3>
     
         <form method="POST" action="{{ route('quiz.submit') }}" id="quizForm">@csrf
@@ -47,7 +46,7 @@
                 Sonuçları Görüntüle
             </button>
         </form>
-    </div>
+
 
 @section('scripts')
 <script>
