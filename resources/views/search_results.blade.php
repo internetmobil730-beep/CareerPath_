@@ -28,7 +28,7 @@
                                 <hr class="my-4">
                                 
                                 <div class="mb-4">
-                                    <h5 class="font-weight-bold mb-2"">Hakkında:</h5>
+                                    <h5 class="font-weight-bold mb-2">Hakkında:</h5>
                                     <p class="card-text text-muted" style="font-size: 1.05rem; line-height: 1.7;">
                                         {{ Str::limit($uni->description, 250) }}
                                     </p>
@@ -80,7 +80,7 @@
                                                 </div>
                                                 <div class="mt-2 text-end">
                                                     {{-- تنسيق زر الانتقال مثل لون الصورة الثانية تماماً --}}
-                                                    <a href="{{ route('university.details', $university->id) }}" class="btn btn-sm text-white px-3" style="background-color: #D38B97; border-radius: 6px;">
+                                                    <a href="{{ route('university.details', $university->id) }}" class="detayuni btn">
                                                         Detayları Gör
                                                     </a>
                                                 </div>
@@ -114,7 +114,7 @@
                     
                                 <div class="collapse mt-4" id="skillCollapse{{ $skill->id }}">
                                     <div class="row">
-                                        {{-- 🌟 هنا السر السحري: استخدام unique('name') لمنع تكرار التخصصات داخل نفس المهارة --}}
+                                        {{--  هنا السر السحري: استخدام unique('name') لمنع تكرار التخصصات داخل نفس المهارة --}}
                                         @forelse($skill->majors->unique('name') as $major)
                                         <div class="details-card col-md-4 mb-3">
                                             <div class="card h-100 p-4 shadow-sm d-flex flex-column justify-content-between" 
@@ -130,8 +130,7 @@
                                                 <div class="mt-2 text-center">
                                                     {{-- تنسيق الزر الوردي الأنيق Detayları Gör --}}
                                                     <a href="{{ route('major.details', $major->id) }}"
-                                                       class="btn btn-md text-white px-4 py-2" 
-                                                       style="background-color: #D38B97; border-radius: 8px; font-size: 0.95rem; font-weight: 500;">
+                                                       class="detayuni btn">
                                                         Detayları Gör
                                                     </a>
                                                 </div>
