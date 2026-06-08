@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <h3 class="title quiz-title mb-4">Yeteneklerinizi/İlgi alanlarınızı seçin</h3>
+    <h3 class="title quiz-title">Yeteneklerinizi/İlgi alanlarınızı seçin</h3>
 
     <form method="POST" action="{{ route('quiz.submit') }}" id="quizForm">@csrf
         <div class="row">
