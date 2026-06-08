@@ -25,28 +25,29 @@
                         </a>
                     </div>
                 </div>
-                <h3 class="title quiz-title mb-4">Yeteneklerinizi/İlgi alanlarınızı seçin</h3>
-
-                <form method="POST" action="{{ route('quiz.submit') }}" id="quizForm">@csrf
-                    <div class="row">
-                        @foreach($skills as $skill)
-                        <div class="col-md-4 mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="skills[]" value="{{ $skill->id }}"
-                                    id="sk{{ $skill->id }}">
-                                <label class="form-check-label" for="sk{{ $skill->id }}">{{ $skill->name }}</label>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                    <button type="submit" class="btn quiz-btn mt-4">
-                        Sonuçları Görüntüle
-                    </button>
-                </form>
             </div>
         </div>
     </div>
-</div>
+    <div class="card details-card shadow-lg  d-flex flex-column mb-4">
+        <h3 class="title quiz-title mb-4">Yeteneklerinizi/İlgi alanlarınızı seçin</h3>
+    
+        <form method="POST" action="{{ route('quiz.submit') }}" id="quizForm">@csrf
+            <div class="row">
+                @foreach($skills as $skill)
+                <div class="col-md-4 mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="skills[]" value="{{ $skill->id }}"
+                            id="sk{{ $skill->id }}">
+                        <label class="form-check-label" for="sk{{ $skill->id }}">{{ $skill->name }}</label>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <button type="submit" class="btn quiz-btn mt-4">
+                Sonuçları Görüntüle
+            </button>
+        </form>
+    </div>
 
 @section('scripts')
 <script>
