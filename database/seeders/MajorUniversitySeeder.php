@@ -11,6 +11,7 @@ class MajorUniversitySeeder extends Seeder
 {
     public function run(): void
     {
+        // استخدام الإستعلام المباشر أو جلب العلاقات الأساسية لتخفيف استهلاك الذاكرة
         $universities = University::all();
         $majors = Major::all();
 
@@ -22,12 +23,12 @@ class MajorUniversitySeeder extends Seeder
         $data = [];
         $timestamp = now();
 
-        // 1. العثور على جامعة بيروني بشكل دقيق من الداتا بيز
+        // 1. العثور على جامعة بيروني بدقة لتطبيق أسعارها الثابتة والحقيقية
         $biruniUni = $universities->first(function ($uni) {
             return str_contains(mb_strtolower($uni->name, 'UTF-8'), 'biruni');
         });
 
-        // 🌟 المصفوفة الشاملة لكافة تخصصات جامعة بيروني الحقيقية (بكالوريوس + دبلوم) مع أسعارها الثابتة
+        // 🌟 مصفوفة تخصصات جامعة بيروني الحقيقية بأسعارها الثابتة
         $biruniRealMajors = [
             // --- كليات البكالوريوس (Lisans) ---
             'Tıp' => 20000,
@@ -46,10 +47,10 @@ class MajorUniversitySeeder extends Seeder
             'Okul Öncesi Öğretmenliği' => 3400,
             'Özel Eğitim Öğretmenliği' => 3400,
             'İngiliz Dili ve Edebiyatı' => 3200,
-            'Yönetim Bilişim Sistemleri' => 3800, // MIS
+            'Yönetim Bilişim Sistemleri' => 3800,
 
             // --- تخصصات المعاهد الدبلوم (Ön Lisans - MYO) ---
-            'Bilgisayar Programcılığı' => 2500, // تخصصك الرائع والأساسي في الفلترة 🔥
+            'Bilgisayar Programcılığı' => 2500,
             'Anestezi' => 2800,
             'İlk ve Acil Yardım' => 2800,
             'Optisyenlik' => 2300,
@@ -60,12 +61,12 @@ class MajorUniversitySeeder extends Seeder
             'Ameliyathane Hizmetleri' => 2400,
             'Eczane Hizmetleri' => 2300,
             'Fizyoterapi' => 2400,
-            'Çocuk Gelişimi' => 2200,
+            'Çocuk Geliشimi' => 2200,
             'Siber Güvenlik' => 2700,
             'Adalet' => 2500
         ];
 
-        // 2. البدء في عملية الربط الذكية
+        // 2. البدء في حلقة الربط الذكي والأكاديمي الشامل
         foreach ($majors as $major) {
             $majorNameLower = mb_strtolower($major->name, 'UTF-8');
 
@@ -73,7 +74,7 @@ class MajorUniversitySeeder extends Seeder
                 $uniNameLower = mb_strtolower($university->name, 'UTF-8');
                 $isMYO = str_contains($uniNameLower, 'meslek yüksekokulu');
 
-                // الفلتر الأكاديمي لمنع ربط كليات الـ Lisans بمعاهد الـ MYO المستقلة
+                // فلتر أكاديمي لمنع ربط بكالوريوس بمعاهد دبلوم مستقلة
                 if ($isMYO && $major->degree_type === 'lisans') {
                     continue;
                 }
@@ -85,8 +86,6 @@ class MajorUniversitySeeder extends Seeder
                 // الحالة الأولى: إذا كان اللوب يمر حالياً على "جامعة بيروني"
                 // -----------------------------------------------------------------
                 if ($biruniUni && $university->id === $biruniUni->id) {
-                    
-                    // فحص إذا كان اسم التخصص من الداتا بيز يطابق أو يحتوي على أي تخصص حقيقي في مصفوفتنا
                     foreach ($biruniRealMajors as $realName => $realPrice) {
                         $realNameLower = mb_strtolower($realName, 'UTF-8');
                         if (str_contains($majorNameLower, $realNameLower)) {
@@ -97,23 +96,67 @@ class MajorUniversitySeeder extends Seeder
                     }
                 }
                 // -----------------------------------------------------------------
-                // الحالة الثانية: باقي جامعات السيستم (توزيع تلقائي وعشوائي منظم)
+                // الحالة الثانية: باقي جامعات السيستم (ربط منطقي بناءً على نوع الجامعة والكلمات المفتاحية)
                 // -----------------------------------------------------------------
                 else {
-                    // توزيع شبه عشوائي ثابت يعتمد على الـ IDs لكي لا تتغير البيانات مع كل تحديث للموقع
-                    $shouldAttach = (($major->id + $university->id) % 3 === 0);
+                    // الفلترة الذكية للجامعات التخصصية:
+                    $isTehnicUni = str_contains($uniNameLower, 'teknik');
+                    $isHealthUni = str_contains($uniNameLower, 'sağlık') || str_contains($uniNameLower, 'tıp');
+                    $isFineArtsUni = str_contains($uniNameLower, 'güzel sanatlar');
 
+                    // أ) كلمات دلالية للتخصصات الطبية والصحية
+                    $healthKeywords = ['tıp', 'diş', 'eczacılık', 'hemşirelik', 'sağlık', 'fizyoterapi', 'anestezi', 'laboratuvar', 'ameliyathane', 'diyaliz', 'optisyenlik', 'odyoloji', 'beslenme'];
+                    // ب) كلمات دلالية للتخصصات الهندسية والتكنولوجية
+                    $techKeywords = ['mühendisliği', 'bilgisayar', 'yazılım', 'programcılığı', 'bilişim', 'siber', 'elektronik', 'makine', 'inşaat', 'mimarlık'];
+                    // ج) كلمات دلالية للفنون والتصميم
+                    $artKeywords = ['tasarımı', 'grafik', 'iç mimarlık', 'moda', 'sinema', 'fotoğrafçılık', 'tiyatro', 'müzik', 'seramik'];
+
+                    // تطبيق شروط الفلترة الأكاديمية:
+                    if ($isHealthUni) {
+                        // جامعات العلوم الصحية تُعطى الأولوية للتخصصات الطبية والصحية
+                        foreach ($healthKeywords as $keyword) {
+                            if (str_contains($majorNameLower, $keyword)) { $shouldAttach = true; break; }
+                        }
+                    } elseif ($isTehnicUni) {
+                        // الجامعات التقنية تُعطى الأولوية للهندسة والتكنولوجيا
+                        foreach ($techKeywords as $keyword) {
+                            if (str_contains($majorNameLower, $keyword)) { $shouldAttach = true; break; }
+                        }
+                    } elseif ($isFineArtsUni) {
+                        // جامعات الفنون الجميلة تُعطى تخصصات التصميم والفن
+                        foreach ($artKeywords as $keyword) {
+                            if (str_contains($majorNameLower, $keyword)) { $shouldAttach = true; break; }
+                        }
+                    } else {
+                        // الجامعات العامة (Düz Üniversiteler) تحتوي على أغلب التخصصات الشائعة تلقائياً
+                        // لمنع حشو كل التخصصات بكل الجامعات، نقوم بعمل ربط منطقي شبه عشوائي مدعوم بالـ ID للجامعات العامة
+                        $shouldAttach = (($major->id + $university->id) % 2 === 0);
+                    }
+
+                    // إذا تأكد ربط التخصص بالجامعة، نحسب السعر بناءً على (حكومية/خاصة) ونوع التخصص
                     if ($shouldAttach) {
-                        // تحديد السعر تلقائياً حسب نوع الجامعة (حكومية أم خاصة) ومستوى الدراسة
+                        $isMedicalMajor = false;
+                        foreach (['tıp', 'diş', 'eczacılık'] as $medKey) {
+                            if (str_contains($majorNameLower, $medKey)) { $isMedicalMajor = true; break; }
+                        }
+
                         if ($university->type === 'devlet') {
-                            $price = ($major->degree_type === 'lisans') ? rand(800, 2500) : rand(400, 1200);
-                        } else {
-                            $price = ($major->degree_type === 'lisans') ? rand(3500, 8000) : rand(1800, 3500);
+                            if ($isMedicalMajor) {
+                                $price = rand(1500, 4000); // كليات الطب البشري والأسنان الحكومية للأجانب
+                            } else {
+                                $price = ($major->degree_type === 'lisans') ? rand(700, 2000) : rand(350, 900);
+                            }
+                        } else { // الجامعات الخاصة
+                            if ($isMedicalMajor) {
+                                $price = str_contains($majorNameLower, 'tıp') ? rand(14000, 22000) : rand(10000, 16000);
+                            } else {
+                                $price = ($major->degree_type === 'lisans') ? rand(3000, 7000) : rand(1500, 3000);
+                            }
                         }
                     }
                 }
 
-                // إضافة العلاقة إلى مصفوفة الإدخال في حال تحقق الشروط
+                // 3. تجميع البيانات لحفظها في قاعدة البيانات
                 if ($shouldAttach) {
                     $data[] = [
                         'major_id'      => $major->id,
@@ -124,7 +167,7 @@ class MajorUniversitySeeder extends Seeder
                     ];
                 }
 
-                // الحفظ على دفعات (كل 500 علاقة) لتجنب بطء سيرفر Render وحماية الذاكرة
+                // حفظ البيانات على دفعات (كل 500 علاقة) لتجنب تجاوز الذاكرة في Render
                 if (count($data) >= 500) {
                     DB::table('major_university')->upsert($data, ['major_id', 'university_id'], ['tuition_usd', 'updated_at']);
                     $data = [];
@@ -132,7 +175,7 @@ class MajorUniversitySeeder extends Seeder
             }
         }
 
-        // إدخال آخر دفعة متبقية في المصفوفة إن وجدت
+        // إدخال الدفعة الأخيرة المتبقية إن وجدت
         if (!empty($data)) {
             DB::table('major_university')->upsert($data, ['major_id', 'university_id'], ['tuition_usd', 'updated_at']);
         }
