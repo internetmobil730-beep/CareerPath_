@@ -26,17 +26,15 @@ class MajorSkillSeeder extends Seeder
                 $name = 'Bilgisayar Programcılığı';
             }
 
-            // ==========================================
-            // [الدفعة الأولى] المهارات الهندسية والأساسية
-            // ==========================================
+            //  [الدفعة الأولى] المهارات العلمية والهندسية والطبية البحتة
 
             // 1. مهارة: İleri Matematik
             if (in_array($name, [
                 'Elektrik-Elektronik Mühendisliği', 'Matematik', 'İlköğretim Matematik Öğretmenliği', 'Bilgisayar Mühendisliği', 
                 'Yazılım Mühendisliği', 'Yapay Zeka Mühendisliği', 'Yapay Zeka ve Veri Mühendisliği', 
-                'Bilişim Sistemleri Mühendisliği', 'Makine Mühendisliği', 'Mekatronik Mühendisliği', 
-                'İnşaat Mühendisliği', 'Endüstri Mühendisliği', 'Havacılık ve Uzay Mühendisliği', 
-                'Uçak Mühendisliği', 'Otomotiv Mühendisliği', 'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)'
+                'Bilişim Sistemleri Mühendisliği', 'Makine Mühendisliği', 
+                'Mekatronik Mühendisliği', 'İnşaat Mühendisliği', 'Endüstri Mühendisliği', 
+                'Havacılık ve Uzay Mühendisliği', 'Uçak Mühendisliği', 'Otomotiv Mühendisliği'
             ])) {
                 if (isset($skills['İleri Matematik'])) $skillIds[] = $skills['İleri Matematik'];
             }
@@ -46,7 +44,7 @@ class MajorSkillSeeder extends Seeder
                 'Elektrik-Elektronik Mühendisliği', 'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 
                 'Makine Mühendisliği', 'Mekatronik Mühendisliği', 'İnşaat Mühendisliği', 
                 'Havacılık ve Uzay Mühendisliği', 'Uçak Mühendisliği', 'Otomotiv Mühendisliği', 
-                'Uçak Bakım ve Onarım', 'Elektrik', 'Makine', 'Uçak Teknolojisi', 'Biyomedikal Mühendisliği'
+                'Uçak Bakım ve Onarım', 'Elektrik', 'Makine', 'Uçak Teknolojisi'
             ])) {
                 if (isset($skills['Genel Fizik'])) $skillIds[] = $skills['Genel Fizik'];
             }
@@ -55,14 +53,14 @@ class MajorSkillSeeder extends Seeder
             if (in_array($name, [
                 'Elektrik-Elektronik Mühendisliği', 'İnşaat Mühendisliği', 'Makine Mühendisliği', 'Mekatronik Mühendisliği', 
                 'Havacılık ve Uzay Mühendisliği', 'Uçak Mühendisliği', 'Otomotiv Mühendisliği', 
-                'İnşaat Teknolojisi', 'Makine', 'Uçak Teknolojisi', 'Otomotiv Teknolojisi', 'Mimarlık'
+                'İnşaat Teknolojisi', 'Makine', 'Uçak Teknolojisi', 'Otomotiv Teknolojisi'
             ])) {
                 if (isset($skills['Statik ve Dinamik Analiz'])) $skillIds[] = $skills['Statik ve Dinamik Analiz'];
             }
 
             // 4. مهارة: Termodinamik Prensipleri
             if (in_array($name, [
-                'Elektrik-Elektronik Mühendisliği', 'Makine Mühendisliği', 'Havacılık ve Uzay Müazaki Mühendisliği', 'Uçak Mühendisliği', 
+                'Elektrik-Elektronik Mühendisliği', 'Makine Mühendisliği', 'Havacılık ve Uzay Mühendisliği', 'Uçak Mühendisliği', 
                 'Otomotiv Mühendisliği', 'Kimya Mühendisliği', 'Makine', 'Otomotiv Teknolojisi', 
                 'Uçak Teknolojisi', 'Hibrid ve Elektrikli Taşıtlar Teknolojisi', 'Alternatif Enerji Kaynakları Teknolojisi'
             ])) {
@@ -73,7 +71,7 @@ class MajorSkillSeeder extends Seeder
             if (in_array($name, [
                 'Elektrik-Elektronik Mühendisliği', 'Mekatronik Mühendisliği', 'Bilişim Sistemleri Mühendisliği', 
                 'Biyomedikal Mühendisliği', 'Mekatronik', 'Elektronik Teknolojisi', 'Elektrik', 
-                'Kontrol ve Otomasyon Teknolojisi', 'Biyomedikal Cihaz Teknolojisi', 'Bilgisayar Mühendisliği'
+                'Kontrol ve Otomasyon Teknolojisi', 'Biyomedikal Cihaz Teknolojisi'
             ])) {
                 if (isset($skills['Elektriksel Devre Tasarımı'])) $skillIds[] = $skills['Elektriksel Devre Tasarımı'];
             }
@@ -81,7 +79,7 @@ class MajorSkillSeeder extends Seeder
             // 6. مهارة: Malzeme Bilimi
             if (in_array($name, [
                 'İnşaat Mühendisliği', 'Makine Mühendisliği', 'Kimya Mühendisliği', 'Tekstil Mühendisliği', 
-                'İnşaat Teknolojisi', 'Makine', 'Uçak Teknolojisi', 'Mekatronik Mühendisliği', 'Otomotiv Mühendisliği', 'Diş Protez Teknolojisi'
+                'İnşaat Teknolojisi', 'Makine', 'Uçak Teknolojisi'
             ])) {
                 if (isset($skills['Malzeme Bilimi'])) $skillIds[] = $skills['Malzeme Bilimi'];
             }
@@ -89,7 +87,7 @@ class MajorSkillSeeder extends Seeder
             // 7. مهارة: Akışkanlar Mekaniği
             if (in_array($name, [
                 'Makine Mühendisliği', 'Havacılık ve Uzay Mühendisliği', 'Uçak Mühendisliği', 
-                'Otomotiv Mühendisliği', 'İnşaat Mühendisliği', 'Makine', 'Kimya Mühendisliği'
+                'Otomotiv Mühendisliği', 'İnşaat Mühendisliği', 'Makine'
             ])) {
                 if (isset($skills['Akışkanlar Mekaniği'])) $skillIds[] = $skills['Akışkanlar Mekaniği'];
             }
@@ -97,76 +95,75 @@ class MajorSkillSeeder extends Seeder
             // 8. مهارة: Kontrol Sistemleri
             if (in_array($name, [
                 'Elektrik-Elektronik Mühendisliği', 'Mekatronik Mühendisliği', 'Havacılık ve Uzay Mühendisliği', 
-                'Mekatronik', 'Kontrol ve Otomasyon Teknolojisi', 'Elektronik Teknolojisi', 'Uçak Mühendisliği', 'Otomotiv Mühendisliği'
+                'Mekatronik', 'Kontrol ve Otomasyon Teknolojisi', 'Elektronik Teknolojisi'
             ])) {
                 if (isset($skills['Kontrol Sistemleri'])) $skillIds[] = $skills['Kontrol Sistemleri'];
             }
 
             // 9. مهارة: Kimyasal Süreç Yönetimi
             if (in_array($name, [
-                'Kimya Mühendisliği', 'Kimya', 'Kimya Teknolojisi', 'Eczacılık', 'Moleküler Biyoloji ve Genetik'
+                'Kimya Mühendisliği', 'Kimya', 'Kimya Teknolojisi'
             ])) {
                 if (isset($skills['Kimyasal Süreç Yönetimi'])) $skillIds[] = $skills['Kimyasal Süreç Yönetimi'];
             }
 
-
-            // =========================================================
-            // [الدفعة الثانية] المهارات الطبية الأساسية، الصيدلانية وطب الأسنان
-            // =========================================================
-
-            // 10. مهارة: İnsan Anatomisi
+           // 10. مهارة: İnsan Anatomisi (شاملة لجميع التخصصات الطبية والصحية بكالوريوس ودبلوم)
             if (in_array($name, [
-                'Tıp', 'Hemşirelik', 'Ebelik', 'Fizyoterapi ve Rehabilitasyon', 
-                'Fizyoterapi', 'Ameliyathane Hizmetleri', 'Yaşlı Bakımı', 'İlk ve Acil Yardım',
-                'Odyoloji', 'Anestezi', 'Ağız ve Diş Sağlığı', 'Diş Hekimliği', 'Tıbbi Görüntüleme Teknikleri'
+                'Tıp', 'Diş Hekimliği', 'Eczacılık', 'Hemşirelik', 'Ebelik', 
+                'Fizyoterapi ve Rehabilitasyon', 'Fizyoterapi', 'Ameliyathane Hizmetleri', 
+                'Yaşlı Bakımı', 'İlk ve Acil Yardım', 'Tıbbi Görüntüleme Teknikleri', 
+                'Anestezi', 'Diyaliz', 'Odyometri', 'Odyoloji', 'Perfüzyon', 
+                'Radyoterapi', 'Podoloji', 'Ağız ve Diş Sağlığı', 'Laborant ve Veteriner Sağlık'
             ])) {
                 if (isset($skills['İnsan Anatomisi'])) $skillIds[] = $skills['İnsan Anatomisi'];
             }
 
-            // 11. مهارة: Fizyoloji
+            // 11. مهارة: Fizyoloji (شاملة لجميع التخصصات الطبية والصحية)
             if (in_array($name, [
-                'Tıp', 'Hemşirelik', 'Ebelik', 'Fizyoterapi ve Rehabilitasyon', 
-                'Fizyoterapi', 'Ameliyathane Hizmetleri', 'Yaşlı Bakımı', 'İlk ve Acil Yardım',
-                'Odyoloji', 'Anestezi', 'Diş Hekimliği', 'Beslenme ve Diyetetik', 'Tıbbi Laboratuvar Teknikleri'
+                'Tıp', 'Diş Hekimliği', 'Eczacılık', 'Hemşirelik', 'Ebelik', 
+                'Fizyoterapi ve Rehabilitasyon', 'Fizyoterapi', 'Ameliyathane Hizmetleri', 
+                'Yaşlı Bakımı', 'İlk ve Acil Yardım', 'Tıbbi Görüntüleme Teknikleri', 
+                'Anestezi', 'Diyaliz', 'Odyometri', 'Odyoloji', 'Perfüzyon', 
+                'Radyoterapi', 'Beslenme ve Diyetetik'
             ])) {
                 if (isset($skills['Fizyoloji'])) $skillIds[] = $skills['Fizyoloji'];
             }
 
             // 12. مهارة: Tıbbi Biyokimya
             if (in_array($name, [
-                'Tıp', 'Eczacılık', 'Beslenme ve Diyetetik', 'Moleküler Biyoloji ve Genetik', 
-                'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Eczane Hizmetleri', 'Diş Hekimliği'
+                'Tıp', 'Diş Hekimliği', 'Eczacılık', 'Beslenme ve Diyetetik', 'Moleküler Biyoloji ve Genetik', 
+                'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Eczane Hizmetleri', 'Diyaliz'
             ])) {
                 if (isset($skills['Tıbbi Biyokimya'])) $skillIds[] = $skills['Tıbbi Biyokimya'];
             }
 
             // 13. مهارة: Farmakoloji
             if (in_array($name, [
-                'Tıp', 'Eczacılık', 'Hemşirelik', 'Ebelik', 
-                'Anestezi', 'Eczane Hizmetleri', 'Diş Hekimliği', 'İlk ve Acil Yardım'
+                'Tıp', 'Diş Hekimliği', 'Eczacılık', 'Hemşirelik', 'Ebelik', 
+                'Anestezi', 'Eczane Hizmetleri', 'İlk ve Acil Yardım', 'Diyaliz', 'Podoloji'
             ])) {
                 if (isset($skills['Farmakoloji'])) $skillIds[] = $skills['Farmakoloji'];
             }
 
             // 14. مهارة: Patoloji
             if (in_array($name, [
-                'Tıp', 'Hemşirelik', 'Patoloji Laboratuvar Teknikleri', 'Tıbbi Laboratuvar Teknikleri', 'Diş Hekimliği', 'Ağız ve Diş Sağlığı'
+                'Tıp', 'Diş Hekimliği', 'Hemşirelik', 'Patoloji Laboratuvar Teknikleri', 'Tıbbi Laboratuvar Teknikleri', 'Tıbbi Görüntüleme Teknikleri'
             ])) {
                 if (isset($skills['Patoloji'])) $skillIds[] = $skills['Patoloji'];
             }
 
             // 15. مهارة: Klinik Mikrobiyoloji
             if (in_array($name, [
-                'Tıp', 'Eczacılık', 'Hemşirelik', 'Moleküler Biyoloji ve Genetik', 
-                'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Diş Hekimliği', 'Ameliyathane Hizmetleri'
+                'Tıp', 'Diş Hekimliği', 'Eczacılık', 'Hemşirelik', 'Ebelik', 'Moleküler Biyoloji ve Genetik', 
+                'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Ameliyathane Hizmetleri'
             ])) {
-                if (isset($skills['Klinik Mikrobiyoloji'])) $skillIds[] = $skills['Klinik Mikrobiyoloji'];
+                if (isset($skills['Klinik Mikrobiyoloji'])) $skillIds[] = $skills['Klik Mikrobiyoloji'];
             }
 
             // 16. مهارة: Histoloji ve Embriyoloji
             if (in_array($name, [
-                'Tıp', 'Beslenme ve Diyetetik', 'Moleküler Biyoloji ve Genetik', 
-                'Biyoloji', 'Patoloji Laboratuvar Teknikleri', 'Diş Hekimliği', 'Ebelik'
+                'Tıp', 'Diş Hekimliği', 'Beslenme ve Diyetetik', 'Moleküler Biyoloji ve Genetik', 
+                'Biyoloji', 'Patoloji Laboratuvar Teknikleri', 'Ebelik'
             ])) {
                 if (isset($skills['Histoloji ve Embriyoloji'])) $skillIds[] = $skills['Histoloji ve Embriyoloji'];
             }
@@ -178,7 +175,7 @@ class MajorSkillSeeder extends Seeder
                 if (isset($skills['Diş Morfolojisi'])) $skillIds[] = $skills['Diş Morfolojisi'];
             }
 
-            // 18. مهارة: Restoratif Diş Tedavisi
+            // 18. مهارة: Restoratif Diş Treatisi
             if (in_array($name, [
                 'Diş Hekimliği', 'Ağız ve Diş Sağlığı'
             ])) {
@@ -187,49 +184,46 @@ class MajorSkillSeeder extends Seeder
 
             // 19. مهارة: Epidemiyoloji
             if (in_array($name, [
-                'Tıp', 'Hemşirelik', 'Sağlık Yönetimi', 'Beslenme ve Diyetetik', 
-                'Sağlık Kurumları İşletmeciliği', 'Ebelik'
+                'Tıp', 'Diş Hekimliği', 'Hemşirelik', 'Ebelik', 'Sağlık Yönetimi', 'Beslenme ve Diyetetik', 
+                'Sağlık Kurumları İşletmeciliği', 'İlk ve Acil Yardım'
             ])) {
                 if (isset($skills['Epidemiyoloji'])) $skillIds[] = $skills['Epidemiyoloji'];
             }
 
             // 20. مهارة: İmmünoloji
             if (in_array($name, [
-                'Tıp', 'Eczacılık', 'Hemşirelik', 'Moleküler Biyoloji ve Genetik', 
-                'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Diş Hekimliği'
+                'Tıp', 'Diş Hekimliği', 'Eczacılık', 'Hemşirelik', 'Moleküler Biyoloji ve Genetik', 
+                'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Diyaliz'
             ])) {
                 if (isset($skills['İmmünoloji'])) $skillIds[] = $skills['İmmünoloji'];
             }
 
-
-            // ========================================================
-            // [الدفعة الثالثة] المهارات الطبية التطبيقية والتقنيات الصحية
-            // ========================================================
+            //  [الدفعة الثالثة] المهارات الطبية التطبيقية والتقنيات الصحية
 
             // 21. مهارة: Genetik ve Kalıtım
             if (in_array($name, [
-                'Tıp', 'Moleküler Biyoloji ve Genetik', 'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Diş Hekimliği', 'Ebelik'
+                'Tıp', 'Moleküler Biyoloji ve Genetik', 'Biyoloji', 'Tıbbi Laboratuvar Teknikleri'
             ])) {
                 if (isset($skills['Genetik ve Kalıtım'])) $skillIds[] = $skills['Genetik ve Kalıtım'];
             }
 
             // 22. مهارة: Radyolojik Görüntüleme
             if (in_array($name, [
-                'Tıp', 'Tıbbi Görüntüleme Teknikleri', 'Radyoterapi', 'Nükleer Tıp Teknikleri', 'Diş Hekimliği', 'Ağız ve Diş Sağlığı'
+                'Tıp', 'Tıbbi Görüntüleme Teknikleri', 'Radyoterapi', 'Nükleer Tıp Teknikleri'
             ])) {
                 if (isset($skills['Radyolojik Görüntüleme'])) $skillIds[] = $skills['Radyolojik Görüntüleme'];
             }
 
             // 23. مهارة: Cerrahi Teknikler
             if (in_array($name, [
-                'Tıp', 'Ameliyathane Hizmetleri', 'Diş Hekimliği'
+                'Tıp', 'Ameliyathane Hizmetleri'
             ])) {
                 if (isset($skills['Cerrahi Teknikler'])) $skillIds[] = $skills['Cerrahi Teknikler'];
             }
 
             // 24. مهارة: Anestezi Uygulamaları
             if (in_array($name, [
-                'Tıp', 'Anestezi', 'Ameliyathane Hizmetleri'
+                'Tıp', 'Anestezi'
             ])) {
                 if (isset($skills['Anestezi Uygulamaları'])) $skillIds[] = $skills['Anestezi Uygulamaları'];
             }
@@ -238,22 +232,21 @@ class MajorSkillSeeder extends Seeder
             if (in_array($name, [
                 'Tıp', 'Hemşirelik', 'Ebelik', 'Fizyoterapi ve Rehabilitasyon', 
                 'Fizyoterapi', 'Ameliyathane Hizmetleri', 'Yaşlı Bakımı', 'İlk ve Acil Yardım',
-                'Acil Yardım ve Afet Yönetimi', 'Acil Durum ve Afet Yönetimi', 'Sivil Savunma ve Itfaiyecilik',
-                'Anestezi', 'Tıbbi Görüntüleme Teknikleri', 'Ağız ve Diş Sağlığı', 'Odyoloji'
+                'Acil Yardım ve Afet Yönetimi', 'Acil Durum ve Afet Yönetimi', 'Sivil Savunma ve Itfaiyecilik'
             ])) {
                 if (isset($skills['İlk Yardım ve Acil Müdahale'])) $skillIds[] = $skills['İlk Yardım ve Acil Müdahale'];
             }
 
             // 26. مهارة: Ortodonti Prensipleri
             if (in_array($name, [
-                'Diş Hekimliği', 'Ağız ve Diش Sağlığı', 'Diş Protez Teknolojisi'
+                'Diş Hekimliği', 'Ağız ve Diş Sağlığı', 'Diş Protez Teknolojisi'
             ])) {
                 if (isset($skills['Ortodonti Prensipleri'])) $skillIds[] = $skills['Ortodonti Prensipleri'];
             }
 
             // 27. مهارة: Biyomedikal Cihaz Teknolojisi
             if (in_array($name, [
-                'Biyomedikal Mühendisliği', 'Elektrik-Elektronik Mühendisliği', 'Biyomedikal Cihaz Teknolojisi', 'Elektronik Teknolojisi', 'Tıbbi Görüntüleme Teknikleri'
+                'Biyomedikal Mühendisliği', 'Elektrik-Elektronik Mühendisliği', 'Biyomedikal Cihaz Teknolojisi', 'Elektronik Teknolojisi'
             ])) {
                 if (isset($skills['Biyomedikal Cihaz Teknolojisi'])) $skillIds[] = $skills['Biyomedikal Cihaz Teknolojisi'];
             }
@@ -279,16 +272,13 @@ class MajorSkillSeeder extends Seeder
                 if (isset($skills['Diyaliz Ekipman Yönetimi'])) $skillIds[] = $skills['Diyaliz Ekipman Yönetimi'];
             }
 
-
-            // ========================================================
-            // [الدفعة الرابعة] مهارات البرمجة، هندسة البرمجيات، وعلم الحاسوب
-            // ========================================================
+            //  [الدفعة الرابعة] مهارات البرمجة، تكنولوجيا المعلومات، وعلم الحاسوب
 
             // 31. مهارة: Algoritma Geliştirme
             if (in_array($name, [
                 'Elektrik-Elektronik Mühendisliği', 'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Yapay Zeka Mühendisliği', 
                 'Yapay Zeka ve Veri Mühendisliği', 'Bilişim Sistemleri Mühendisliği', 
-                'Adli Bilişim Mühendisliği', 'Bilgisayar Programcılığı', 'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)', 'Dijital Oyun Tasarımı'
+                'Adli Bilişim Mühendisliği', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Algoritma Geliştirme'])) $skillIds[] = $skills['Algoritma Geliştirme'];
             }
@@ -297,7 +287,7 @@ class MajorSkillSeeder extends Seeder
             if (in_array($name, [
                 'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Yapay Zeka Mühendisliği', 
                 'Yapay Zeka ve Veri Mühendisliği', 'Bilişim Sistemleri Mühendisliği', 
-                'Adli Bilişim Mühendisliği', 'Bilgisayar Programcılığı', 'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)'
+                'Adli Bilişim Mühendisliği', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Veri Yapıları'])) $skillIds[] = $skills['Veri Yapıları'];
             }
@@ -305,7 +295,7 @@ class MajorSkillSeeder extends Seeder
             // 33. مهارة: Yapay Zeka Mantığı
             if (in_array($name, [
                 'Yapay Zeka Mühendisliği', 'Yapay Zeka ve Veri Mühendisliği', 
-                'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Bilgisayar Programcılığı', 'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)'
+                'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Yapay Zeka Mantığı'])) $skillIds[] = $skills['Yapay Zeka Mantığı'];
             }
@@ -321,23 +311,23 @@ class MajorSkillSeeder extends Seeder
             // 35. مهارة: Gömülü Sistemler
             if (in_array($name, [
                 'Bilgisayar Mühendisliği', 'Elektrik-Elektronik Mühendisliği', 'Mekatronik Mühendisliği', 
-                'Mekatronik', 'Elektronik Teknolojisi', 'Bilgisayar Programcılığı', 'Biyomedikal Mühendisliği'
+                'Mekatronik', 'Elektronik Teknolojisi', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Gömülü Sistemler'])) $skillIds[] = $skills['Gömülü Sistemler'];
             }
 
             // 36. مهارة: Web Tasarımı ve Front-end
             if (in_array($name, [
-                'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı', 
-                'Web Tasarımı ve Kodlama', 'Yazılım Mühendisliği', 'Grafik Tasarımı', 'Bilgisayar Mühendisliği'
+                'Yönetim Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı', 
+                'Web Tasarımı ve Kodlama', 'Yazılım Mühendisliği', 'Grafik Tasarımı'
             ])) {
                 if (isset($skills['Web Tasarımı ve Front-end'])) $skillIds[] = $skills['Web Tasarımı ve Front-end'];
             }
 
             // 37. مهارة: UX/UI Tasarımı
             if (in_array($name, [
-                'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)', 'Web Tasarımı ve Kodlama', 
-                'Bilgisayar Programcılığı', 'Grafik Tasarımı', 'Dijital Oyun Tasarımı', 'Yazılım Mühendisliği'
+                'Yönetim Bilişim Sistemleri (MIS)', 'Web Tasarımı ve Kodlama', 
+                'Bilgisayar Programcılığı', 'Grafik Tasarımı', 'Dijital Oyun Tasarımı'
             ])) {
                 if (isset($skills['UX/UI Tasarımı'])) $skillIds[] = $skills['UX/UI Tasarımı'];
             }
@@ -345,7 +335,7 @@ class MajorSkillSeeder extends Seeder
             // 38. مهارة: Siber Güvenlik ve Ağ Savunması
             if (in_array($name, [
                 'Bilgi Güvenliği Teknolojisi', 'Siber Güvenlik', 'Bilişim Güvenliği Teknolojisi', 
-                'Adli Bilişim Mühendisliği', 'Bilgisayar Mühendisliği', 'Bilgisayar Programcılığı', 'Yazılım Mühendisliği', 'Bilişim Sistemleri Mühendisliği'
+                'Adli Bilişim Mühendisliği', 'Bilgisayar Mühendisliği', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Siber Güvenlik ve Ağ Savunması'])) $skillIds[] = $skills['Siber Güvenlik ve Ağ Savunması'];
             }
@@ -353,8 +343,8 @@ class MajorSkillSeeder extends Seeder
             // 39. مهارة: Veri Tabanı Yönetimi
             if (in_array($name, [
                 'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Yapay Zeka ve Veri Mühendisliği', 
-                'Bilişim Sistemleri Mühendisliği', 'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)', 
-                'Bilgisayar Programcılığı', 'Web Tasarımı ve Kodlama', 'Siber Güvenlik'
+                'Bilişim Sistemleri Mühendisliği', 'Yönetim Bilişim Sistemleri (MIS)', 
+                'Bilgisayar Programcılığı', 'Web Tasarımı ve Kodlama'
             ])) {
                 if (isset($skills['Veri Tabanı Yönetimi'])) $skillIds[] = $skills['Veri Tabanı Yönetimi'];
             }
@@ -362,7 +352,7 @@ class MajorSkillSeeder extends Seeder
             // 40. مهارة: Mobil Uygulama Geliştirme (iOS/Android)
             if (in_array($name, [
                 'Yazılım Mühendisliği', 'Bilgisayar Mühendisliği', 'Bilgisayar Programcılığı', 
-                'Mobil Teknolojiler', 'Web Tasarımı ve Kodlama', 'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)'
+                'Mobil Teknolojiler', 'Web Tasarımı ve Kodlama'
             ])) {
                 if (isset($skills['Mobil Uygulama Geliştirme (iOS/Android)'])) $skillIds[] = $skills['Mobil Uygulama Geliştirme (iOS/Android)'];
             }
@@ -370,7 +360,7 @@ class MajorSkillSeeder extends Seeder
             // 41. مهارة: Bulut Bilişim
             if (in_array($name, [
                 'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Bilişim Sistemleri Mühendisliği', 
-                'Yönetim Bilişim Sistemleri', 'Yönetim Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı', 'Siber Güvenlik'
+                'Yönetim Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Bulut Bilişim'])) $skillIds[] = $skills['Bulut Bilişim'];
             }
@@ -378,14 +368,14 @@ class MajorSkillSeeder extends Seeder
             // 42. مهارة: Bilgisayar Ağları ve Sunucu Yönetimi
             if (in_array($name, [
                 'İnternet ve Ağ Teknolojileri', 'Bilgi Güvenliği Teknolojisi', 'Bilişim Güvenliği Teknolojisi', 
-                'Bilgisayar Mühendisliği', 'Bilgisayar Programcılığı', 'Yazılım Mühendisliği', 'Siber Güvenlik'
+                'Bilgisayar Mühendisliği', 'Bilgisayar Programcılığı', 'Yazılım Mühendisliği'
             ])) {
                 if (isset($skills['Bilgisayar Ağları ve Sunucu Yönetimi'])) $skillIds[] = $skills['Bilgisayar Ağları ve Sunucu Yönetimi'];
             }
 
             // 43. مهارة: Adli Bilişim Analizi
             if (in_array($name, [
-                'Adli Bilişim Mühendisliği', 'Bilgi Güvenliği Teknolojisi', 'Hukuk', 'Adalet', 'Yazılım Mühendisliği', 'Bilgisayar Programcılığı', 'Siber Güvenlik'
+                'Adli Bilişim Mühendisliği', 'Bilgi Güvenliği Teknolojisi', 'Hukuk', 'Adalet', 'Yazılım Mühendisliği','Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Adli Bilişim Analizi'])) $skillIds[] = $skills['Adli Bilişim Analizi'];
             }
@@ -393,15 +383,12 @@ class MajorSkillSeeder extends Seeder
             // 44. مهارة: Dijital Oyun Tasarımı
             if (in_array($name, [
                 'Dijital Oyun Tasarımı', 'Bilgisayar Destekli Tasarım ve Animasyon', 
-                'Grafik Tasarımı', 'Bilgisayar Programcılığı', 'Yazılım Mühendisliği', 'Bilgisayar Mühendisliği'
+                'Grafik Tasarımı', 'Bilgisayar Programcılığı', 'Yazılım Mühendisliği'
             ])) {
                 if (isset($skills['Dijital Oyun Tasarımı'])) $skillIds[] = $skills['Dijital Oyun Tasarımı'];
             }
 
-
-            // ========================================================
-            // [الدفعة الخامسة] مهارات التعليم، الإعلام، الإدارة والخدمات العامة
-            // ========================================================
+            //  [الدفعة الخامسة] مهارات التعليم، الإعلام، العلاقات العامة والإدارة
 
             // 45. مهارة: Sınıf Yönetimi
             if (in_array($name, [
@@ -414,14 +401,14 @@ class MajorSkillSeeder extends Seeder
             // 46. مهارة: Halkla İlişkiler
             if (in_array($name, [
                 'Halkla İlişkiler ve Reklamcılık', 'Kurumsal İletişim', 'Sosyal Medya Yöneticiliği', 
-                'Yeni Medya ve İletişim', 'İşletme', 'İşletme Yönetimi', 'Sağlık Yönetimi', 'Havacılık Yönetimi'
+                'Yeni Medya ve İletişim', 'İşletme', 'İşletme Yönetimi'
             ])) {
                 if (isset($skills['Halkla İlişkiler'])) $skillIds[] = $skills['Halkla İlişkiler'];
             }
 
             // 47. مهارة: Rehberlik ve Danışmanlık
             if (in_array($name, [
-                'Psikolojik Danışmanlık ve Rehberlik (PDR)', 'Psikoloji', 'Sosyal Hizmet', 'Çocuk Gelişimi', 'Yaşlı Bakımı'
+                'Psikolojik Danışmanlık ve Rehberlik (PDR)', 'Psikoloji', 'Sosyal Hizmet'
             ])) {
                 if (isset($skills['Rehberlik ve Danışmanlık'])) $skillIds[] = $skills['Rehberlik ve Danışmanlık'];
             }
@@ -429,7 +416,7 @@ class MajorSkillSeeder extends Seeder
             // 48. مهارة: Büro Yönetimi
             if (in_array($name, [
                 'Büro Yönetimi ve Yönetici Asistanlığı', 'Tıbbi Dokümantasyon ve Sekreterlik', 
-                'Sağlık Kurumları İşletmeciliği', 'İşletme Yönetimi', 'Çağrı Merkezi Hizmetleri', 'Sağlık Yönetimi', 'Adalet'
+                'Sağlık Kurumları İşletmeciliği', 'İşletme Yönetimi', 'Çağrı Merkezi Hizmetleri'
             ])) {
                 if (isset($skills['Büro Yönetimi'])) $skillIds[] = $skills['Büro Yönetimi'];
             }
@@ -459,24 +446,21 @@ class MajorSkillSeeder extends Seeder
             // 52. مهارة: Kurumsal İletişim
             if (in_array($name, [
                 'Kurumsal İletişim', 'Halkla İlişkiler ve Reklamcılık', 'İşletme', 
-                'İnsan Kaynakları Yönetimi', 'Sağlık Yönetimi', 'Havacılık Yönetimi', 'Uluslararası Ticaret ve Lojistik'
+                'İnsan Kaynakları Yönetimi', 'Sağlık Yönetimi'
             ])) {
-                if (isset($skills['Kurumsal İletişim'])) $skillIds[] = $skills['Kurumsal İletيشim'];
+                if (isset($skills['Kurumsal İletişim'])) $skillIds[] = $skills['Kurumsal İletişim'];
             }
 
             // 53. مهارة: Diksiyon ve Hitabet
             if (in_array($name, [
                 'Radyo, Televizyon ve Sinema', 'Halkla İlişkiler ve Reklamcılık', 'Gazetecilik', 
                 'Okul Öncesi Öğretmenliği', 'Sınıf Öğretmenliği', 'İngilizce Öğretmenliği', 
-                'Turist Rehberliği', 'Sivil Havacılık Kabin Hizmetleri', 'Çağrı Merkezi Hizmetleri', 'Hukuk', 'Psikoloji'
+                'Turist Rehberliği', 'Sivil Havacılık Kabin Hizmetleri', 'Çağrı Merkezi Hizmetleri'
             ])) {
                 if (isset($skills['Diksiyon ve Hitabet'])) $skillIds[] = $skills['Diksiyon ve Hitabet'];
             }
 
-
-            // ========================================================
-            // [الدفعة السادسة] مهارات التصميم، الفنون، والعمارة
-            // ========================================================
+            //  [الدفعة السادسة] مهارات التصميم، الفنون، والعمارة والإبداع الرقمي
 
             // 54. مهارة: Mimari Proje Tasarımı
             if (in_array($name, [
@@ -494,7 +478,7 @@ class MajorSkillSeeder extends Seeder
 
             // 56. مهارة: Grafiksel Görselleştirme
             if (in_array($name, [
-                'Grafik Tasarımı', 'Görsel İletişim Tasarımı', 'Yeni Medya ve İletişim', 'Web Tasarımı ve Kodlama', 'Dijital Oyun Tasarımı', 'İç Mimarlık ve Çevre Tasarımı'
+                'Grafik Tasarımı', 'Görsel İletişim Tasarımı', 'Yeni Medya ve İletişim', 'Web Tasarımı ve Kodlama', 'Dijital Oyun Tasarımı'
             ])) {
                 if (isset($skills['Grafiksel Görselleştirme'])) $skillIds[] = $skills['Grafiksel Görselleştirme'];
             }
@@ -584,7 +568,7 @@ class MajorSkillSeeder extends Seeder
                 if (isset($skills['3D Modelleme ve Animasyon'])) $skillIds[] = $skills['3D Modelleme ve Animasyon'];
             }
 
-            // [الدفعة السابعة] مهارات الإدارة، اللوجستيات، الطيران والسلامة المهنية
+            //  [الدفعة السابعة] مهارات الإدارة، اللوجستيات، الطيران والسلامة المهنية
 
             // 69. مهارة: Lojistik Yönetimi
             if (in_array($name, [
@@ -664,7 +648,7 @@ class MajorSkillSeeder extends Seeder
                 if (isset($skills['Kriz ve Afet Yönetimi'])) $skillIds[] = $skills['Kriz ve Afet Yönetimi'];
             }
 
-            // [الدفعة الثامنة] مهارات التجارة، المالية، التسويق والعلاقات الدولية
+            //  [الدفعة الثامنة] مهارات التجارة، المالية، التسويق والعلاقات الدولية
 
             // 79. مهارة: Dış Ticaret Mevzuatı
             if (in_array($name, [
@@ -690,7 +674,7 @@ class MajorSkillSeeder extends Seeder
             // 82. مهارة: Dijital Pazarlama ve Reklamcılık
             if (in_array($name, [
                 'Pazarlama', 'Yeni Medya ve İletişim', 'Sosyal Medya Yöneticiliği', 'Elektronik Ticaret ve Yönetimi', 
-                'Halkla İlişkiler ve Reklamcılık', 'Yönetim Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı'
+                'Halkla İlişkiler ve Reklamcılık', 'Yönetم Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Dijital Pazarlama ve Reklamcılık'])) $skillIds[] = $skills['Dijital Pazarlama ve Reklamcılık'];
             }
@@ -767,7 +751,7 @@ class MajorSkillSeeder extends Seeder
 
             // 92. مهارة: Sosyal Medya Yönetimi
             if (in_array($name, [
-                'Sosyal Medya Yöneticiliği', 'Yeni Medya ve İletişim', 'Halkla İlişkiler ve Reklamcılık', 
+                'Sosyal Medya Yöneticiliği', 'Yeni Medya ve İletيشim', 'Halkla İlişkiler ve Reklamcılık', 
                 'Pazarlama', 'Görsel İletişim Tasarımı', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Sosyal Medya Yönetimi'])) $skillIds[] = $skills['Sosyal Medya Yönetimi'];
@@ -793,7 +777,7 @@ class MajorSkillSeeder extends Seeder
             // 95. مهارة: Olasılık ve İstatistik
             if (in_array($name, [
                 'Matematik', 'İlköğretim Matematik Öğretmenliği', 'Endüstri Mühendisliği', 
-                'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Yyapay Zeka ve Veri Mühendisliği', 
+                'Bilgisayar Mühendisliği', 'Yazılım Mühendisliği', 'Yapay Zeka ve Veri Mühendisliği', 
                 'Yönetim Bilişim Sistemleri (MIS)', 'İktisat', 'İşletme', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Olasılık ve İstatistik'])) $skillIds[] = $skills['Olasılık ve İstatistik'];
@@ -805,8 +789,7 @@ class MajorSkillSeeder extends Seeder
                 'İlköğretim Matematik Öğretmenliği', 'Özel Eğitim Öğretmenliği', 
                 'Psikolojik Danışmanlık ve Rehberlik (PDR)'
             ])) {
-                // تم تصحيح اسم المصفوفة هنا من $skillsIds لـ $skillIds
-                if (isset($skills['Ölçme ve Değerlendirme'])) $skillIds[] = $skills['Ölçme ve Değerlendirme'];
+                if (isset($skills['Ölçme ve Değerlendirme'])) $skillsIds[] = $skills['Ölçme ve Değerlendirme'];
             }
 
             // 97. مهارة: Hukuk Prensipleri
@@ -819,7 +802,7 @@ class MajorSkillSeeder extends Seeder
 
             // 98. مهارة: Büyük Veri Analitiği
             if (in_array($name, [
-                'Yyapay Zeka ve Veri Mühendisliği', 'Yapay Zeka Mühendisliği', 'Bilgisayar Mühendisliği', 
+                'Yapay Zeka ve Veri Mühendisliği', 'Yapay Zeka Mühendisliği', 'Bilgisayar Mühendisliği', 
                 'Yazılım Mühendisliği', 'Yönetim Bilişim Sistemleri (MIS)', 'Bilgisayar Programcılığı'
             ])) {
                 if (isset($skills['Büyük Veri Analitiği'])) $skillIds[] = $skills['Büyük Veri Analitiği'];
@@ -923,7 +906,7 @@ class MajorSkillSeeder extends Seeder
             ])) {
                 if (isset($skills['Pastacılık ve Ekmekçilik'])) $skillIds[] = $skills['Pastacılık ve Ekmekçilik'];
             }
-            
+
             // حقن مصفوفة الربط لكل تخصص أولاً بأول داخل الـ foreach الكبرى لضمان عدم ضياع التخصصات
             if (!empty($skillIds)) {
                 $this->insertSkillsForMajor($major->id, $skillIds, $pivotData);
