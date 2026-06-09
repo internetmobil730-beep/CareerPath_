@@ -157,7 +157,7 @@ class MajorSkillSeeder extends Seeder
                 'Tıp', 'Diş Hekimliği', 'Eczacılık', 'Hemşirelik', 'Ebelik', 'Moleküler Biyoloji ve Genetik', 
                 'Biyoloji', 'Tıbbi Laboratuvar Teknikleri', 'Ameliyathane Hizmetleri'
             ])) {
-                if (isset($skills['Klinik Mikrobiyoloji'])) $skillIds[] = $skills['Klik Mikrobiyoloji'];
+                if (isset($skills['Klinik Mikrobiyoloji'])) $skillIds[] = $skills['Klinik Mikrobiyoloji'];
             }
 
             // 16. مهارة: Histoloji ve Embriyoloji
